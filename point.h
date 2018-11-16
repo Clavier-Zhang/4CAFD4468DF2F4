@@ -12,7 +12,7 @@ class Point {
         // for bash display, can be Z
         std::string type;
         // window
-        Window *xw;
+        Xwindow *xw;
     public:
         void draw();
         void undraw();

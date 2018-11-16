@@ -20,7 +20,7 @@ class Player {
         // grid on the bottom
         std::vector<std::vector<Point>> grid;
         // window
-        Window* xw;
+        Xwindow* xw;
     public:
         // initialzie the player, draw in the constructor, save window pointer
         Player();

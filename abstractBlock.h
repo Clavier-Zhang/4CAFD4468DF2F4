@@ -15,7 +15,7 @@ class AbstractBlock {
         // determined by level
         bool is_heavy = false;
         // window
-        Window* xw;
+        Xwindow* xw;
     public:
         // user operation
         virtual void moveLeft() = 0;

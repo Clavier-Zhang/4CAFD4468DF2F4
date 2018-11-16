@@ -13,7 +13,7 @@ class Board {
         // player in the current turn
         std::unique_ptr<Player> currentPlayer;
         // window, pass this pointer to subclasses
-        std::unique_ptr<Window> xw;
+        std::unique_ptr<XWindow> xw;
     public:
         // initialize two players
         Board();
