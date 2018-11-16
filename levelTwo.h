@@ -1,9 +1,9 @@
-#ifndef _LEVELONE_H_
-#define _LEVELONE_H_
+#ifndef _LEVELTWO_H_
+#define _LEVELTWO_H_
 #include <string>
 #include "AbstractLevel.h"
 
-class LevelOne : public AbstractLevel {
+class LevelTwo : public AbstractLevel {
     public:
         // visitor 
         void generateBlock(BlockI &b) override;

@@ -11,6 +11,7 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "memory": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "string": "cpp"
     }
 }

@@ -6,13 +6,6 @@
 #include "point.h"
 #include "abstractLevel.h"
 class BlockL : public AbstractBlock {
-    private:
-        // have four points in the vector
-        // each time we move or rotate block, 
-        // we edit the points in the vector
-        std::vector<Point> points;
-        // determined by level
-        bool is_heavy = false;
     public:
         // constructor, put points into vectors, 
         // set the string/color of point
