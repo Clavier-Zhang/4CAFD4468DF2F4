@@ -12,6 +12,7 @@
         "typeinfo": "cpp",
         "memory": "cpp",
         "algorithm": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "vector": "cpp"
     }
 }

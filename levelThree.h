@@ -6,12 +6,15 @@
 class LevelThree : public AbstractLevel {
     public:
         // visitor 
-        void generateBlock(BlockI &b) override;
-        void generateBlock(BlockJ &b) override;
-        void generateBlock(BlockL &b) override;
-        void generateBlock(BlockO &b) override;
-        void generateBlock(BlockS &b) override;
-        void generateBlock(BlockT &b) override;
-        void generateBlock(BlockZ &b) override;
+        AbstractBlock* generateBlock(BlockI &b) override;
+        AbstractBlock* generateBlock(BlockJ &b) override;
+        AbstractBlock* generateBlock(BlockL &b) override;
+        AbstractBlock* generateBlock(BlockO &b) override;
+        AbstractBlock* generateBlock(BlockS &b) override;
+        AbstractBlock* generateBlock(BlockT &b) override;
+        AbstractBlock* generateBlock(BlockZ &b) override;
+        AbstractBlock* generateBlock(BlockX &b) override;
+        AbstractPlayer* addDecorator(AbstractPlayer* player);
+        AbstractPlayer* removeDecorator(AbstractPlayer* player);
 };
 #endif

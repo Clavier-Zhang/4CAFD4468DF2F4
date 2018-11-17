@@ -1,14 +1,17 @@
-#ifndef _BLOCK_I_
-#define _BLOCK_I_
+#ifndef _BLOCK_X_
+#define _BLOCK_X_
 #include "abstractBlock.h"
 #include <string>
 #include <vector>
 #include "point.h"
 #include "abstractLevel.h"
-#include <memory>
-class BlockI : public AbstractBlock {
+class BlockX : public AbstractBlock {
     public:
-        BlockI();
+        // constructor, put points into vectors, 
+        // set the string/color of point
+        // according to the block feature
+        // maybe multiple constructor
+        BlockX();
         // accept for visitor pattern
         void accept(AbstractLevel &level) override;
         // simple implementation

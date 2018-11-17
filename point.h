@@ -7,8 +7,6 @@ class Point {
     private:
         int x;
         int y;
-        // for window display
-        std::string colour;
         // for bash display, can be Z
         std::string type;
         // window
@@ -16,6 +14,9 @@ class Point {
     public:
         void draw();
         void undraw();
+        void getX();
+        void getY();
+        void getType();
 };
 // text output
 std::ostream& operator<<(std::ostream &out, const Point &p);

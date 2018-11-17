@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -Wall -MMD -Werror=vla
 EXEC = biquadris
-OBJECTS = main.o window.o board.o player.o abstractLevel.o abstractBlock.o levelOne.o levelTwo.o levelThree.o levelFour.o blockI.o blockJ.o blockL.o blockO.o blockS.o blockT.o blockZ.o point.o
+OBJECTS = main.o window.o game.o player.o abstractLevel.o abstractBlock.o levelOne.o levelTwo.o levelThree.o levelFour.o blockI.o blockJ.o blockL.o blockO.o blockS.o blockT.o blockZ.o point.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}

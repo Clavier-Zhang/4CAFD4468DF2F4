@@ -4,7 +4,7 @@
 #include <memory>
 #include <iostream>
 #include "window.h"
-class Board {
+class Game {
     private:
         // player one
         std::unique_ptr<Player> one;
@@ -13,14 +13,16 @@ class Board {
         // player in the current turn
         std::unique_ptr<Player> currentPlayer;
         // window, pass this pointer to subclasses
-        std::unique_ptr<XWindow> xw;
+        std::unique_ptr<Xwindow> xw;
+        // status of game
+        bool isOver = false;
+        bool needSpecial = false;
     public:
         // initialize two players
-        Board();
+        Game();
         // player's operation
         // do not need to check, call currentPlayer's method directly
-        void levelUp();
-        void leveldown();
+        void setLevel();
         void moveLeft();
         void moveRight();
         void moveDown();
@@ -28,7 +30,10 @@ class Board {
         void rotateCounterClockwise();
         void drop();
         // more command to be determined
+        void gameOver();
+        void turnOver();
+        void specialAction();
 };
 // text output
-std::ostream& operator<<(std::ostream &out, const Board &b);
+std::ostream& operator<<(std::ostream &out, const Game &g);
 #endif

@@ -1,5 +1,6 @@
 #ifndef _ABSTRACTLEVEL_H_
 #define _ABSTRACTLEVEL_H_
+#include "abstractBlock.h"
 #include "blockI.h"
 #include "blockJ.h"
 #include "blockL.h"
@@ -7,6 +8,9 @@
 #include "blockS.h"
 #include "blockT.h"
 #include "blockZ.h"
+#include "blockX.h"
+#include <memory>
+#include "abstractPlayer.h"
 // visitor
 class AbstractLevel {
     protected:
@@ -16,13 +20,21 @@ class AbstractLevel {
         // if is random mode, update sequence with one char each time
         bool isRandom = false;
     public:
+        virtual AbstractBlock* generateBlock() = 0;
+    private:
         // visitor 
-        virtual void generateBlock(BlockI &b) = 0;
-        virtual void generateBlock(BlockJ &b) = 0;
-        virtual void generateBlock(BlockL &b) = 0;
-        virtual void generateBlock(BlockO &b) = 0;
-        virtual void generateBlock(BlockS &b) = 0;
-        virtual void generateBlock(BlockT &b) = 0;
-        virtual void generateBlock(BlockZ &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockI &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockJ &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockL &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockO &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockS &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockT &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockZ &b) = 0;
+        virtual AbstractBlock* generateBlock(BlockX &b) = 0;
+        // getter
+        int getLevel();
+        // decorator
+        virtual AbstractPlayer* addDecorator(AbstractPlayer* player);
+        virtual AbstractPlayer* removeDecorator(AbstractPlayer* player);
 };
 #endif
