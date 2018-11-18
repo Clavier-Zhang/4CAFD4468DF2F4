@@ -7,26 +7,13 @@
 class Game {
     private:
         // // player one
-        // std::unique_ptr<Player> one;
+        std::unique_ptr<Player> playerOne;
         // // player two
-        // std::unique_ptr<Player> two;
+        std::unique_ptr<Player> playerTwo;
         // // player in the current turn
-        // std::unique_ptr<Player> currentPlayer;
-        // // window, pass this pointer to subclasses
-        // std::unique_ptr<Xwindow> xw;
-
-
-        // player one
-        Player* one;
-        // player two
-        Player* two;
-        // player in the current turn
         Player* currentPlayer;
-        // window, pass this pointer to subclasses
-        Xwindow* xw;
-
-
-
+        // // window, pass this pointer to subclasses
+        std::unique_ptr<Xwindow> xw;
         // status of game
         bool isOver = false;
         bool needSpecial = false;

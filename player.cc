@@ -22,3 +22,6 @@ void Player::putPoint(int x, int y){}
 void Player::removePoint(int x, int y){}
 // display
 std::string Player::printLine(){}
+void Player::setCurrentBlock() {}
+
+void Player::setRandom() {}

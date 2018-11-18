@@ -25,7 +25,9 @@ class Player : public AbstractPlayer {
         // target::block
         void putPoint(int x, int y) override;
         void removePoint(int x, int y) override;
+        void setRandom() override;
         // display
+        void setCurrentBlock() override;
         std::string printLine() override;
 };
 #endif

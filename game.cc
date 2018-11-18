@@ -1,7 +1,13 @@
 #include "game.h"
 using namespace std;
+
 // initialize two players
-Game::Game() {}
+Game::Game() :
+    playerOne{new Player()}, 
+    playerTwo{new Player()}, 
+    currentPlayer{playerOne.get()},
+    xw{new Xwindow()} {}
+
 // player's operation
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel() {}

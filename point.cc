@@ -24,6 +24,7 @@ void Point::getType() {
     
 }
 
+
 ostream& operator<<(std::ostream &out, const Point &p) {
     return out;
 }
