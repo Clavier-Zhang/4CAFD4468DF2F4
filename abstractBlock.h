@@ -1,11 +1,10 @@
 #ifndef _ABSTRACTBLOCK_H_
 #define _ABSTRACTBLOCK_H_
 #include <iostream>
-#include "window.h"
-#include "abstractLevel.h"
-#include "point.h"
 #include <string>
 #include <vector>
+class AbstractLevel;
+class Point;
 // visitable
 class AbstractBlock {
     // set protected, so can be called in concrete block and draw

@@ -21,4 +21,4 @@ void Player::drop(){}
 void Player::putPoint(int x, int y){}
 void Player::removePoint(int x, int y){}
 // display
-std::string printLine(){}
+std::string Player::printLine(){}

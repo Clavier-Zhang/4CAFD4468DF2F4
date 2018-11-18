@@ -1,17 +1,27 @@
 #ifndef _ABSTRACTLEVEL_H_
 #define _ABSTRACTLEVEL_H_
-#include "abstractBlock.h"
-#include "point.h"
-#include "blockI.h"
-#include "blockJ.h"
-#include "blockL.h"
-#include "blockO.h"
-#include "blockS.h"
-#include "blockT.h"
-#include "blockZ.h"
-#include "blockX.h"
-#include <memory>
-#include "abstractPlayer.h"
+#include <vector>
+#include <string>
+class Point;
+class AbstractBlock;
+class BlockI;
+class BlockJ;
+class BlockL;
+class BlockO;
+class BlockS;
+class BlockT;
+class BlockZ;
+class BlockX;
+// #include "blockI.h"
+// #include "blockJ.h"
+// #include "blockL.h"
+// #include "blockO.h"
+// #include "blockS.h"
+// #include "blockT.h"
+// #include "blockZ.h"
+// #include "blockX.h"
+class AbstractPlayer;
+// #include "abstractPlayer.h"
 // visitor
 class AbstractLevel {
     protected:

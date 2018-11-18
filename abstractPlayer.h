@@ -1,27 +1,28 @@
 #ifndef _ABSTRACTPLAYER_H_
 #define _ABSTRACTPLAYER_H_
-#include "abstractLevel.h"
 #include <memory>
 #include <vector>
 #include <iostream>
 #include "point.h"
-#include "abstractBlock.h"
 #include "window.h"
-#include "game.h"
 #include <string>
+class AbstractLevel;
+class AbstractBlock;
+class Game;
+
 class AbstractPlayer {
     protected:
         // level on the top left
-        std::unique_ptr<AbstractLevel> level;
+        AbstractLevel* level;
         // score on the top left
         int currenntScore = 0;
         int highestScore = 0;
-        std::unique_ptr<AbstractBlock> currentBlock;
-        std::unique_ptr<AbstractBlock> nextBlock;
+        AbstractBlock* currentBlock;
+        AbstractBlock* nextBlock;
         // grid on the bottom
-        std::vector<std::vector<std::unique_ptr<Point>>> grid;
+        std::vector<std::vector<Point*>> grid;
         // blocks already exists, will be checked and cleared
-        std::vector<std::unique_ptr<AbstractBlock>> fieldBlocks;
+        std::vector<AbstractBlock*> fieldBlocks;
         // window
         Xwindow *xw;
         // game for observer
