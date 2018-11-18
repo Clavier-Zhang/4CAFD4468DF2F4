@@ -1,5 +1,5 @@
-#ifndef _BOARD_H_
-#define _BOARD_H_
+#ifndef _GAME_H_
+#define _GAME_H_
 #include "player.h"
 #include <memory>
 #include <iostream>

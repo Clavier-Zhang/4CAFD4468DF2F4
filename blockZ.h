@@ -10,10 +10,9 @@ class BlockZ : public AbstractBlock {
         // constructor, put points into vectors, 
         // set the string/color of point
         // according to the block feature
-        // maybe multiple constructor
         BlockZ();
         // accept for visitor pattern
-        void accept(AbstractLevel &level) override;
+        void accept(class AbstractLevel &level) override;
         // simple implementation
         // {
         //      level.generateBlock(this);

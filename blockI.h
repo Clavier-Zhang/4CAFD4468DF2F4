@@ -10,7 +10,7 @@ class BlockI : public AbstractBlock {
     public:
         BlockI();
         // accept for visitor pattern
-        void accept(AbstractLevel &level) override;
+        void accept(class AbstractLevel &level) override;
         // simple implementation
         // {
         //      level.generateBlock(this);

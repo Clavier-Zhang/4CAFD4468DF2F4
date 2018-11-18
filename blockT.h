@@ -13,7 +13,7 @@ class BlockT : public AbstractBlock {
         // maybe multiple constructor
         BlockT();
         // accept for visitor pattern
-        void accept(AbstractLevel &level) override;
+        void accept(class AbstractLevel &level) override;
         // simple implementation
         // {
         //      level.generateBlock(this);

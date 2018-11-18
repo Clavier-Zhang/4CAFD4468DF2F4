@@ -13,7 +13,7 @@ class BlockO : public AbstractBlock {
         // maybe multiple constructor
         BlockO();
         // accept for visitor pattern
-        void accept(AbstractLevel &level) override;
+        void accept(class AbstractLevel &level) override;
         // simple implementation
         // {
         //      level.generateBlock(this);

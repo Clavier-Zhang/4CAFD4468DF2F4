@@ -8,6 +8,7 @@
 #include "abstractBlock.h"
 #include "window.h"
 #include "game.h"
+#include <string>
 class AbstractPlayer {
     protected:
         // level on the top left
@@ -15,9 +16,7 @@ class AbstractPlayer {
         // score on the top left
         int currenntScore = 0;
         int highestScore = 0;
-        // current on the top middle
         std::unique_ptr<AbstractBlock> currentBlock;
-        // next block on the bottom middle
         std::unique_ptr<AbstractBlock> nextBlock;
         // grid on the bottom
         std::vector<std::vector<std::unique_ptr<Point>>> grid;
@@ -26,7 +25,7 @@ class AbstractPlayer {
         // window
         Xwindow *xw;
         // game for observer
-        Game *game;
+        class Game *game;
     public:
         // player's operation
         // check if it is possible to level up/down
@@ -39,17 +38,12 @@ class AbstractPlayer {
         virtual void rotateCounterClockwise() = 0;
         // add the points of blocks to grid, update the block in drop(), 
         virtual void drop() = 0;
-        // more commands
-        int getCurrentScore();
-        int getHighestScore();
-        std::vector<std::vector<Point>>* getGrid();
-        AbstractLevel* getLevel();
         // assign the point pointer to currentBlock, can
         // be used in moveLeft, moveRight
         // target::block
         virtual void putPoint(int x, int y) = 0;
         virtual void removePoint(int x, int y) = 0;
-        virtual void setRandom();
+        virtual void setRandom() = 0;
         // display
         virtual void setCurrentBlock() = 0;
         virtual std::string printLine() = 0;
@@ -57,7 +51,12 @@ class AbstractPlayer {
         void notifyGameover();
         void notifyTurnover();
         void notifySpecialAction();
+
+        int getCurrentScore();
+        int getHighestScore();
+        std::vector<std::vector<Point>>* getGrid();
+        AbstractLevel* getLevel();
         
 };
-std::ostream& operator<<(std::ostream &out, const AbstractPlayer &p) = 0;
+std::ostream& operator<<(std::ostream &out, const AbstractPlayer &p);
 #endif

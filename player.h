@@ -1,14 +1,10 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
-#include "abstractLevel.h"
 #include <memory>
 #include <vector>
 #include <iostream>
-#include "point.h"
-#include "abstractBlock.h"
-#include "window.h"
-#include "game.h"
 #include "abstractPlayer.h"
+
 class Player : public AbstractPlayer {
     public:
         // initialzie the player, draw in the constructor, save window pointer
@@ -24,11 +20,6 @@ class Player : public AbstractPlayer {
         void rotateCounterClockwise() override;
         // add the points of blocks to grid, update the block in drop(), 
         void drop() override;
-        // more commands
-        int getCurrentScore() override;
-        int getHighestScore() override;
-        std::vector<std::vector<Point>>* getGrid() override;
-        AbstractLevel* getLevel() override;
         // assign the point pointer to currentBlock, can
         // be used in moveLeft, moveRight
         // target::block

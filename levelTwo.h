@@ -1,8 +1,8 @@
 #ifndef _LEVELTWO_H_
 #define _LEVELTWO_H_
 #include <string>
-#include "AbstractLevel.h"
-
+#include "abstractLevel.h"
+#include "abstractBlock.h"
 class LevelTwo : public AbstractLevel {
     public:
         // visitor 
@@ -14,7 +14,6 @@ class LevelTwo : public AbstractLevel {
         AbstractBlock* generateBlock(BlockT &b) override;
         AbstractBlock* generateBlock(BlockZ &b) override;
         AbstractBlock* generateBlock(BlockX &b) override;
-        AbstractPlayer* addDecorator(AbstractPlayer* player);
-        AbstractPlayer* removeDecorator(AbstractPlayer* player);
+
 };
 #endif

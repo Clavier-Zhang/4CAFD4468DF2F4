@@ -1,7 +1,8 @@
 #ifndef _LEVELFOUR_H_
 #define _LEVELFOUR_H_
 #include <string>
-#include "AbstractLevel.h"
+#include "abstractLevel.h"
+#include "abstractBlock.h"
 class LevelFour : public AbstractLevel {
     public:
         // visitor 

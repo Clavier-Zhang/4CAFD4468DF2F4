@@ -3,6 +3,7 @@
 #include "abstractDecorator.h"
 class BlindDecorator : public AbstractDecorator {
     public:
+        BlindDecorator(AbstractDecorator *abstractDecorator);
         // player's operation
         // check if it is possible to level up/down
         void setLevel(int level);

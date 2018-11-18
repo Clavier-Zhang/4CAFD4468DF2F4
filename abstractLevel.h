@@ -1,6 +1,7 @@
 #ifndef _ABSTRACTLEVEL_H_
 #define _ABSTRACTLEVEL_H_
 #include "abstractBlock.h"
+#include "point.h"
 #include "blockI.h"
 #include "blockJ.h"
 #include "blockL.h"
@@ -22,7 +23,7 @@ class AbstractLevel {
     public:
         virtual AbstractBlock* generateBlock() = 0;
     private:
-        // visitor 
+        // visitor
         virtual AbstractBlock* generateBlock(BlockI &b) = 0;
         virtual AbstractBlock* generateBlock(BlockJ &b) = 0;
         virtual AbstractBlock* generateBlock(BlockL &b) = 0;
@@ -33,8 +34,5 @@ class AbstractLevel {
         virtual AbstractBlock* generateBlock(BlockX &b) = 0;
         // getter
         int getLevel();
-        // decorator
-        virtual AbstractPlayer* addDecorator(AbstractPlayer* player);
-        virtual AbstractPlayer* removeDecorator(AbstractPlayer* player);
 };
 #endif
