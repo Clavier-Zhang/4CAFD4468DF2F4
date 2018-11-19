@@ -33,7 +33,7 @@ class Game {
         void gameOver();
         void turnOver();
         void specialAction();
+        // print
+        void print();
 };
-// text output
-std::ostream& operator<<(std::ostream &out, const Game &g);
 #endif

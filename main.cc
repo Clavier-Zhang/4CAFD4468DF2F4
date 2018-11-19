@@ -8,6 +8,8 @@ using namespace std;
 
 int main () {
     string s;
+    Game game;
+    game.print();
 
     // Command interpreter
     while (cin >> s) {

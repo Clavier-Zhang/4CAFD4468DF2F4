@@ -4,6 +4,9 @@
 #include "point.h"
 using namespace std;
 
+Point::Point(int x, int y, string type, Xwindow *xw) 
+    : x{x}, y{y}, type{type}, xw{xw} {}
+
 void Point::draw() {
 
 }
@@ -12,19 +15,14 @@ void Point::undraw() {
 
 }
 
-void Point::getX() {
-
+int Point::getX() {
+    return this->x;
 }
 
-void Point::getY() {
-
+int Point::getY() {
+    return this->y;
 }
 
-void Point::getType() {
-    
-}
-
-
-ostream& operator<<(std::ostream &out, const Point &p) {
-    return out;
+string Point::getType() {
+    return this->type;
 }

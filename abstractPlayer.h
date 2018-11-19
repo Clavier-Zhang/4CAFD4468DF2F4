@@ -17,8 +17,8 @@ class AbstractPlayer {
         // score on the top left
         int currenntScore = 0;
         int highestScore = 0;
-        int row = 15;
-        int col = 11;
+        int rowNum = 15;
+        int colNum = 11;
         AbstractBlock* currentBlock;
         AbstractBlock* nextBlock;
         // grid on the bottom
@@ -31,7 +31,7 @@ class AbstractPlayer {
         Game *game;
     public:
         // constructor
-        AbstractPlayer(Game *game);
+        AbstractPlayer(Game *game, Xwindow *xw);
         // player's operation
         // check if it is possible to level up/down
         virtual void setLevel(int level) = 0;
@@ -61,7 +61,7 @@ class AbstractPlayer {
         int getCurrentScore();
         int getHighestScore();
         int getLevel();
+        std::string getGridRow(int row);
         
 };
-std::ostream& operator<<(std::ostream &out, const AbstractPlayer &p);
 #endif

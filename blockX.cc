@@ -2,5 +2,6 @@
 #include "abstractLevel.h"
 using namespace std;
 
-BlockX::BlockX() {}
+BlockX::BlockX()
+    : AbstractBlock{"X"} {}
 void BlockX::accept(AbstractLevel &level) {}

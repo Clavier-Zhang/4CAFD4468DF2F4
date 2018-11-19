@@ -1,6 +1,7 @@
-#include "BlockO.h"
+#include "blockO.h"
 #include "abstractLevel.h"
 using namespace std;
 
-BlockO::BlockO() {}
+BlockO::BlockO()
+    : AbstractBlock{"O"} {}
 void BlockO::accept(AbstractLevel &level) {}

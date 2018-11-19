@@ -4,12 +4,13 @@
 #include <vector>
 #include <iostream>
 #include "game.h"
+#include "window.h"
 #include "abstractPlayer.h"
 
 class Player : public AbstractPlayer {
     public:
         // initialzie the player, draw in the constructor, save window pointer
-        Player(Game *game);
+        Player(Game *game, Xwindow *xw);
         // player's operation
         // check if it is possible to level up/down
         void setLevel(int level) override;

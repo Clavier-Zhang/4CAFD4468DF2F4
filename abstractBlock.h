@@ -12,10 +12,11 @@ class AbstractBlock {
         // have four points in the vector
         // each time we move or rotate block, 
         // we edit the points in the vector
-        std::vector<Point *> points;
+        std::vector<Point*> points;
         std::string type;
     public:
+        AbstractBlock(std::string type);
         // accept
-        virtual void accept(class AbstractLevel &level) = 0;
+        virtual void accept(AbstractLevel &level) = 0;
 };
 #endif

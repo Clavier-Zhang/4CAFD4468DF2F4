@@ -1,10 +1,13 @@
 #include "player.h"
 #include "abstractPlayer.h"
 #include "game.h"
+#include "window.h"
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game) : AbstractPlayer{game} {}
+Player::Player(Game *game, Xwindow *xw) 
+    : AbstractPlayer{game, xw} {}
+    
 // player's operation
 // check if it is possible to level up/down
 void Player::setLevel(int level){}

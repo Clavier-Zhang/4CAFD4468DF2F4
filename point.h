@@ -12,12 +12,11 @@ class Point {
         // window
         Xwindow *xw;
     public:
+        Point(int x, int y, std::string type, Xwindow *xw);
         void draw();
         void undraw();
-        void getX();
-        void getY();
-        void getType();
+        int getX();
+        int getY();
+        std::string getType();
 };
-// text output
-std::ostream& operator<<(std::ostream &out, const Point &p);
 #endif

@@ -1,12 +1,14 @@
 #include "game.h"
 #include "player.h"
+#include <iostream>
+#include <iomanip>
 using namespace std;
 
 // initialize two players
 // more constructor for differnnt mode in command line
 Game::Game() :
-    playerOne{new Player(this)}, 
-    playerTwo{new Player(this)}, 
+    playerOne{new Player(this, this->xw.get())}, 
+    playerTwo{new Player(this, this->xw.get())}, 
     currentPlayer{playerOne.get()},
     xw{new Xwindow()} {}
 
@@ -57,6 +59,39 @@ void Game::turnOver() {
 void Game::specialAction() {}
 
 // finish later
-ostream& operator<<(ostream &out, const Game &g) {
-    return out;
+void Game::print() {
+    // print level
+    cout << "Level:";
+    cout << setw(5) << playerOne->getLevel();
+    cout  << setw(7) << " ";
+    cout << "Level:";
+    cout << setw(5) << playerTwo->getLevel();
+    cout << endl;
+    // print score
+    cout << "Score:";
+    cout << setw(5) << playerOne->getCurrentScore();
+    cout  << setw(7) << " ";
+    cout << "Score:";
+    cout << setw(5) << playerTwo->getCurrentScore();
+    cout << endl;
+    // print dash
+    cout << "-----------";
+    cout  << setw(7) << " ";
+    cout << "-----------";
+    cout << endl;
+    // print grid
+    for (int i = 0; i < 15; i++) {
+        cout << playerOne->getGridRow(i);
+        cout  << setw(7) << " ";
+        cout << playerTwo->getGridRow(i);
+        cout << endl;
+    }
+    // print dash
+    cout << "-----------";
+    cout  << setw(7) << " ";
+    cout << "-----------";
+    cout << endl;
+    // print next
+    cout << "Next:";
+    cout  << setw(7) << " " << endl;
 }
