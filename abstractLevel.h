@@ -12,16 +12,7 @@ class BlockS;
 class BlockT;
 class BlockZ;
 class BlockX;
-// #include "blockI.h"
-// #include "blockJ.h"
-// #include "blockL.h"
-// #include "blockO.h"
-// #include "blockS.h"
-// #include "blockT.h"
-// #include "blockZ.h"
-// #include "blockX.h"
 class AbstractPlayer;
-// #include "abstractPlayer.h"
 // visitor
 class AbstractLevel {
     protected:
@@ -32,6 +23,7 @@ class AbstractLevel {
         bool isRandom = false;
     public:
         virtual AbstractBlock* generateBlock() = 0;
+        int getLevel();
     private:
         // visitor
         virtual AbstractBlock* generateBlock(BlockI &b) = 0;
@@ -42,7 +34,5 @@ class AbstractLevel {
         virtual AbstractBlock* generateBlock(BlockT &b) = 0;
         virtual AbstractBlock* generateBlock(BlockZ &b) = 0;
         virtual AbstractBlock* generateBlock(BlockX &b) = 0;
-        // getter
-        int getLevel();
 };
 #endif

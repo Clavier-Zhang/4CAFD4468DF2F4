@@ -6,6 +6,8 @@
 class LevelOne : public AbstractLevel {
     public:
         // visitor 
+        AbstractBlock* generateBlock() override;
+    private:
         AbstractBlock* generateBlock(BlockI &b) override;
         AbstractBlock* generateBlock(BlockJ &b) override;
         AbstractBlock* generateBlock(BlockL &b) override;
@@ -14,6 +16,5 @@ class LevelOne : public AbstractLevel {
         AbstractBlock* generateBlock(BlockT &b) override;
         AbstractBlock* generateBlock(BlockZ &b) override;
         AbstractBlock* generateBlock(BlockX &b) override;
-
 };
 #endif

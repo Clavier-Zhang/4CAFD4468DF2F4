@@ -1,21 +1,42 @@
 #include "abstractPlayer.h"
+#include "game.h"
+#include "abstractLevel.h"
+#include "levelOne.h"
+#include "levelTwo.h"
+#include "levelThree.h"
+#include "levelFour.h"
 using namespace std;
 
-void AbstractPlayer::notifyGameover() {}
-void AbstractPlayer::notifyTurnover() {}
-void AbstractPlayer::notifySpecialAction() {}
+// constructor
+AbstractPlayer::AbstractPlayer(Game *game) {
+    this->level = new LevelOne();
+    
+}
 
+// getter
 int AbstractPlayer::getCurrentScore() {
-    return 0;
+    return this->currenntScore;
 }
+
 int AbstractPlayer::getHighestScore() {
-    return 0;
+    return this->highestScore;
 }
-vector<vector<Point>>* AbstractPlayer::getGrid() {
-    return nullptr;
+
+int AbstractPlayer::getLevel() {
+    return this->level->getLevel();
 }
-AbstractLevel* AbstractPlayer::getLevel() {
-    return nullptr;
+
+// observer pattern
+void AbstractPlayer::notifyGameover() {
+    this->game->gameOver();
+}
+
+void AbstractPlayer::notifyTurnover() {
+    this->game->turnOver();
+}
+
+void AbstractPlayer::notifySpecialAction() {
+    this->game->specialAction();
 }
 
 ostream& operator<<(ostream &out, const AbstractPlayer &p) {

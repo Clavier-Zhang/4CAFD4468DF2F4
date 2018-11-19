@@ -1,6 +1,9 @@
 #include "abstractBlock.h"
 #include "levelOne.h"
 using namespace std;
+AbstractBlock* LevelOne::generateBlock() {
+    return nullptr;
+}
 
 AbstractBlock* LevelOne::generateBlock(BlockI &b) {
     return nullptr;

@@ -6,6 +6,8 @@
 class LevelThree : public AbstractLevel {
     public:
         // visitor 
+        AbstractBlock* generateBlock() override;
+    private:
         AbstractBlock* generateBlock(BlockI &b) override;
         AbstractBlock* generateBlock(BlockJ &b) override;
         AbstractBlock* generateBlock(BlockL &b) override;

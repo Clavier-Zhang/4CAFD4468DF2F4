@@ -3,12 +3,13 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include "game.h"
 #include "abstractPlayer.h"
 
 class Player : public AbstractPlayer {
     public:
         // initialzie the player, draw in the constructor, save window pointer
-        Player();
+        Player(Game *game);
         // player's operation
         // check if it is possible to level up/down
         void setLevel(int level) override;
@@ -27,7 +28,7 @@ class Player : public AbstractPlayer {
         void removePoint(int x, int y) override;
         void setRandom() override;
         // display
-        void setCurrentBlock() override;
+        void setCurrentBlock() override; 
         std::string printLine() override;
 };
 #endif

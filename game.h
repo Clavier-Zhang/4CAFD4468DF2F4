@@ -1,17 +1,17 @@
 #ifndef _GAME_H_
 #define _GAME_H_
-#include "player.h"
+#include "abstractPlayer.h"
 #include <memory>
 #include <iostream>
 #include "window.h"
 class Game {
     private:
         // // player one
-        std::unique_ptr<Player> playerOne;
+        std::unique_ptr<AbstractPlayer> playerOne;
         // // player two
-        std::unique_ptr<Player> playerTwo;
+        std::unique_ptr<AbstractPlayer> playerTwo;
         // // player in the current turn
-        Player* currentPlayer;
+        AbstractPlayer* currentPlayer;
         // // window, pass this pointer to subclasses
         std::unique_ptr<Xwindow> xw;
         // status of game
@@ -22,10 +22,10 @@ class Game {
         Game();
         // player's operation
         // do not need to check, call currentPlayer's method directly
-        void setLevel();
-        void moveLeft();
-        void moveRight();
-        void moveDown();
+        void setLevel(int level);
+        void moveLeft(int step = 1);
+        void moveRight(int step = 1);
+        void moveDown(int step = 1);
         void rotateClockwise();
         void rotateCounterClockwise();
         void drop();

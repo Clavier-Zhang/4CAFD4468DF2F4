@@ -1,9 +1,10 @@
 #include "player.h"
 #include "abstractPlayer.h"
+#include "game.h"
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player() {}
+Player::Player(Game *game) : AbstractPlayer{game} {}
 // player's operation
 // check if it is possible to level up/down
 void Player::setLevel(int level){}
@@ -24,4 +25,4 @@ void Player::removePoint(int x, int y){}
 std::string Player::printLine(){}
 void Player::setCurrentBlock() {}
 
-void Player::setRandom() {}
+void Player::setRandom() {} 

@@ -10,24 +10,28 @@ class AbstractLevel;
 class AbstractBlock;
 class Game;
 
-class AbstractPlayer {
+class AbstractPlayer { 
     protected:
         // level on the top left
         AbstractLevel* level;
         // score on the top left
         int currenntScore = 0;
         int highestScore = 0;
+        int row = 15;
+        int col = 11;
         AbstractBlock* currentBlock;
         AbstractBlock* nextBlock;
         // grid on the bottom
-        std::vector<std::vector<Point*>> grid;
+        std::vector<std::vector<Point>> grid;
         // blocks already exists, will be checked and cleared
         std::vector<AbstractBlock*> fieldBlocks;
         // window
         Xwindow *xw;
         // game for observer
-        class Game *game;
+        Game *game;
     public:
+        // constructor
+        AbstractPlayer(Game *game);
         // player's operation
         // check if it is possible to level up/down
         virtual void setLevel(int level) = 0;
@@ -48,15 +52,15 @@ class AbstractPlayer {
         // display
         virtual void setCurrentBlock() = 0;
         virtual std::string printLine() = 0;
-        // notify
+
+        // observer pattern
         void notifyGameover();
         void notifyTurnover();
         void notifySpecialAction();
-
+        // getter
         int getCurrentScore();
         int getHighestScore();
-        std::vector<std::vector<Point>>* getGrid();
-        AbstractLevel* getLevel();
+        int getLevel();
         
 };
 std::ostream& operator<<(std::ostream &out, const AbstractPlayer &p);
