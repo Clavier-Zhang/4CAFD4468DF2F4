@@ -12,11 +12,5 @@ class BlockS : public AbstractBlock {
         // according to the block feature
         // maybe multiple constructor
         BlockS();
-        // accept for visitor pattern
-        void accept(class AbstractLevel &level) override;
-        // simple implementation
-        // {
-        //      level.generateBlock(this);
-        // }
 };
 #endif

@@ -10,6 +10,8 @@ int main () {
     string s;
     Game game;
     game.print();
+    game.setLevel(2);
+    game.print();
 
     // Command interpreter
     while (cin >> s) {

@@ -16,7 +16,6 @@ class AbstractBlock {
         std::string type;
     public:
         AbstractBlock(std::string type);
-        // accept
-        virtual void accept(AbstractLevel &level) = 0;
+        std::string getType();
 };
 #endif

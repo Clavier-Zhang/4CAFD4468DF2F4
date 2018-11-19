@@ -93,5 +93,16 @@ void Game::print() {
     cout << endl;
     // print next
     cout << "Next:";
+    cout  << setw(7) << " ";
+    cout << "Next:";
     cout  << setw(7) << " " << endl;
+}
+
+// helper
+string getNextBlockFirstRow(string type) {
+    return "";
+}
+
+string getNextBlockSecondRow(string type) {
+    return "";
 }

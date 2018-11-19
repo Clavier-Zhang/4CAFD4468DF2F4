@@ -16,23 +16,16 @@ class AbstractPlayer;
 // visitor
 class AbstractLevel {
     protected:
-        int level;
+        int level = 1;
         // set in the constructor, either from file or generate randomly
         std::string sequence;
         // if is random mode, update sequence with one char each time
         bool isRandom = false;
     public:
+        AbstractLevel(int level, std::string sequence, bool isRandom );
+        ~AbstractLevel();
         virtual AbstractBlock* generateBlock() = 0;
+        // getter
         int getLevel();
-    private:
-        // visitor
-        virtual AbstractBlock* generateBlock(BlockI &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockJ &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockL &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockO &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockS &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockT &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockZ &b) = 0;
-        virtual AbstractBlock* generateBlock(BlockX &b) = 0;
 };
 #endif

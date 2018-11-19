@@ -30,6 +30,5 @@ class Player : public AbstractPlayer {
         void setRandom() override;
         // display
         void setCurrentBlock() override; 
-        std::string printLine() override;
 };
 #endif

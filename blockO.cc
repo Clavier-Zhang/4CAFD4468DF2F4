@@ -4,4 +4,3 @@ using namespace std;
 
 BlockO::BlockO()
     : AbstractBlock{"O"} {}
-void BlockO::accept(AbstractLevel &level) {}

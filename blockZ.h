@@ -11,11 +11,5 @@ class BlockZ : public AbstractBlock {
         // set the string/color of point
         // according to the block feature
         BlockZ();
-        // accept for visitor pattern
-        void accept(class AbstractLevel &level) override;
-        // simple implementation
-        // {
-        //      level.generateBlock(this);
-        // }
 };
 #endif

@@ -8,11 +8,12 @@
 #include "point.h"
 #include <string.h>
 #include "window.h"
+#include <memory>
 using namespace std;
 
 // constructor
 AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
-    this->level = new LevelOne();
+    this->level = shared_ptr<AbstractLevel>(new LevelOne());
     this->currentBlock = this->level->generateBlock();
     this->nextBlock = this->level->generateBlock();
     this->xw = xw;
@@ -26,19 +27,6 @@ AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
         this->grid.emplace_back(row);
     }
     this->game = game;
-}
-
-// getter
-int AbstractPlayer::getCurrentScore() {
-    return this->currenntScore;
-}
-
-int AbstractPlayer::getHighestScore() {
-    return this->highestScore;
-}
-
-int AbstractPlayer::getLevel() {
-    return this->level->getLevel();
 }
 
 string AbstractPlayer::getGridRow(int row) {
@@ -62,3 +50,19 @@ void AbstractPlayer::notifySpecialAction() {
     this->game->specialAction();
 }
 
+// getter
+int AbstractPlayer::getCurrentScore() {
+    return this->currenntScore;
+}
+
+int AbstractPlayer::getHighestScore() {
+    return this->highestScore;
+}
+
+int AbstractPlayer::getLevel() {
+    return this->level->getLevel();
+}
+
+string AbstractPlayer::getNextBlock() {
+    return this->nextBlock->getType();
+}

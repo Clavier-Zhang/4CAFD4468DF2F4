@@ -6,14 +6,14 @@
 #include "point.h"
 #include "window.h"
 #include <string>
-class AbstractLevel;
+#include "abstractLevel.h"
 class AbstractBlock;
 class Game;
 
 class AbstractPlayer { 
     protected:
         // level on the top left
-        AbstractLevel* level;
+        std::shared_ptr<AbstractLevel> level;
         // score on the top left
         int currenntScore = 0;
         int highestScore = 0;
@@ -51,7 +51,6 @@ class AbstractPlayer {
         virtual void setRandom() = 0;
         // display
         virtual void setCurrentBlock() = 0;
-        virtual std::string printLine() = 0;
 
         // observer pattern
         void notifyGameover();
@@ -62,6 +61,7 @@ class AbstractPlayer {
         int getHighestScore();
         int getLevel();
         std::string getGridRow(int row);
+        std::string getNextBlock();
         
 };
 #endif
