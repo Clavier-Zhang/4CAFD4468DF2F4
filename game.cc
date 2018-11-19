@@ -76,13 +76,13 @@ void Game::print() {
     cout << endl;
     // print dash
     cout << "-----------";
-    cout  << setw(7) << " ";
+    cout << setw(7) << " ";
     cout << "-----------";
     cout << endl;
     // print grid
     for (int i = 0; i < 15; i++) {
         cout << playerOne->getGridRow(i);
-        cout  << setw(7) << " ";
+        cout << setw(7) << " ";
         cout << playerTwo->getGridRow(i);
         cout << endl;
     }
@@ -93,16 +93,51 @@ void Game::print() {
     cout << endl;
     // print next
     cout << "Next:";
-    cout  << setw(7) << " ";
+    cout << setw(6) << " ";
+    cout << setw(7) << " ";
     cout << "Next:";
-    cout  << setw(7) << " " << endl;
+    cout << setw(6) << " " << endl;
+    cout << this->getNextBlockFirstRow(playerOne->getNextBlock());
+    cout << setw(7) << " ";
+    cout << this->getNextBlockFirstRow(playerTwo->getNextBlock());
+    cout << endl;
+    cout << this->getNextBlockSecondRow(playerOne->getNextBlock());
+    cout << setw(7) << " ";
+    cout << this->getNextBlockSecondRow(playerTwo->getNextBlock());
+    cout << endl;
 }
 
-// helper
-string getNextBlockFirstRow(string type) {
-    return "";
+// helper, modify later
+string Game::getNextBlockFirstRow(string type) {
+    if (type == "I") {
+        return "           ";
+    } else if (type == "J") {
+        return "J          ";
+    } else if (type == "L") {
+        return "  L        ";
+    } else if (type == "O") {
+        return "OO         ";
+    } else if (type == "S") {
+        return " SS        ";
+    } else if (type == "Z") {
+        return "ZZ         ";
+    }
+    return "TTT        ";
 }
 
-string getNextBlockSecondRow(string type) {
-    return "";
+string Game::getNextBlockSecondRow(string type) {
+    if (type == "I") {
+        return "IIII       ";
+    } else if (type == "J") {
+        return "JJJ        ";
+    } else if (type == "L") {
+        return "LLL        ";
+    } else if (type == "O") {
+        return "OO         ";
+    } else if (type == "S") {
+        return "SS         ";
+    } else if (type == "Z") {
+        return " ZZ        ";
+    }
+    return " T         ";
 }

@@ -35,8 +35,8 @@ void Player::drop(){}
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
-void Player::putPoint(int x, int y){}
-void Player::removePoint(int x, int y){}
+void Player::putPointToCurrentBlock(int x, int y){}
+void Player::removePointFromCurrentBlock(int x, int y){}
 void Player::setCurrentBlock() {}
 
 void Player::setRandom() {} 

@@ -35,5 +35,8 @@ class Game {
         void specialAction();
         // print
         void print();
+        // modify later
+        std::string getNextBlockFirstRow(std::string type);
+        std::string getNextBlockSecondRow(std::string type);
 };
 #endif

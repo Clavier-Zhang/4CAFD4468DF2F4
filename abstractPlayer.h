@@ -46,8 +46,8 @@ class AbstractPlayer {
         // assign the point pointer to currentBlock, can
         // be used in moveLeft, moveRight
         // target::block
-        virtual void putPoint(int x, int y) = 0;
-        virtual void removePoint(int x, int y) = 0;
+        virtual void putPointToCurrentBlock(int x, int y) = 0;
+        virtual void removePointFromCurrentBlock(int x, int y) = 0;
         virtual void setRandom() = 0;
         // display
         virtual void setCurrentBlock() = 0;

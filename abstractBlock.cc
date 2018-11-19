@@ -1,5 +1,6 @@
 #include <string>
 #include "abstractBlock.h"
+#include "point.h"
 using namespace std;
 
 AbstractBlock::AbstractBlock(string type) 
@@ -7,4 +8,14 @@ AbstractBlock::AbstractBlock(string type)
 
 string AbstractBlock::getType() {
     return this->type;
+}
+
+void AbstractBlock::removePoint(Point *p) {
+    p->setType(" ");
+    for (int i = 0; i < this->points.size(); i++) {
+        if (this->points[i] == p) {
+            this->points.erase(this->points.begin() + i);
+            return;
+        }
+    }
 }

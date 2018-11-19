@@ -15,6 +15,12 @@ void Point::undraw() {
 
 }
 
+// setter
+void Point::setType(string type) {
+    this->type = type;
+}
+
+// getter
 int Point::getX() {
     return this->x;
 }

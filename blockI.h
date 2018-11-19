@@ -9,5 +9,7 @@
 class BlockI : public AbstractBlock {
     public:
         BlockI();
+        void addPoint(Point *p);
+        
 };
 #endif

@@ -15,6 +15,7 @@ class Point {
         Point(int x, int y, std::string type, Xwindow *xw);
         void draw();
         void undraw();
+        void setType(std::string type);
         int getX();
         int getY();
         std::string getType();
