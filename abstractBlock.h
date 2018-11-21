@@ -18,7 +18,7 @@ class AbstractBlock {
         std::vector<Coordinate> positions;
         int score = 0;
     public:
-        AbstractBlock(std::string type);
+        AbstractBlock(std::string type, int score);
         virtual ~AbstractBlock();
         virtual void initialize(AbstractPlayer *p) = 0;
         bool addPoint(Coordinate &c, AbstractPlayer *p);
@@ -28,5 +28,6 @@ class AbstractBlock {
         std::string getType();
         std::vector<Point*>& getPoints();
         bool contain(Point *p);
+        int getScore();
 };
 #endif

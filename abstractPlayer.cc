@@ -69,6 +69,9 @@ void AbstractPlayer::recalculateGrid() {
             (this->level->getLevel() + count);
         this->recalculateFieldBlocks();
     }
+    if (this->currenntScore > this->highestScore) {
+        this->highestScore = this->currenntScore;
+    }
 }
 
 void AbstractPlayer::clearRow(int row) {
@@ -92,6 +95,8 @@ void AbstractPlayer::recalculateFieldBlocks() {
     for (int i = 0; i < this->fieldBlocks.size(); i++) {
         if (this->fieldBlocks[i].get()->getPoints().size()!= 0) {
             newFieldBlocks.emplace_back(this->fieldBlocks[i]);
+        } else {
+            this->currenntScore += this->fieldBlocks[i].get()->getScore();
         }
     }
     this->fieldBlocks = newFieldBlocks;

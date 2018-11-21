@@ -11,7 +11,7 @@ class BlockJ : public AbstractBlock {
         // set the string/color of point
         // according to the block feature
         // maybe multiple constructor
-        BlockJ();
+        BlockJ(int score);
         ~BlockJ();
         void initialize(AbstractPlayer *p) override;
 };

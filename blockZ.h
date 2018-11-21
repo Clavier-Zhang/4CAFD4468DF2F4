@@ -10,7 +10,7 @@ class BlockZ : public AbstractBlock {
         // constructor, put points into vectors, 
         // set the string/color of point
         // according to the block feature
-        BlockZ();
+        BlockZ(int score);
         ~BlockZ();
         void initialize(AbstractPlayer *p) override;
 };

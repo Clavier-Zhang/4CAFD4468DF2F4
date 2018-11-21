@@ -29,7 +29,6 @@ class AbstractPlayer {
         // game for observer
         Game *game;
     public:
-        // constructor
         AbstractPlayer(Game *game);
         // player's operation
         // check if it is possible to level up/down

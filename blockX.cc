@@ -3,7 +3,7 @@
 #include "abstractPlayer.h"
 using namespace std;
 
-BlockX::BlockX() : AbstractBlock{"X"} {
+BlockX::BlockX(int score) : AbstractBlock{"X", score} {
     Coordinate c1{0,0};
     this->positions.emplace_back(c1);
 }

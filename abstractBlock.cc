@@ -6,7 +6,8 @@
 #include <vector>
 using namespace std;
 
-AbstractBlock::AbstractBlock(string type) : type{type} {}
+AbstractBlock::AbstractBlock(string type, int score) : type{type}, score{score} {}
+
 AbstractBlock::~AbstractBlock() {}
 bool AbstractBlock::contain(Point *p) {
     for (Point *old : this->points) {
@@ -53,4 +54,8 @@ void AbstractBlock::addPoints(vector<Coordinate>& coordinates, AbstractPlayer *p
         for (Coordinate c : coordinates) {
             this->addPoint(c, p);
         }
+}
+
+int AbstractBlock::getScore() {
+    return this->score;
 }

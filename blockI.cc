@@ -4,12 +4,11 @@
 #include "coordinate.h"
 using namespace std;
 
-BlockI::BlockI(int score) : AbstractBlock{"I"} {
-    this->score = score;
-    Coordinate c1{0,1};
-    Coordinate c2{1,1};
-    Coordinate c3{2,1};
-    Coordinate c4{3,1};
+BlockI::BlockI(int score) : AbstractBlock{"I", score} {
+    Coordinate c1{0,3};
+    Coordinate c2{1,3};
+    Coordinate c3{2,3};
+    Coordinate c4{3,3};
     this->positions.emplace_back(c1);
     this->positions.emplace_back(c2);
     this->positions.emplace_back(c3);

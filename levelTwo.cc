@@ -8,5 +8,5 @@ LevelTwo::LevelTwo() : AbstractLevel{2, "", false} {}
 LevelTwo::~LevelTwo() {}
  
 AbstractBlock* LevelTwo::generateBlock() {
-    return new BlockX();
+    return new BlockX((this->level + 1) * (this->level + 1));
 }
