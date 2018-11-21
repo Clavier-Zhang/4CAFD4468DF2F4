@@ -90,9 +90,9 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (this->move("down", 1)) {}
-    this->currentBlock.reset(new BlockI());
-    // this->currentBlock->initialize(this);
-    // this->nextBlock.reset(this->level->generateBlock());
+    this->currentBlock = this->nextBlock;
+    this->currentBlock->initialize(this);
+    this->nextBlock = this->level->generateBlock();
 }
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight

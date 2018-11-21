@@ -23,8 +23,8 @@ AbstractPlayer::AbstractPlayer(Game *game) {
         this->grid.emplace_back(row);
     }
     this->level = shared_ptr<AbstractLevel>(new LevelOne());
-    this->currentBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
-    this->nextBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
+    this->currentBlock = this->level->generateBlock();
+    this->nextBlock = this->level->generateBlock();
     this->currentBlock->initialize(this);
     this->game = game;
 }

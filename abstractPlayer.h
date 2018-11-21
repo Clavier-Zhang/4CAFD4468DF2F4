@@ -19,12 +19,12 @@ class AbstractPlayer {
         int highestScore = 0;
         int rowNum = 15;
         int colNum = 11;
-        std::shared_ptr<AbstractBlock> currentBlock;
-        std::shared_ptr<AbstractBlock> nextBlock;
+        AbstractBlock *currentBlock;
+        AbstractBlock *nextBlock;
         // grid on the bottom
         std::vector<std::vector<Point>> grid;
         // blocks already exists, will be checked and cleared
-        std::vector<AbstractBlock*> fieldBlocks;
+        std::vector<std::shared_ptr<AbstractBlock>> fieldBlocks;
         // game for observer
         Game *game;
     public:
