@@ -12,6 +12,7 @@ class BlockT : public AbstractBlock {
         // according to the block feature
         // maybe multiple constructor
         BlockT();
+        ~BlockT();
         void initialize(AbstractPlayer *p) override;
 };
 #endif

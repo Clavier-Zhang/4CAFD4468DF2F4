@@ -15,6 +15,8 @@ BlockI::BlockI() : AbstractBlock{"I"} {
     this->positions.emplace_back(c4);
 }
 
+BlockI::~BlockI() {}
+
 // initialize, only call once for each block
 void BlockI::initialize(AbstractPlayer *p) {
     // get point pointers

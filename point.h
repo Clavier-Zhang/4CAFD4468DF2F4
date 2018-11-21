@@ -2,17 +2,14 @@
 #define _POINT_H_
 #include <string>
 #include <iostream>
-#include "window.h"
 class Point {
     private:
         int x;
         int y;
         // for bash display, can be Z
         std::string type;
-        // window
-        Xwindow *xw;
     public:
-        Point(int x, int y, std::string type, Xwindow *xw);
+        Point(int x, int y, std::string type);
         void draw();
         void undraw();
         void setType(std::string type);

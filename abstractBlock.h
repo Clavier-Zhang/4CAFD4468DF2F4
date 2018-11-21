@@ -18,6 +18,7 @@ class AbstractBlock {
         std::vector<Coordinate> positions;
     public:
         AbstractBlock(std::string type);
+        virtual ~AbstractBlock();
         virtual void initialize(AbstractPlayer *p) = 0;
         void addPoint(Coordinate &c, AbstractPlayer *p);
         void addPoints(std::vector<Coordinate>& coordinates, AbstractPlayer *p);

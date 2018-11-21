@@ -6,6 +6,8 @@ using namespace std;
 BlockX::BlockX()
     : AbstractBlock{"X"} {}
 
+BlockX::~BlockX() {}
+
 void BlockX::initialize(AbstractPlayer *p) {
 
 }

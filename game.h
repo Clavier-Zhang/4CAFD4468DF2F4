@@ -3,7 +3,6 @@
 #include "abstractPlayer.h"
 #include <memory>
 #include <iostream>
-#include "window.h"
 class Game {
     private:
         // // player one
@@ -12,8 +11,6 @@ class Game {
         std::shared_ptr<AbstractPlayer> playerTwo;
         // // player in the current turn
         AbstractPlayer* currentPlayer;
-        // // window, pass this pointer to subclasses
-        std::shared_ptr<Xwindow> xw;
         // status of game
         bool isOver = false;
         bool needSpecial = false;

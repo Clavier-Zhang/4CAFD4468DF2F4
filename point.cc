@@ -4,8 +4,8 @@
 #include "point.h"
 using namespace std;
 
-Point::Point(int x, int y, string type, Xwindow *xw) 
-    : x{x}, y{y}, type{type}, xw{xw} {}
+Point::Point(int x, int y, string type) 
+    : x{x}, y{y}, type{type} {}
 
 void Point::draw() {
 

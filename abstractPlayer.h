@@ -4,7 +4,6 @@
 #include <vector>
 #include <iostream>
 #include "point.h"
-#include "window.h"
 #include <string>
 #include "abstractLevel.h"
 #include "coordinate.h"
@@ -26,18 +25,16 @@ class AbstractPlayer {
         std::vector<std::vector<Point>> grid;
         // blocks already exists, will be checked and cleared
         std::vector<AbstractBlock*> fieldBlocks;
-        // window
-        Xwindow *xw;
         // game for observer
         Game *game;
     public:
         // constructor
-        AbstractPlayer(Game *game, Xwindow *xw);
+        AbstractPlayer(Game *game);
         // player's operation
         // check if it is possible to level up/down
         virtual void setLevel(int level) = 0;
         // check if it's movable, then call block's method to move
-        virtual void move(std::string type, int step = 1) = 0;
+        virtual bool move(std::string type, int step = 1) = 0;
         virtual void rotate(bool counter = false, int step = 1) = 0;
         // add the points of blocks to grid, update the block in drop(), 
         virtual void drop() = 0;

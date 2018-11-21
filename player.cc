@@ -1,17 +1,17 @@
 #include "player.h"
 #include "abstractPlayer.h"
 #include "game.h"
-#include "window.h"
 #include <memory>
 #include "levelOne.h"
 #include "levelTwo.h"
 #include "coordinate.h"
+#include "blockI.h"
 #include <iostream>
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game, Xwindow *xw) 
-    : AbstractPlayer{game, xw} {}
+Player::Player(Game *game) 
+    : AbstractPlayer{game} {}
     
 // player's operation
 // check if it is possible to level up/down
@@ -23,7 +23,7 @@ void Player::setLevel(int level){
     }
 }
 
-void Player::move(std::string type, int step) {
+bool Player::move(std::string type, int step) {
     // interpret command
     int deltaX = 0;
     int deltaY = 0;
@@ -43,12 +43,13 @@ void Player::move(std::string type, int step) {
         if (this->isValid(c)) {
             coordinates.emplace_back(c);
         } else {
-            return;
+            return false;
         }
     }
     // clear block first, then add points
     this->currentBlock->removeAllPoint();
     this->currentBlock->addPoints(coordinates, this);
+    return true;
 }
 
 
@@ -87,7 +88,12 @@ void Player::rotate(bool counter, int step) {
 }
 
 // add the points of blocks to grid, update the block in drop(), 
-void Player::drop(){}
+void Player::drop(){
+    while (this->move("down", 1)) {}
+    this->currentBlock.reset(new BlockI());
+    // this->currentBlock->initialize(this);
+    // this->nextBlock.reset(this->level->generateBlock());
+}
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block

@@ -7,6 +7,7 @@ class AbstractPlayer;
 class BlockI : public AbstractBlock {
     public:
         BlockI();
+        ~BlockI();
         void initialize(AbstractPlayer *p) override;
 };
 #endif

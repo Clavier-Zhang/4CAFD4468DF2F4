@@ -21,10 +21,8 @@ int main () {
             game.move("down", 1);
         } else if (command == "rotate") {
             game.rotate(true, 1);
-        }
-        // one step
-        else if (command == "step") {
-
+        } else if (command == "drop") {
+            game.drop();
         }
         // n steps
         else if (command == "steps") {

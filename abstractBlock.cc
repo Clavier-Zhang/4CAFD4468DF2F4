@@ -7,7 +7,7 @@
 using namespace std;
 
 AbstractBlock::AbstractBlock(string type) : type{type} {}
-
+AbstractBlock::~AbstractBlock() {}
 bool AbstractBlock::contain(Point *p) {
     for (Point *old : this->points) {
         if (old == p) {

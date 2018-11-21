@@ -7,10 +7,9 @@ using namespace std;
 // initialize two players
 // more constructor for differnnt mode in command line
 Game::Game() :
-    playerOne{new Player(this, this->xw.get())}, 
-    playerTwo{new Player(this, this->xw.get())}, 
-    currentPlayer{playerOne.get()},
-    xw{new Xwindow()} {}
+    playerOne{new Player(this)}, 
+    playerTwo{new Player(this)}, 
+    currentPlayer{playerOne.get()} {}
 
 // player's operation
 // do not need to check, call currentPlayer's method directly
@@ -28,8 +27,10 @@ void Game::rotate(bool counter, int step) {
     this->print();
 }
 
+// later, clear row
 void Game::drop() {
     this->currentPlayer->drop();
+    this->print();
 }
 
 void Game::gameOver() {

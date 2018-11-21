@@ -7,26 +7,24 @@
 #include "levelFour.h"
 #include "point.h"
 #include <string.h>
-#include "window.h"
 #include "coordinate.h"
 #include <memory>
 using namespace std;
 
 // constructor
-AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
+AbstractPlayer::AbstractPlayer(Game *game) {
     // initialize the grid
     for (int i = 0; i < this->rowNum; i++) {
         vector<Point> row;
         for (int j = 0; j < colNum; j++) {
             string empty = " ";
-            row.emplace_back(Point(j,i,empty, xw));
+            row.emplace_back(Point(j,i,empty));
         }
         this->grid.emplace_back(row);
     }
     this->level = shared_ptr<AbstractLevel>(new LevelOne());
     this->currentBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
     this->nextBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
-    this->xw = xw;
     this->currentBlock->initialize(this);
     this->game = game;
 }

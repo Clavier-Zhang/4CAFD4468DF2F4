@@ -11,6 +11,7 @@ class BlockZ : public AbstractBlock {
         // set the string/color of point
         // according to the block feature
         BlockZ();
+        ~BlockZ();
         void initialize(AbstractPlayer *p) override;
 };
 #endif
