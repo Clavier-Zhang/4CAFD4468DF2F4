@@ -15,32 +15,30 @@ using namespace std;
 // constructor
 AbstractPlayer::AbstractPlayer(Game *game) {
     // initialize the grid
-    for (int i = 0; i < this->rowNum; i++) {
+    for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
         for (int j = 0; j < colNum; j++) {
             string empty = " ";
             row.emplace_back(Point(j,i,empty));
         }
-        this->grid.emplace_back(row);
+        grid.emplace_back(row);
     }
-    this->level = shared_ptr<AbstractLevel>(new LevelOne());
-    this->currentBlock = this->level->generateBlock();
-    this->nextBlock = this->level->generateBlock();
-    this->currentBlock->initialize(this);
+    level = shared_ptr<AbstractLevel>(new LevelOne());
+    currentBlock = level->generateBlock();
+    nextBlock = level->generateBlock();
+    currentBlock->initialize(this);
     this->game = game;
 }
 
-bool AbstractPlayer::isValid(/*Coordinate &c*/pair<int, int> &c) {
-    //if (c.getX() < 0 || c.getY() < 0) {
+bool AbstractPlayer::isValid(pair<int, int> &c) {
     if (c.first < 0 || c.second < 0) {
         return false;
     }
-    //if (c.getX() >= this->colNum || c.getY() >= this->rowNum) {
     if (c.first >= colNum || c.second >= rowNum) {
         return false;
     }
     Point *p = this->getPoint(c);
-    if (p->getType() != " " && !this->currentBlock->contain(p)) {
+    if (p->getType() != " " && !currentBlock->contain(p)) {
         return false;
     }
     return true;
@@ -57,11 +55,11 @@ string AbstractPlayer::getGridRow(int row) {
 void AbstractPlayer::recalculateGrid() {
     int count = 0;
     for (int i = this->rowNum - 1; i >= 0; i--) {
-        if (this->isFull(i)) {
+        if (isFull(i)) {
             cout << "full !!!" << endl;
             count++;
-            this->clearRow(i);
-            this->moveAllHigherRowDown(i);
+            clearRow(i);
+            moveAllHigherRowDown(i);
         }
     }
     if (count >= 2) this->notifySpecialAction();
@@ -134,7 +132,7 @@ void AbstractPlayer::notifyGameover() {
 }
 
 void AbstractPlayer::notifyTurnover() {
-    this->game->turnOver();
+   this->game->turnOver();
 }
 
 void AbstractPlayer::notifySpecialAction() {
@@ -158,7 +156,6 @@ string AbstractPlayer::getNextBlock() {
     return this->nextBlock->getType();
 }
 
-Point* AbstractPlayer::getPoint(/*Coordinate &c*/pair<int, int> &c) {
-  //  return &this->grid[c.getY()][c.getX()];
+Point* AbstractPlayer::getPoint(pair<int, int> &c) {
   return &grid[c.second][c.first];
 }

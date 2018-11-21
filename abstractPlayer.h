@@ -59,8 +59,8 @@ class AbstractPlayer {
         int getLevel();
         std::string getGridRow(int row);
         std::string getNextBlock();
-        Point* getPoint(/*Coordinate*/ std::pair<int, int> &c);
+        Point* getPoint(std::pair<int, int> &c);
         // check if the point at c is valid
-        bool isValid(/*Coordinate*/std::pair<int, int> &c);
+        bool isValid(std::pair<int, int> &c);
 };
 #endif
