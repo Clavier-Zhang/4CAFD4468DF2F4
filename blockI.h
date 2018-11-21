@@ -9,5 +9,6 @@ class BlockI : public AbstractBlock {
         BlockI(int score);
         ~BlockI();
         void initialize(AbstractPlayer *p) override;
+
 };
 #endif

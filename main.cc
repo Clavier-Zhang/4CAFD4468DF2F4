@@ -36,6 +36,14 @@ int main () {
             int level;
             cin >> level;
             game.setLevel(level);
+        } else if (command == "clockwise") {
+            int step;
+            cin >> step;
+            game.rotate(false, step);
+        } else if (command == "counterclockwise") {
+            int step;
+            cin >> step;
+            game.rotate(true, step);
         }
     } 
 }
