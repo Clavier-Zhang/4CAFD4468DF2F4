@@ -16,6 +16,7 @@ class Point {
         void draw();
         void undraw();
         void setType(std::string type);
+        void reset();
         int getX();
         int getY();
         std::string getType();

@@ -5,6 +5,7 @@
 #include <memory>
 #include "levelOne.h"
 #include "levelTwo.h"
+#include "coordinate.h"
 #include <iostream>
 using namespace std;
 
@@ -22,10 +23,32 @@ void Player::setLevel(int level){
     }
 }
 
-// check if it's movable, then call block's method to move
-void Player::moveLeft(int step){}
-void Player::moveRight(int step){}
-void Player::moveDown(int step){}
+void Player::move(std::string type, int step) {
+    int deltaX = 0;
+    int deltaY = 0;
+    if (type == "down") {
+        deltaY = -step;
+    }
+    if (type == "left") {
+        deltaX = -step;
+    }
+    if (type == "right") {
+        deltaX = step;
+    }
+    vector<Coordinate> coordinates;
+    // check if it's movable
+    for (Point *p : this->currentBlock->getPoints()) {
+        Coordinate c{p->getX() + deltaX, p->getY() + deltaY};
+        if (this->isValid(c)) {
+            coordinates.emplace_back(c);
+        } else {
+            return;
+        }
+    }
+    this->currentBlock->removeAllPoint();
+    this->currentBlock->addPoints(coordinates, this);
+}
+
 void Player::rotateClockwise(){}
 void Player::rotateCounterClockwise(){}
 // add the points of blocks to grid, update the block in drop(), 
@@ -33,7 +56,5 @@ void Player::drop(){}
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
-void Player::putPointToCurrentBlock(int x, int y){}
-void Player::removePointFromCurrentBlock(int x, int y){}
 void Player::setCurrentBlock() {}
 void Player::setRandom() {} 

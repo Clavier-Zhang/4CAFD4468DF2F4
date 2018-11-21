@@ -20,8 +20,10 @@ class AbstractBlock {
         AbstractBlock(std::string type);
         virtual void initialize(AbstractPlayer *p) = 0;
         void addPoint(Coordinate &c, AbstractPlayer *p);
-        void removePoint(Point *p);
+        void addPoints(std::vector<Coordinate>& coordinates, AbstractPlayer *p);
         void removeAllPoint();
         std::string getType();
+        std::vector<Point*>& getPoints();
+        bool contain(Point *p);
 };
 #endif

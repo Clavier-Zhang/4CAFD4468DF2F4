@@ -18,16 +18,9 @@ void Game::setLevel(int level) {
     this->currentPlayer->setLevel(level);
 }
 
-void Game::moveLeft(int step) {
-    this->currentPlayer->moveLeft(step);
-}
-
-void Game::moveRight(int step) {
-    this->currentPlayer->moveRight(step);
-}
-
-void Game::moveDown(int step) {
-    this->currentPlayer->moveDown(step);
+void Game::move(string type, int step) {
+    this->currentPlayer->move(type, step);
+    this->print();
 }
 
 void Game::rotateClockwise() {

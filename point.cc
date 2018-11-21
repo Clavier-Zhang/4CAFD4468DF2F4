@@ -32,3 +32,7 @@ int Point::getY() {
 string Point::getType() {
     return this->type;
 }
+
+void Point::reset() {
+    this->type = " ";
+}

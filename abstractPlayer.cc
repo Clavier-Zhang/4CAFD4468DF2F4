@@ -14,11 +14,7 @@ using namespace std;
 
 // constructor
 AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
-    this->level = shared_ptr<AbstractLevel>(new LevelOne());
-    this->currentBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
-    this->nextBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
-    this->xw = xw;
-    // set grid
+    // initialize the grid
     for (int i = 0; i < this->rowNum; i++) {
         vector<Point> row;
         for (int j = 0; j < colNum; j++) {
@@ -27,19 +23,27 @@ AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
         }
         this->grid.emplace_back(row);
     }
+    this->level = shared_ptr<AbstractLevel>(new LevelOne());
+    this->currentBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
+    this->nextBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
+    this->xw = xw;
     this->currentBlock->initialize(this);
     this->game = game;
 }
 
-// important
-void AbstractPlayer::updateCurrentBlock() {
-    cout << this->currentBlock->getType() << endl;
-    // this->currentBlock->removeAllPoint();
-    // this->currentBlock.reset(this->nextBlock.get());
-    // this->nextBlock.reset(this->level->generateBlock());
-    // add poitns
+bool AbstractPlayer::isValid(Coordinate &c) {
+    if (c.getX() < 0 || c.getY() < 0) {
+        return false;
+    }
+    if (c.getX() >= this->colNum || c.getY() >= this->rowNum) {
+        return false;
+    }
+    Point *p = this->getPoint(c);
+    if (p->getType() != " " && !this->currentBlock->contain(p)) {
+        return false;
+    }
+    return true;
 }
-
 
 string AbstractPlayer::getGridRow(int row) {
     string s;

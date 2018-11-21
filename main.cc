@@ -7,34 +7,26 @@ using namespace std;
 
 
 int main () {
-    string s;
+    string command;
     Game game;
     game.print();
-    game.setLevel(2);
-    game.print();
-
     // Command interpreter
-    while (cin >> s) {
+    while (cin >> command) {
         // create a grid of size n
-        if (s == "new") {
-
-        }
-        // start init mode
-        else if (s == "init") {
-            while (true) {
-
-
-            }
+        if (command == "left") {
+            game.move("left", 1);
+        } else if (command == "right") {
+            game.move("right", 1);
         }
         // one step
-        else if (s == "step") {
+        else if (command == "step") {
 
         }
         // n steps
-        else if (s == "steps") {
+        else if (command == "steps") {
 
         // print
-        } else if (s == "print") {
+        } else if (command == "print") {
             
         }
     } 

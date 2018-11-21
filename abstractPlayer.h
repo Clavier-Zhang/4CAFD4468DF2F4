@@ -37,18 +37,12 @@ class AbstractPlayer {
         // check if it is possible to level up/down
         virtual void setLevel(int level) = 0;
         // check if it's movable, then call block's method to move
-        virtual void moveLeft(int step = 1) = 0;
-        virtual void moveRight(int step = 1) = 0;
-        virtual void moveDown(int step = 1) = 0;
+        virtual void move(std::string type, int step = 1) = 0;
         virtual void rotateClockwise() = 0;
         virtual void rotateCounterClockwise() = 0;
         // add the points of blocks to grid, update the block in drop(), 
         virtual void drop() = 0;
         // assign the point pointer to currentBlock, can
-        // be used in moveLeft, moveRight
-        // target::block
-        virtual void putPointToCurrentBlock(int x, int y) = 0;
-        virtual void removePointFromCurrentBlock(int x, int y) = 0;
         virtual void setRandom() = 0;
         // display
         virtual void setCurrentBlock() = 0;
@@ -64,10 +58,7 @@ class AbstractPlayer {
         std::string getGridRow(int row);
         std::string getNextBlock();
         Point* getPoint(Coordinate &c);
-        // helper later
-        // replace the current with next block
-        // and initialize it. and get new next block
-        void updateCurrentBlock();
-        
+        // check if the point at c is valid
+        bool isValid(Coordinate &c);
 };
 #endif

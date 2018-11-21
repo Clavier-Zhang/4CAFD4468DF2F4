@@ -23,9 +23,7 @@ class Game {
         // player's operation
         // do not need to check, call currentPlayer's method directly
         void setLevel(int level);
-        void moveLeft(int step = 1);
-        void moveRight(int step = 1);
-        void moveDown(int step = 1);
+        void move(std::string type = "down", int step = 1);
         void rotateClockwise();
         void rotateCounterClockwise();
         void drop();
