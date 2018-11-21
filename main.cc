@@ -17,6 +17,10 @@ int main () {
             game.move("left", 1);
         } else if (command == "right") {
             game.move("right", 1);
+        } else if (command == "down") {
+            game.move("down", 1);
+        } else if (command == "rotate") {
+            game.rotate(true, 1);
         }
         // one step
         else if (command == "step") {

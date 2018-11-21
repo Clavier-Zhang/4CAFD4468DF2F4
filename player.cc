@@ -28,7 +28,7 @@ void Player::move(std::string type, int step) {
     int deltaX = 0;
     int deltaY = 0;
     if (type == "down") {
-        deltaY = -step;
+        deltaY = step;
     }
     if (type == "left") {
         deltaX = -step;
@@ -53,6 +53,36 @@ void Player::move(std::string type, int step) {
 
 
 void Player::rotate(bool counter, int step) {
+    // rotation matrix
+    vector<vector<int>> clockWise{{0,-1},{1,0}};
+    vector<vector<int>> counterClockWise{{0,1},{-1,0}};
+    vector<vector<int>>& current = clockWise;
+    if (counter) {
+        current = counterClockWise;
+    }
+    // check if it's rotatable
+    vector<Coordinate> coordinates;
+    for (Point *p : this->currentBlock->getPoints()) {
+        int x = p->getX();
+        int y = p->getY();
+        int newX;
+        int newY;
+        for (int i = 0; i < step; i++) {
+            newX = x*current[0][0] + y*current[1][0];
+            newY = x*current[0][1] + y*current[1][1];
+        }
+        cout << x << "  " << y << endl;
+        cout << newX << "  " << newY << endl;
+        Coordinate c{newX, newY};
+        if (this->isValid(c)) {
+            coordinates.emplace_back(c);
+        } else {
+            return;
+        }
+    }
+    // clear block first, then add points
+    this->currentBlock->removeAllPoint();
+    this->currentBlock->addPoints(coordinates, this);
 
 }
 
