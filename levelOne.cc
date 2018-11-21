@@ -9,5 +9,5 @@ LevelOne::LevelOne() : AbstractLevel{1, "", false} {};
 LevelOne::~LevelOne() {}
 
 AbstractBlock* LevelOne::generateBlock() {
-    return new BlockI();
+    return new BlockI(this->level * this->level);
 }

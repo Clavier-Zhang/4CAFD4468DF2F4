@@ -4,7 +4,8 @@
 #include "coordinate.h"
 using namespace std;
 
-BlockI::BlockI() : AbstractBlock{"I"} {
+BlockI::BlockI(int score) : AbstractBlock{"I"} {
+    this->score = score;
     Coordinate c1{0,1};
     Coordinate c2{1,1};
     Coordinate c3{2,1};

@@ -16,6 +16,7 @@ class AbstractBlock {
         std::string type;
         // 4 pairs of number to store init positions
         std::vector<Coordinate> positions;
+        int score = 0;
     public:
         AbstractBlock(std::string type);
         virtual ~AbstractBlock();
