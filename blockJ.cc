@@ -3,10 +3,9 @@
 #include "abstractPlayer.h"
 using namespace std;
 
-BlockJ::BlockJ()
-    : AbstractBlock{"J"} {}
+BlockJ::BlockJ() : AbstractBlock{"J"} {
+}
 
-    
-void BlockJ::catchPoints(AbstractPlayer *p) {
-
+// only for initialize
+void BlockJ::initialize(AbstractPlayer *p) {
 }

@@ -7,6 +7,7 @@
 #include "window.h"
 #include <string>
 #include "abstractLevel.h"
+#include "coordinate.h"
 class AbstractBlock;
 class Game;
 
@@ -62,6 +63,7 @@ class AbstractPlayer {
         int getLevel();
         std::string getGridRow(int row);
         std::string getNextBlock();
+        Point* getPoint(Coordinate &c);
         // helper later
         // replace the current with next block
         // and initialize it. and get new next block

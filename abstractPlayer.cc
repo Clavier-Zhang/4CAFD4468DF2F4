@@ -8,6 +8,7 @@
 #include "point.h"
 #include <string.h>
 #include "window.h"
+#include "coordinate.h"
 #include <memory>
 using namespace std;
 
@@ -26,7 +27,7 @@ AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
         }
         this->grid.emplace_back(row);
     }
-    // set observer
+    this->currentBlock->initialize(this);
     this->game = game;
 }
 
@@ -48,7 +49,9 @@ string AbstractPlayer::getGridRow(int row) {
     return s;
 }
 
-
+Point* AbstractPlayer::getPoint(Coordinate &c) {
+    return &this->grid[c.getY()][c.getX()];
+}
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {

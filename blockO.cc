@@ -6,6 +6,6 @@ using namespace std;
 BlockO::BlockO()
     : AbstractBlock{"O"} {}
 
-void BlockO::catchPoints(AbstractPlayer *p) {
+void BlockO::initialize(AbstractPlayer *p) {
 
 }

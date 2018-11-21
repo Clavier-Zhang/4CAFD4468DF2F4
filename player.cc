@@ -36,5 +36,4 @@ void Player::drop(){}
 void Player::putPointToCurrentBlock(int x, int y){}
 void Player::removePointFromCurrentBlock(int x, int y){}
 void Player::setCurrentBlock() {}
-
 void Player::setRandom() {} 

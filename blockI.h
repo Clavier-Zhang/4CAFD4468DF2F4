@@ -1,14 +1,12 @@
 #ifndef _BLOCK_I_
 #define _BLOCK_I_
-#include "abstractBlock.h"
-#include <string>
 #include <vector>
 #include <memory>
-class Point;
+#include "abstractBlock.h"
 class AbstractPlayer;
 class BlockI : public AbstractBlock {
     public:
         BlockI();
-        void catchPoints(AbstractPlayer *p) override;
+        void initialize(AbstractPlayer *p) override;
 };
 #endif

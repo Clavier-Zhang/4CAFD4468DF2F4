@@ -12,6 +12,6 @@ class BlockL : public AbstractBlock {
         // according to the block feature
         // maybe multiple constructor
         BlockL();
-        void catchPoints(AbstractPlayer *p) override;
+        void initialize(AbstractPlayer *p) override;
 };
 #endif
