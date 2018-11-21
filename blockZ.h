@@ -11,5 +11,6 @@ class BlockZ : public AbstractBlock {
         // set the string/color of point
         // according to the block feature
         BlockZ();
+        void catchPoints(AbstractPlayer *p) override;
 };
 #endif

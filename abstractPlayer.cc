@@ -14,8 +14,8 @@ using namespace std;
 // constructor
 AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
     this->level = shared_ptr<AbstractLevel>(new LevelOne());
-    this->currentBlock = this->level->generateBlock();
-    this->nextBlock = this->level->generateBlock();
+    this->currentBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
+    this->nextBlock = shared_ptr<AbstractBlock>(this->level->generateBlock());
     this->xw = xw;
     // set grid
     for (int i = 0; i < this->rowNum; i++) {
@@ -26,8 +26,19 @@ AbstractPlayer::AbstractPlayer(Game *game, Xwindow *xw) {
         }
         this->grid.emplace_back(row);
     }
+    // set observer
     this->game = game;
 }
+
+// important
+void AbstractPlayer::updateCurrentBlock() {
+    cout << this->currentBlock->getType() << endl;
+    // this->currentBlock->removeAllPoint();
+    // this->currentBlock.reset(this->nextBlock.get());
+    // this->nextBlock.reset(this->level->generateBlock());
+    // add poitns
+}
+
 
 string AbstractPlayer::getGridRow(int row) {
     string s;
@@ -36,6 +47,8 @@ string AbstractPlayer::getGridRow(int row) {
     }
     return s;
 }
+
+
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {

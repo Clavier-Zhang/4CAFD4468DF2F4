@@ -1,6 +1,7 @@
 #include <string>
 #include "abstractBlock.h"
 #include "point.h"
+#include <iostream>
 using namespace std;
 
 AbstractBlock::AbstractBlock(string type) 
@@ -18,4 +19,8 @@ void AbstractBlock::removePoint(Point *p) {
             return;
         }
     }
+}
+
+void AbstractBlock::removeAllPoint() {
+    this->points.clear();
 }

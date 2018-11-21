@@ -1,10 +1,10 @@
 #ifndef _ABSTRACTBLOCK_H_
 #define _ABSTRACTBLOCK_H_
-#include <iostream>
 #include <string>
 #include <vector>
 class AbstractLevel;
 class Point;
+class AbstractPlayer;
 class AbstractBlock {
     // set protected, so can be called in concrete block and draw
     protected:
@@ -15,8 +15,9 @@ class AbstractBlock {
         std::string type;
     public:
         AbstractBlock(std::string type);
-        virtual void addPoint(Point *p) = 0;
+        virtual void catchPoints(AbstractPlayer *p) = 0;
         void removePoint(Point *p);
+        void removeAllPoint();
         std::string getType();
 };
 #endif

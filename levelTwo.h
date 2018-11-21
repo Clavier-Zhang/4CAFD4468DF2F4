@@ -8,6 +8,5 @@ class LevelTwo : public AbstractLevel {
         LevelTwo();
         ~LevelTwo();
         AbstractBlock* generateBlock() override;
-
 };
 #endif

@@ -12,6 +12,6 @@ class BlockX : public AbstractBlock {
         // according to the block feature
         // maybe multiple constructor
         BlockX();
-        // accept for visitor pattern
+        void catchPoints(AbstractPlayer *p) override;
 };
 #endif

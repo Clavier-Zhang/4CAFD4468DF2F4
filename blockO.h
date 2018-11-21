@@ -12,5 +12,6 @@ class BlockO : public AbstractBlock {
         // according to the block feature
         // maybe multiple constructor
         BlockO();
+        void catchPoints(AbstractPlayer *p) override;
 };
 #endif

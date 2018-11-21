@@ -18,9 +18,7 @@ void Player::setLevel(int level){
     if (level == 1) {
         this->level.reset(new LevelOne());
     } else if (level == 2) {
-        cout << "error" << endl;
         this->level.reset(new LevelTwo());
-        cout << "error" << endl;
     }
 }
 

@@ -3,13 +3,12 @@
 #include "abstractBlock.h"
 #include <string>
 #include <vector>
-#include "point.h"
-#include "abstractLevel.h"
 #include <memory>
+class Point;
+class AbstractPlayer;
 class BlockI : public AbstractBlock {
     public:
         BlockI();
-        void addPoint(Point *p);
-        
+        void catchPoints(AbstractPlayer *p) override;
 };
 #endif

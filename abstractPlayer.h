@@ -19,8 +19,8 @@ class AbstractPlayer {
         int highestScore = 0;
         int rowNum = 15;
         int colNum = 11;
-        AbstractBlock* currentBlock;
-        AbstractBlock* nextBlock;
+        std::shared_ptr<AbstractBlock> currentBlock;
+        std::shared_ptr<AbstractBlock> nextBlock;
         // grid on the bottom
         std::vector<std::vector<Point>> grid;
         // blocks already exists, will be checked and cleared
@@ -62,6 +62,10 @@ class AbstractPlayer {
         int getLevel();
         std::string getGridRow(int row);
         std::string getNextBlock();
+        // helper later
+        // replace the current with next block
+        // and initialize it. and get new next block
+        void updateCurrentBlock();
         
 };
 #endif
