@@ -17,7 +17,8 @@ class AbstractPlayer {
         // score on the top left
         int currenntScore = 0;
         int highestScore = 0;
-        int rowNum = 15;
+        int rowNum = 18;
+        int reservedRowNum = 3;
         int colNum = 11;
         AbstractBlock *currentBlock;
         AbstractBlock *nextBlock;
@@ -43,6 +44,12 @@ class AbstractPlayer {
         // display
         virtual void setCurrentBlock() = 0;
 
+        void recalculateGrid();
+        void recalculateFieldBlocks();
+        bool isFull(int row);
+        void clearRow(int row);
+        void moveOneHigherRowDown(int row);
+        void moveAllHigherRowDown(int row);
         // observer pattern
         void notifyGameover();
         void notifyTurnover();

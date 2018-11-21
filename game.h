@@ -24,7 +24,8 @@ class Game {
         void rotate(bool counter = false, int step = 1);
         void drop();
         // more command to be determined
-        void gameOver();
+        bool gameOver();
+        void setGameOver();
         void turnOver();
         void specialAction();
         // print

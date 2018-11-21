@@ -21,7 +21,10 @@ BlockI::~BlockI() {}
 void BlockI::initialize(AbstractPlayer *p) {
     // get point pointers
     for (Coordinate &c : this->positions) {
-        this->addPoint(c, p);
+        if (!this->addPoint(c, p)) {
+            p->notifyGameover();
+            return;
+        }
     }
     // set points
     for (Point *p : this->points) {

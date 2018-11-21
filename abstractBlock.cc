@@ -24,6 +24,15 @@ void AbstractBlock::removeAllPoint() {
     this->points.clear();
 }
 
+void AbstractBlock::removeOnePoint(Point *p) {
+    for (int i = 0; i < this->points.size(); i++) {
+        if (this->points[i] == p) {
+            this->points.erase(this->points.begin()+i);
+            return;
+        }
+    }
+}
+
 // getters
 string AbstractBlock::getType() {
     return this->type;
@@ -33,9 +42,11 @@ std::vector<Point*>& AbstractBlock::getPoints() {
     return this->points;
 }
 
-void AbstractBlock::addPoint(Coordinate &c, AbstractPlayer *p) {
+bool AbstractBlock::addPoint(Coordinate &c, AbstractPlayer *p) {
+    if (p->getPoint(c)->getType() != " ") return false;
     p->getPoint(c)->setType(this->type);
     this->points.emplace_back(p->getPoint(c));
+    return true;
 }
 
 void AbstractBlock::addPoints(vector<Coordinate>& coordinates, AbstractPlayer *p) {

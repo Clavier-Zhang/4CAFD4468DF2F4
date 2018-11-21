@@ -9,6 +9,7 @@
 #include <string.h>
 #include "coordinate.h"
 #include <memory>
+#include <iostream>
 using namespace std;
 
 // constructor
@@ -51,13 +52,78 @@ string AbstractPlayer::getGridRow(int row) {
     return s;
 }
 
-Point* AbstractPlayer::getPoint(Coordinate &c) {
-    return &this->grid[c.getY()][c.getX()];
+void AbstractPlayer::recalculateGrid() {
+    int count = 0;
+    for (int i = this->rowNum - 1; i >= 0; i--) {
+        if (this->isFull(i)) {
+            cout << "full !!!" << endl;
+            count++;
+            this->clearRow(i);
+            this->moveAllHigherRowDown(i);
+        }
+    }
+    if (count >= 2) this->notifySpecialAction();
+    if (count > 0) {
+        this->currenntScore += 
+            (this->level->getLevel() + count) * 
+            (this->level->getLevel() + count);
+        this->recalculateFieldBlocks();
+    }
+}
+
+void AbstractPlayer::clearRow(int row) {
+    // reset each point in the row
+    for (int i = 0; i < this->colNum; i++) {
+        Point *p = &this->grid[row][i];
+        p->setType(" ");
+        // check this point with each block in the block field
+        for (int j = 0; j < this->fieldBlocks.size(); j++) {
+            for (Point *old : this->fieldBlocks[j].get()->getPoints()) {
+                if (old == p) {
+                    this->fieldBlocks[j].get()->removeOnePoint(p);
+                }
+            }
+        }
+    }
+}
+
+void AbstractPlayer::recalculateFieldBlocks() {
+    vector<shared_ptr<AbstractBlock>> newFieldBlocks;
+    for (int i = 0; i < this->fieldBlocks.size(); i++) {
+        if (this->fieldBlocks[i].get()->getPoints().size()!= 0) {
+            newFieldBlocks.emplace_back(this->fieldBlocks[i]);
+        }
+    }
+    this->fieldBlocks = newFieldBlocks;
+}
+
+void AbstractPlayer::moveOneHigherRowDown(int row) {
+    if (row <= 0) return;
+    for (int i = 0; i < this->colNum; i++) {
+        this->grid[row][i].setType(this->grid[row-1][i].getType());
+        this->grid[row-1][i].setType(" ");
+    }
+}
+
+void AbstractPlayer::moveAllHigherRowDown(int row) {
+    if (row <= 0) return;
+    for (int i = row; i > 0; i--) {
+        this->moveOneHigherRowDown(i);
+    }
+}
+
+bool AbstractPlayer::isFull(int row) {
+    for (int i = 0; i < this->colNum; i++) {
+        if (this->grid[row][i].getType() == " ") {
+            return false;
+        }
+    }
+    return true;
 }
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {
-    this->game->gameOver();
+    this->game->setGameOver();
 }
 
 void AbstractPlayer::notifyTurnover() {
@@ -83,4 +149,8 @@ int AbstractPlayer::getLevel() {
 
 string AbstractPlayer::getNextBlock() {
     return this->nextBlock->getType();
+}
+
+Point* AbstractPlayer::getPoint(Coordinate &c) {
+    return &this->grid[c.getY()][c.getX()];
 }

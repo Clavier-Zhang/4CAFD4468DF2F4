@@ -15,6 +15,7 @@ Game::Game() :
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
     this->currentPlayer->setLevel(level);
+    this->print();
 }
 
 void Game::move(string type, int step) {
@@ -33,7 +34,11 @@ void Game::drop() {
     this->print();
 }
 
-void Game::gameOver() {
+bool Game::gameOver() {
+    return this->isOver;
+}
+
+void Game::setGameOver() {
     this->isOver = true;
 }
 
@@ -71,7 +76,7 @@ void Game::print() {
     cout << "-----------";
     cout << endl;
     // print grid
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 18; i++) {
         cout << playerOne->getGridRow(i);
         cout << setw(7) << " ";
         cout << playerTwo->getGridRow(i);

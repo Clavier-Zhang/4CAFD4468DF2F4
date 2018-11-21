@@ -10,8 +10,7 @@
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game) 
-    : AbstractPlayer{game} {}
+Player::Player(Game *game) : AbstractPlayer{game} {}
     
 // player's operation
 // check if it is possible to level up/down
@@ -52,7 +51,6 @@ bool Player::move(std::string type, int step) {
     return true;
 }
 
-
 void Player::rotate(bool counter, int step) {
     // rotation matrix
     vector<vector<int>> clockWise{{0,-1},{1,0}};
@@ -90,10 +88,14 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (this->move("down", 1)) {}
+    this->fieldBlocks.emplace_back(shared_ptr<AbstractBlock>(this->currentBlock));
     this->currentBlock = this->nextBlock;
     this->currentBlock->initialize(this);
     this->nextBlock = this->level->generateBlock();
+    this->recalculateGrid();
+    this->notifyTurnover();
 }
+
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
