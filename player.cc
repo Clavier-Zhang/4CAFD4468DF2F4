@@ -36,64 +36,79 @@ bool Player::move(std::string type, int step) {
         deltaX = step;
     }
     // check if it's movable
-    vector<Coordinate> coordinates;
-    for (Point *p : this->currentBlock->getPoints()) {
-        Coordinate c{p->getX() + deltaX, p->getY() + deltaY};
-        if (this->isValid(c)) {
+    vector<pair<int, int>> coordinates;
+    for (Point *p : currentBlock->getPoints()) {
+        pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
+        if (isValid(c)) {
             coordinates.emplace_back(c);
         } else {
             return false;
         }
     }
     // clear block first, then add points
-    this->currentBlock->removeAllPoint();
-    this->currentBlock->addPoints(coordinates, this);
+    currentBlock->removeAllPoint();
+    currentBlock->addPoints(coordinates, this);
     return true;
 }
 
 void Player::rotate(bool counter, int step) {
     // rotation matrix
+    if (step % 4 == 0) return;
+
     vector<vector<int>> clockWise{{0,-1},{1,0}};
     vector<vector<int>> counterClockWise{{0,1},{-1,0}};
     vector<vector<int>>& current = clockWise;
     if (counter) {
         current = counterClockWise;
     }
+    int numRotations = step % 4; // since 4 possible orientations
     // check if it's rotatable
-    vector<Coordinate> coordinates;
-    for (Point *p : this->currentBlock->getPoints()) {
+    vector<pair<int, int>> coordinates;
+ 
+    const pair<int, int> lowerLeft = currentBlock->getLowerLeftBetter();
+    pair<int, int> rotatedll = lowerLeft; // copy of the lowerLeft; same if not rotated
+    
+    for (int i = 0; i < numRotations; ++i) {
+    rotatedll = make_pair(rotatedll.first * current[0][0] + rotatedll.second * current[1][0], rotatedll.first * current[0][1] + rotatedll.second * current[1][1]);
+    }
+
+    int deltaX = rotatedll.first - lowerLeft.first;
+    int deltaY = rotatedll.second - lowerLeft.second;
+    for (Point *p : currentBlock->getPoints()) {
         int x = p->getX();
         int y = p->getY();
-        int newX;
-        int newY;
-        for (int i = 0; i < step; i++) {
-            newX = x*current[0][0] + y*current[1][0];
-            newY = x*current[0][1] + y*current[1][1];
+        int rotateX = x;
+        int rotateY = y;
+        for (int i = 0; i < numRotations; ++i) {
+        int newX = (rotateX * current[0][0] + rotateY * current[1][0]);
+        int newY = (rotateX * current[0][1] + rotateY * current[1][1]);
+        rotateX = newX;
+        rotateY = newY;
         }
-        cout << x << "  " << y << endl;
-        cout << newX << "  " << newY << endl;
-        Coordinate c{newX, newY};
-        if (this->isValid(c)) {
+        rotateX -= deltaX;
+        rotateY -= deltaY;
+        pair<int, int> c = make_pair(rotateX, rotateY);
+        if (isValid(c)) {
             coordinates.emplace_back(c);
         } else {
             return;
         }
     }
     // clear block first, then add points
-    this->currentBlock->removeAllPoint();
-    this->currentBlock->addPoints(coordinates, this);
+    currentBlock->removeAllPoint();
+    currentBlock->addPoints(coordinates, this);
 
 }
 
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
-    while (this->move("down", 1)) {}
-    this->fieldBlocks.emplace_back(shared_ptr<AbstractBlock>(this->currentBlock));
-    this->currentBlock = this->nextBlock;
-    this->currentBlock->initialize(this);
-    this->nextBlock = this->level->generateBlock();
-    this->recalculateGrid();
-    this->notifyTurnover();
+    while (move("down", 1)) {}
+    fieldBlocks.emplace_back(shared_ptr<AbstractBlock>(currentBlock));
+    currentBlock = nextBlock;
+    currentBlock->initialize(this);
+    nextBlock = level->generateBlock();
+    recalculateGrid();
+    notifyTurnover();
 }
 
 // assign the point pointer to currentBlock, can

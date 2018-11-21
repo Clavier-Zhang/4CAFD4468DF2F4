@@ -43,18 +43,34 @@ std::vector<Point*>& AbstractBlock::getPoints() {
     return this->points;
 }
 
-bool AbstractBlock::addPoint(Coordinate &c, AbstractPlayer *p) {
+bool AbstractBlock::addPoint(/*Coordinate*/pair<int, int> &c, AbstractPlayer *p) {
     if (p->getPoint(c)->getType() != " ") return false;
     p->getPoint(c)->setType(this->type);
     this->points.emplace_back(p->getPoint(c));
     return true;
 }
 
-void AbstractBlock::addPoints(vector<Coordinate>& coordinates, AbstractPlayer *p) {
-        for (Coordinate c : coordinates) {
+void AbstractBlock::addPoints(vector</*Coordinate*/pair<int, int>>& coordinates, AbstractPlayer *p) {
+        for (/*Coordinate*/pair<int, int> c : coordinates) {
             this->addPoint(c, p);
         }
 }
+
+pair<int, int> AbstractBlock::getLowerLeftBetter() {
+ int minX = points.at(0)->getX();
+ int maxY = points.at(0)->getY();
+ for (Point *p : points) {
+    if (p->getX() < minX) {
+     minX = p->getX();
+     }
+    if (p->getY() > maxY) {
+     maxY = p->getY();
+     }
+  }
+  pair<int, int> lowerLeft = make_pair(minX, maxY);
+  return lowerLeft;
+}
+
 
 int AbstractBlock::getScore() {
     return this->score;

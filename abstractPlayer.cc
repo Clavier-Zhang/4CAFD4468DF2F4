@@ -30,11 +30,13 @@ AbstractPlayer::AbstractPlayer(Game *game) {
     this->game = game;
 }
 
-bool AbstractPlayer::isValid(Coordinate &c) {
-    if (c.getX() < 0 || c.getY() < 0) {
+bool AbstractPlayer::isValid(/*Coordinate &c*/pair<int, int> &c) {
+    //if (c.getX() < 0 || c.getY() < 0) {
+    if (c.first < 0 || c.second < 0) {
         return false;
     }
-    if (c.getX() >= this->colNum || c.getY() >= this->rowNum) {
+    //if (c.getX() >= this->colNum || c.getY() >= this->rowNum) {
+    if (c.first >= colNum || c.second >= rowNum) {
         return false;
     }
     Point *p = this->getPoint(c);
@@ -156,6 +158,7 @@ string AbstractPlayer::getNextBlock() {
     return this->nextBlock->getType();
 }
 
-Point* AbstractPlayer::getPoint(Coordinate &c) {
-    return &this->grid[c.getY()][c.getX()];
+Point* AbstractPlayer::getPoint(/*Coordinate &c*/pair<int, int> &c) {
+  //  return &this->grid[c.getY()][c.getX()];
+  return &grid[c.second][c.first];
 }

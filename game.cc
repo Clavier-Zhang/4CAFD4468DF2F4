@@ -14,40 +14,40 @@ Game::Game() :
 // player's operation
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
-    this->currentPlayer->setLevel(level);
-    this->print();
+    currentPlayer->setLevel(level);
+    print();
 }
 
 void Game::move(string type, int step) {
-    this->currentPlayer->move(type, step);
-    this->print();
+    currentPlayer->move(type, step);
+    print();
 }
 
 void Game::rotate(bool counter, int step) {
-    this->currentPlayer->rotate(counter, step);
-    this->print();
+    currentPlayer->rotate(counter, step);
+    print();
 }
 
 // later, clear row
 void Game::drop() {
-    this->currentPlayer->drop();
-    this->print();
+    currentPlayer->drop();
+    print();
 }
 
 bool Game::gameOver() {
-    return this->isOver;
+    return isOver;
 }
 
 void Game::setGameOver() {
-    this->isOver = true;
+    isOver = true;
 }
 
 // next player's turn
 void Game::turnOver() {
-    if (this->currentPlayer == this->playerOne.get()) {
-        this->currentPlayer = this->playerTwo.get();
+    if (currentPlayer == playerOne.get()) {
+        currentPlayer = playerTwo.get();
     } else {
-        this->currentPlayer = this->playerOne.get();
+        currentPlayer = playerOne.get();
     }
 }
 
