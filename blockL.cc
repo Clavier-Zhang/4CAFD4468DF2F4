@@ -3,11 +3,11 @@
 #include "abstractPlayer.h"
 using namespace std;
 
-BlockL::BlockL(int score) : AbstractBlock{"I", score} {
+BlockL::BlockL(int score) : AbstractBlock{"L", score} {
     Coordinate c1{0,3};
     Coordinate c2{1,3};
     Coordinate c3{2,3};
-    Coordinate c4{3,2};
+    Coordinate c4{2,2};
     this->positions.emplace_back(c1);
     this->positions.emplace_back(c2);
     this->positions.emplace_back(c3);

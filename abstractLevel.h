@@ -19,6 +19,7 @@ class AbstractLevel {
         int level = 1;
         // set in the constructor, either from file or generate randomly
         std::string sequence;
+        int seqAt = 0;
         // if is random mode, update sequence with one char each time
         bool isRandom = false;
     public:

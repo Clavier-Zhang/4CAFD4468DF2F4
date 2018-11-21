@@ -3,7 +3,7 @@
 #include "abstractPlayer.h"
 using namespace std;
 
-BlockJ::BlockJ(int score) : AbstractBlock{"I", score} {
+BlockJ::BlockJ(int score) : AbstractBlock{"J", score} {
     Coordinate c1{0,3};
     Coordinate c2{1,3};
     Coordinate c3{2,3};

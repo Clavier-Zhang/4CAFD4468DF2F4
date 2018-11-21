@@ -3,7 +3,7 @@
 #include "abstractPlayer.h"
 using namespace std;
 
-BlockO::BlockO(int score) : AbstractBlock{"I", score} {
+BlockO::BlockO(int score) : AbstractBlock{"O", score} {
     Coordinate c1{0,3};
     Coordinate c2{1,3};
     Coordinate c3{1,2};
