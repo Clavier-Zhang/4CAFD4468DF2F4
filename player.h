@@ -16,8 +16,7 @@ class Player : public AbstractPlayer {
         void setLevel(int level) override;
         // check if it's movable, then call block's method to move
         void move(std::string type = "down", int step = 1) override;
-        void rotateClockwise() override;
-        void rotateCounterClockwise() override;
+        void rotate(bool counter = false, int step = 1) override;
         // add the points of blocks to grid, update the block in drop(), 
         void drop() override;
         // assign the point pointer to currentBlock, can

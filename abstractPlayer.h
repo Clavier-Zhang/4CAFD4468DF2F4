@@ -38,8 +38,7 @@ class AbstractPlayer {
         virtual void setLevel(int level) = 0;
         // check if it's movable, then call block's method to move
         virtual void move(std::string type, int step = 1) = 0;
-        virtual void rotateClockwise() = 0;
-        virtual void rotateCounterClockwise() = 0;
+        virtual void rotate(bool counter = false, int step = 1) = 0;
         // add the points of blocks to grid, update the block in drop(), 
         virtual void drop() = 0;
         // assign the point pointer to currentBlock, can

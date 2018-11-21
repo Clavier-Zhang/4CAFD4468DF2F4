@@ -24,6 +24,7 @@ void Player::setLevel(int level){
 }
 
 void Player::move(std::string type, int step) {
+    // interpret command
     int deltaX = 0;
     int deltaY = 0;
     if (type == "down") {
@@ -35,8 +36,8 @@ void Player::move(std::string type, int step) {
     if (type == "right") {
         deltaX = step;
     }
-    vector<Coordinate> coordinates;
     // check if it's movable
+    vector<Coordinate> coordinates;
     for (Point *p : this->currentBlock->getPoints()) {
         Coordinate c{p->getX() + deltaX, p->getY() + deltaY};
         if (this->isValid(c)) {
@@ -45,12 +46,16 @@ void Player::move(std::string type, int step) {
             return;
         }
     }
+    // clear block first, then add points
     this->currentBlock->removeAllPoint();
     this->currentBlock->addPoints(coordinates, this);
 }
 
-void Player::rotateClockwise(){}
-void Player::rotateCounterClockwise(){}
+
+void Player::rotate(bool counter, int step) {
+
+}
+
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){}
 // assign the point pointer to currentBlock, can

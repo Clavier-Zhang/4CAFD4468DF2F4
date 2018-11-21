@@ -7,8 +7,6 @@ class ForceDecorator : public AbstractDecorator {
         // player's operation
         // check if it is possible to level up/down
         void setLevel(int level);
-        void rotateClockwise();
-        void rotateCounterClockwise();
         // add the points of blocks to grid, update the block in drop(), 
         void drop();
 };

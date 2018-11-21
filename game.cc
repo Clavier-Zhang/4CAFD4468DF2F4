@@ -23,12 +23,9 @@ void Game::move(string type, int step) {
     this->print();
 }
 
-void Game::rotateClockwise() {
-    this->currentPlayer->rotateClockwise();
-}
-
-void Game::rotateCounterClockwise() {
-    this->rotateCounterClockwise();
+void Game::rotate(bool counter, int step) {
+    this->currentPlayer->rotate(counter, step);
+    this->print();
 }
 
 void Game::drop() {

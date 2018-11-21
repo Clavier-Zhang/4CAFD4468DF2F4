@@ -24,8 +24,7 @@ class Game {
         // do not need to check, call currentPlayer's method directly
         void setLevel(int level);
         void move(std::string type = "down", int step = 1);
-        void rotateClockwise();
-        void rotateCounterClockwise();
+        void rotate(bool counter = false, int step = 1);
         void drop();
         // more command to be determined
         void gameOver();
