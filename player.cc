@@ -65,7 +65,7 @@ void Player::rotate(bool counter, int step) {
     // check if it's rotatable
     vector<pair<int, int>> coordinates;
  
-    const pair<int, int> lowerLeft = currentBlock->getLowerLeftBetter();
+    const pair<int, int> lowerLeft = currentBlock->getLowerLeft();
     pair<int, int> rotatedll = lowerLeft; // copy of the lowerLeft; same if not rotated
     
     for (int i = 0; i < numRotations; ++i) {
