@@ -132,8 +132,6 @@ void AbstractPlayer::notifyGameover() {
 }
 
 void AbstractPlayer::notifyTurnover() {
-   cout << "witiin abs player" << endl;
-   if (game == nullptr) cout << "game" << endl;
    this->game->turnOver();
 }
 
@@ -158,7 +156,6 @@ string AbstractPlayer::getNextBlock() {
     return this->nextBlock->getType();
 }
 
-Point* AbstractPlayer::getPoint(/*Coordinate &c*/pair<int, int> &c) {
-  //  return &this->grid[c.getY()][c.getX()];
+Point* AbstractPlayer::getPoint(pair<int, int> &c) {
   return &grid[c.second][c.first];
 }

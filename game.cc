@@ -44,8 +44,6 @@ void Game::setGameOver() {
 
 // next player's turn
 void Game::turnOver() {
- if (playerOne == nullptr) cout << "p1" << endl;
- if (playerTwo == nullptr) cout << "p2" << endl;
     if (currentPlayer == playerOne.get()) {
         currentPlayer = playerTwo.get();
     } else {
