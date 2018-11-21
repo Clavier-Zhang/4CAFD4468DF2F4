@@ -27,7 +27,7 @@ AbstractPlayer::AbstractPlayer(Game *game) {
     currentBlock = level->generateBlock();
     nextBlock = level->generateBlock();
     currentBlock->initialize(this);
-    game = game;
+    this->game = game;
 }
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
@@ -132,7 +132,9 @@ void AbstractPlayer::notifyGameover() {
 }
 
 void AbstractPlayer::notifyTurnover() {
-    this->game->turnOver();
+   cout << "witiin abs player" << endl;
+   if (game == nullptr) cout << "game" << endl;
+   this->game->turnOver();
 }
 
 void AbstractPlayer::notifySpecialAction() {

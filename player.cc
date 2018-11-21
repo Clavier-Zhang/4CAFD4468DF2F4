@@ -103,12 +103,18 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (move("down", 1)) {}
+    cout << "got here" << endl;
     fieldBlocks.emplace_back(shared_ptr<AbstractBlock>(currentBlock));
+    cout << "emplaced" << endl;
     currentBlock = nextBlock;
     currentBlock->initialize(this);
+    cout << "current block initilized" << endl;
     nextBlock = level->generateBlock();
-    recalculateGrid();
+cout << "next block gen" << endl;
+recalculateGrid();
+cout << "recalculated" << endl;
     notifyTurnover();
+    cout << "turnver notified" << endl;
 }
 
 // assign the point pointer to currentBlock, can
