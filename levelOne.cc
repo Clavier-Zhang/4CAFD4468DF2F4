@@ -20,6 +20,7 @@ LevelOne::LevelOne() : AbstractLevel{1, "", true} {
 };
 
 LevelOne::~LevelOne() {}
+
 AbstractBlock * LevelOne::generateBlock(){
     const double DEFAULT = 1/6;
     double Z_S_PROB = 1/12;

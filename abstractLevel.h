@@ -2,6 +2,7 @@
 #define _ABSTRACTLEVEL_H_
 #include <vector>
 #include <string>
+#include <iostream>
 class Point;
 class AbstractBlock;
 class BlockI;
@@ -22,6 +23,8 @@ class AbstractLevel {
         int seqAt = 0;
         // if is random mode, update sequence with one char each time
         bool isRandom = false;
+        char generateChar(double bI, double bJ,double bL, double bT, double bS, 
+        double bZ, double bO);
     public:
         AbstractLevel(int level, std::string sequence, bool isRandom );
         ~AbstractLevel();
