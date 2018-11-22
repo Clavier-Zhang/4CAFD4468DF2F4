@@ -27,7 +27,7 @@ LevelZero::LevelZero() : AbstractLevel{0, "", false} {
 LevelZero::~LevelZero() {}
 
 AbstractBlock* LevelZero::generateBlock() {
-    if (this->seqAt == this->sequence.length()) {
+    if (this->seqAt == (int)this->sequence.length()) {
         this->seqAt = 0;
     }
     char c = this->sequence[this->seqAt];

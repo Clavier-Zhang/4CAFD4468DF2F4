@@ -19,7 +19,7 @@ LevelOne::~LevelOne() {}
 
 AbstractBlock * LevelOne::generateBlock(){
     const double DEFAULT = 1/6;
-    double Z_S_PROB = 1/12;
+    const double Z_S_PROB = 1/12;
     char c = this->generateChar(DEFAULT,DEFAULT,DEFAULT,DEFAULT,
     Z_S_PROB,Z_S_PROB,DEFAULT);
     if (c == 'I') {
