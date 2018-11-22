@@ -52,6 +52,17 @@ bool Player::move(std::string type, int step) {
     return true;
 }
 
+pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
+ int minX = coordinates[0].first;
+ int maxY = coordinates[0].second;
+ for (int i = 0; i < coordinates.size(); ++i) {
+  if (coordinates[i].first < minX) minX = coordinates[i].first;
+  if (coordinates[i].second > maxY) maxY = coordinates[i].second;
+  }
+ pair<int, int> lowerLeft = make_pair(minX, maxY);
+ return lowerLeft;
+ }
+
 void Player::rotate(bool counter, int step) {
     // rotation matrix
     if (step % 4 == 0) return;
@@ -63,42 +74,45 @@ void Player::rotate(bool counter, int step) {
         current = counterClockWise;
     }
     int numRotations = step % 4; // since 4 possible orientations
-    // check if it's rotatable
-    vector<pair<int, int>> coordinates;
- 
-    const pair<int, int> lowerLeft = currentBlock->getLowerLeftBetter();
-    pair<int, int> rotatedll = lowerLeft; // copy of the lowerLeft; same if not rotated
+    vector<pair<int, int>> coordinates; // create cordinates array foro case rot is 0
+    for (Point *p : currentBlock->getPoints()) {
+     int x = p->getX();
+     int y = p->getY();
+     pair<int, int> pair = make_pair(x, y);
+     coordinates.emplace_back(pair);
+     }
+
+   pair<int, int> lowerLeft;// = getLowerLeft(coordinates);
     
     for (int i = 0; i < numRotations; ++i) {
-    rotatedll = make_pair(rotatedll.first * current[0][0] + rotatedll.second * current[1][0], rotatedll.first * current[0][1] + rotatedll.second * current[1][1]);
-    }
-
-    int deltaX = rotatedll.first - lowerLeft.first;
-    int deltaY = rotatedll.second - lowerLeft.second;
-    for (Point *p : currentBlock->getPoints()) {
-        int x = p->getX();
-        int y = p->getY();
-        int rotateX = x;
-        int rotateY = y;
-        for (int i = 0; i < numRotations; ++i) {
-        int newX = (rotateX * current[0][0] + rotateY * current[1][0]);
-        int newY = (rotateX * current[0][1] + rotateY * current[1][1]);
-        rotateX = newX;
-        rotateY = newY;
+    lowerLeft = getLowerLeft(coordinates);
+    vector<pair<int, int>> coorCopy;
+    for (pair<int, int> p : coordinates) {
+        int x = p.first;
+        int y = p.second;
+        int newX = x * current[0][0] + y * current[0][1];
+        int newY = x * current[1][0] + y * current[1][1];
+        pair<int, int> p1 = make_pair(newX, newY);
+        coorCopy.emplace_back(p1);
         }
-        rotateX -= deltaX;
-        rotateY -= deltaY;
-        pair<int, int> c = make_pair(rotateX, rotateY);
-        if (isValid(c)) {
-            coordinates.emplace_back(c);
+
+      pair<int, int> rotatedll = getLowerLeft(coorCopy);
+      int deltaX = rotatedll.first - lowerLeft.first;
+      int deltaY = rotatedll.second - lowerLeft.second;
+      coordinates.clear();
+      for (pair<int, int> p : coorCopy) {
+        pair<int, int> finalPair = make_pair(p.first - deltaX, p.second - deltaY);
+      
+        if (isValid(finalPair)) {
+            coordinates.emplace_back(finalPair);
         } else {
             return;
         }
-    }
+       }
+     }
     // clear block first, then add points
     currentBlock->removeAllPoint();
     currentBlock->addPoints(coordinates, this);
-
 }
 
 // add the points of blocks to grid, update the block in drop(), 

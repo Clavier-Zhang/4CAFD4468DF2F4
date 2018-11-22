@@ -4,10 +4,6 @@
 using namespace std;
 
 BlockL::BlockL(int score) : AbstractBlock{"L", score} {
-/*    Coordinate c1{0,3};
-    Coordinate c2{1,3};
-    Coordinate c3{2,3};
-    Coordinate c4{2,2};*/
     auto c1 = make_pair(0, 3);
     auto c2 = make_pair(1, 3);
     auto c3 = make_pair(2, 3);
@@ -24,7 +20,6 @@ BlockL::~BlockL() {}
 // initialize, only call once for each block
 void BlockL::initialize(AbstractPlayer *p) {
     // get point pointers
-//    for (Coordinate &c : this->positions) {
      for (pair<int, int> &c : positions) {
         if (!this->addPoint(c, p)) {
             p->notifyGameover();

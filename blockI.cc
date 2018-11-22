@@ -20,7 +20,6 @@ BlockI::~BlockI() {}
 // initialize, only call once for each block
 void BlockI::initialize(AbstractPlayer *p) {
     // get point pointers
-   // for (Coordinate &c : positions) {
      for (pair<int, int> &c : positions) {
         if (!addPoint(c, p)) {
             p->notifyGameover();

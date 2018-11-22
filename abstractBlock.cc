@@ -27,8 +27,8 @@ void AbstractBlock::removeAllPoint() {
 
 void AbstractBlock::removeOnePoint(Point *p) {
     for (int i = 0; i < this->points.size(); i++) {
-        if (this->points[i] == p) {
-            this->points.erase(this->points.begin()+i);
+        if (points[i] == p) {
+            points.erase(this->points.begin()+i);
             return;
         }
     }
@@ -36,27 +36,27 @@ void AbstractBlock::removeOnePoint(Point *p) {
 
 // getters
 string AbstractBlock::getType() {
-    return this->type;
+    return type;
 }
 
 std::vector<Point*>& AbstractBlock::getPoints() {
-    return this->points;
+    return points;
 }
 
-bool AbstractBlock::addPoint(/*Coordinate*/pair<int, int> &c, AbstractPlayer *p) {
+bool AbstractBlock::addPoint(pair<int, int> &c, AbstractPlayer *p) {
     if (p->getPoint(c)->getType() != " ") return false;
     p->getPoint(c)->setType(this->type);
     this->points.emplace_back(p->getPoint(c));
     return true;
 }
 
-void AbstractBlock::addPoints(vector</*Coordinate*/pair<int, int>>& coordinates, AbstractPlayer *p) {
-        for (/*Coordinate*/pair<int, int> c : coordinates) {
+void AbstractBlock::addPoints(vector<pair<int, int>>& coordinates, AbstractPlayer *p) {
+        for (pair<int, int> c : coordinates) {
             this->addPoint(c, p);
         }
 }
 
-pair<int, int> AbstractBlock::getLowerLeftBetter() {
+pair<int, int> AbstractBlock::getLowerLeft() {
  int minX = points.at(0)->getX();
  int maxY = points.at(0)->getY();
  for (Point *p : points) {
@@ -73,5 +73,5 @@ pair<int, int> AbstractBlock::getLowerLeftBetter() {
 
 
 int AbstractBlock::getScore() {
-    return this->score;
+    return score;
 }
