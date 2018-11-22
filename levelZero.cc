@@ -1,5 +1,5 @@
-//#include "abstractBlock.h"
-#include "levelOne.h"
+#include "abstractBlock.h"
+#include "levelZero.h"
 #include "abstractLevel.h"
 #include "blockI.h"
 #include "blockJ.h"
@@ -8,37 +8,50 @@
 #include "blockS.h"
 #include "blockT.h"
 #include "blockZ.h"
+#include <fstream>
 #include <sstream>
 #include <string>
-#include <random>
-#include<iostream>
-
 
 using namespace std;
 
-LevelOne::LevelOne() : AbstractLevel{1, "", true} {
+LevelZero::LevelZero() : AbstractLevel{0, "", false} {
+    fstream file{"sequence1.txt"};
+    string s;
+    string all = "";
+    while (file >> s) {
+        all += s;
+    }
+    this->sequence = all;
 };
 
-LevelOne::~LevelOne() {}
-AbstractBlock * LevelOne::generateBlock(){
-    const double DEFAULT = 1/6;
-    double Z_S_PROB = 1/12;
-    char c = this->generateChar(DEFAULT,DEFAULT,DEFAULT,DEFAULT,
-    Z_S_PROB,Z_S_PROB,DEFAULT);
+LevelZero::~LevelZero() {}
+
+AbstractBlock* LevelZero::generateBlock() {
+    if (this->seqAt == this->sequence.length()) {
+        this->seqAt = 0;
+    }
+    char c = this->sequence[this->seqAt];
+    this->seqAt++;
     if (c == 'I') {
         return new BlockI((this->level + 1) * (this->level + 1));
-    }else if (c == 'J') {
+    }
+    if (c == 'J') {
         return new BlockJ((this->level + 1) * (this->level + 1));
-    }else if (c == 'L') {
+    }
+    if (c == 'L') {
         return new BlockL((this->level + 1) * (this->level + 1));
-    }else if (c == 'O') {
+    }
+    if (c == 'O') {
         return new BlockO((this->level + 1) * (this->level + 1));
-    }else if (c == 'S') {
+    }
+    if (c == 'S') {
         return new BlockS((this->level + 1) * (this->level + 1));
-    }else if (c == 'T') {
+    }
+    if (c == 'T') {
         return new BlockT((this->level + 1) * (this->level + 1));
-    }else { // has to be Z
+    }
+    if (c == 'Z') {
         return new BlockZ((this->level + 1) * (this->level + 1));
     }
-
+    return new BlockI((this->level + 1) * (this->level + 1));
 }

@@ -1,6 +1,7 @@
 #include "abstractPlayer.h"
 #include "game.h"
 #include "abstractLevel.h"
+#include "levelZero.h"
 #include "levelOne.h"
 #include "levelTwo.h"
 #include "levelThree.h"
@@ -23,7 +24,7 @@ AbstractPlayer::AbstractPlayer(Game *game) {
         }
         this->grid.emplace_back(row);
     }
-    this->level = shared_ptr<AbstractLevel>(new LevelOne());
+    this->level = shared_ptr<AbstractLevel>(new LevelZero());
     this->currentBlock = this->level->generateBlock();
     this->nextBlock = this->level->generateBlock();
     this->currentBlock->initialize(this);

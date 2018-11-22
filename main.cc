@@ -7,6 +7,7 @@ using namespace std;
 
 
 int main () {
+    srand(time(NULL));
     string command;
     Game game;
     game.print();
