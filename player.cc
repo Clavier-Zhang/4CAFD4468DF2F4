@@ -2,6 +2,7 @@
 #include "abstractPlayer.h"
 #include "game.h"
 #include <memory>
+#include "levelZero.h"
 #include "levelOne.h"
 #include "levelTwo.h"
 #include "coordinate.h"
@@ -15,10 +16,10 @@ Player::Player(Game *game) : AbstractPlayer{game} {}
 // player's operation
 // check if it is possible to level up/down
 void Player::setLevel(int level){
-    if (level == 1) {
+    if (level == 0) {
+        this->level.reset(new LevelZero());
+    } else if (level == 1) {
         this->level.reset(new LevelOne());
-    } else if (level == 2) {
-        this->level.reset(new LevelTwo());
     }
 }
 
