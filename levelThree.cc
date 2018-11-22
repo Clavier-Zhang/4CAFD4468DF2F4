@@ -9,6 +9,8 @@
 #include "blockZ.h"
 using namespace std;
 
+//LevelThree::LevelThree() : AbstractLevel{3, "", true} {} // fix this
+
 LevelThree::~LevelThree() {}
 
 AbstractBlock* LevelThree::generateBlock() {

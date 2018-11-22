@@ -5,7 +5,6 @@
 #include "levelZero.h"
 #include "levelOne.h"
 #include "levelTwo.h"
-#include "coordinate.h"
 #include "blockI.h"
 #include <iostream>
 using namespace std;

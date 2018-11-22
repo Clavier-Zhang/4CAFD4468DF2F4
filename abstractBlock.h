@@ -2,7 +2,6 @@
 #define _ABSTRACTBLOCK_H_
 #include <string>
 #include <vector>
-#include "coordinate.h"
 class AbstractLevel;
 class Point;
 class AbstractPlayer;

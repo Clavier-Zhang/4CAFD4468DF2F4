@@ -8,7 +8,6 @@
 #include "levelFour.h"
 #include "point.h"
 #include <string.h>
-#include "coordinate.h"
 #include <memory>
 #include <iostream>
 using namespace std;

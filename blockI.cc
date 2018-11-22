@@ -1,7 +1,6 @@
 #include "blockI.h"
 #include "abstractPlayer.h"
 #include "point.h"
-#include "coordinate.h"
 using namespace std;
 
 BlockI::BlockI(int score) : AbstractBlock{"I", score} {

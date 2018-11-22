@@ -6,7 +6,6 @@
 #include "point.h"
 #include <string>
 #include "abstractLevel.h"
-#include "coordinate.h"
 class AbstractBlock;
 class Game;
 
