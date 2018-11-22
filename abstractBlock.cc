@@ -26,7 +26,7 @@ void AbstractBlock::removeAllPoint() {
 }
 
 void AbstractBlock::removeOnePoint(Point *p) {
-    for (int i = 0; i < this->points.size(); i++) {
+    for (int i = 0; i < (int)this->points.size(); i++) {
         if (points[i] == p) {
             points.erase(this->points.begin()+i);
             return;

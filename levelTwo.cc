@@ -1,7 +1,13 @@
 #include "abstractBlock.h"
 #include "levelTwo.h"
 #include "abstractLevel.h"
-#include "blockX.h"
+#include "blockI.h"
+#include "blockJ.h"
+#include "blockL.h"
+#include "blockO.h"
+#include "blockS.h"
+#include "blockT.h"
+#include "blockZ.h"
 using namespace std;
 
 LevelTwo::LevelTwo() : AbstractLevel{2, "", false} {}

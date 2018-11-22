@@ -81,7 +81,7 @@ void AbstractPlayer::clearRow(int row) {
         Point *p = &this->grid[row][i];
         p->setType(" ");
         // check this point with each block in the block field
-        for (int j = 0; j < this->fieldBlocks.size(); j++) {
+        for (int j = 0; j < (int)this->fieldBlocks.size(); j++) {
             for (Point *old : this->fieldBlocks[j].get()->getPoints()) {
                 if (old == p) {
                     this->fieldBlocks[j].get()->removeOnePoint(p);
@@ -93,7 +93,7 @@ void AbstractPlayer::clearRow(int row) {
 
 void AbstractPlayer::recalculateFieldBlocks() {
     vector<shared_ptr<AbstractBlock>> newFieldBlocks;
-    for (int i = 0; i < this->fieldBlocks.size(); i++) {
+    for (int i = 0; i < (int)this->fieldBlocks.size(); i++) {
         if (this->fieldBlocks[i].get()->getPoints().size()!= 0) {
             newFieldBlocks.emplace_back(this->fieldBlocks[i]);
         } else {

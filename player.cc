@@ -55,7 +55,7 @@ bool Player::move(std::string type, int step) {
 pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
  int minX = coordinates[0].first;
  int maxY = coordinates[0].second;
- for (int i = 0; i < coordinates.size(); ++i) {
+ for (int i = 0; i < (int)coordinates.size(); ++i) {
   if (coordinates[i].first < minX) minX = coordinates[i].first;
   if (coordinates[i].second > maxY) maxY = coordinates[i].second;
   }

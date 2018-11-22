@@ -8,10 +8,6 @@
 #include "blockS.h"
 #include "blockT.h"
 #include "blockZ.h"
-#include <sstream>
-#include <string>
-#include <random>
-#include<iostream>
 
 
 using namespace std;
