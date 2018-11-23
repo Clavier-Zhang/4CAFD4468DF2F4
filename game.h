@@ -17,6 +17,7 @@ class Game {
     public:
         // initialize two players
         Game();
+        void restart(); // TODO clears the board and starts a new game
         // player's operation
         // do not need to check, call currentPlayer's method directly
         void setLevel(int level);

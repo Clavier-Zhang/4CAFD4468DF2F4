@@ -11,6 +11,10 @@ Game::Game() :
     playerTwo{new Player(this)}, 
     currentPlayer{playerOne.get()} {}
 
+void Game::restart() {
+// need to implement
+}
+
 // player's operation
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
