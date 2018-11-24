@@ -21,16 +21,19 @@ class AbstractPlayer {
         int rowNum = 18;
         int reservedRowNum = 3;
         int colNum = 11;
-        AbstractBlock *currentBlock;
-        AbstractBlock *nextBlock;
+        std::unique_ptr<AbstractBlock>currentBlock;
+        std::unique_ptr<AbstractBlock>nextBlock;
+       //AbstractBlock *currentBlock;
+       // AbstractBlock *nextBlock;
         // grid on the bottom
         std::vector<std::vector<Point>> grid;
         // blocks already exists, will be checked and cleared
-        std::map<int,std::shared_ptr<AbstractBlock>> inactiveBlocks;
+        std::map<int,std::unique_ptr<AbstractBlock>> inactiveBlocks;
         // game for observer
         Game *game;
     public:
         AbstractPlayer(Game *game);
+        ~AbstractPlayer();
         // player's operation
         // check if it is possible to level up/down
         virtual void setLevel(int level) = 0;

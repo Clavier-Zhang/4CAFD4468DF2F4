@@ -117,12 +117,13 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (move("down", 1)) {}
-    inactiveBlocks[currID] = shared_ptr<AbstractBlock>(currentBlock);
     currentBlock->setID(currID);
+    inactiveBlocks[currID] = std::move(currentBlock);
     currID++;
-    currentBlock = nextBlock;
+    currentBlock = std::move(nextBlock);
     currentBlock->initialize(this);
-    nextBlock = level->generateBlock();
+    unique_ptr<AbstractBlock>tmp{level->generateBlock()};
+    nextBlock = std::move(tmp);
     recalculateGrid();
     notifyTurnover();
 }

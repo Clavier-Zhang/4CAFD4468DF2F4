@@ -75,10 +75,10 @@ int main () {
     initializeDict(cmdMappings, commands);
 
     string command;
-    Game game;
-    game.print();
+    unique_ptr<Game>game{new Game};
+    game->print();
  // Command interpreter
-     while (!game.gameOver()) {
+     while (!game->gameOver() && !cin.eof()) {
         cin >> command;
         if (cin.fail()) {
             cin.clear();
@@ -90,21 +90,21 @@ int main () {
         if (translatedCmd == " ") continue;
 
         if (translatedCmd == "left") {
-            game.move("left", step);
+            game->move("left", step);
         } else if (translatedCmd == "right") {
-            game.move("right", step);
+            game->move("right", step);
         } else if (translatedCmd == "down") {
-            game.move("down", step);
+            game->move("down", step);
         } else if (translatedCmd == "drop") {
-            game.drop();
+            game->drop();
         } else if (translatedCmd == "level") { // needs to be looked into
             int level;
             cin >> level;
-            game.setLevel(level);
+            game->setLevel(level);
         } else if (translatedCmd == "clockwise") {
-            game.rotate(false, step);
+            game->rotate(false, step);
         } else if (translatedCmd == "counterclockwise") {
-            game.rotate(true, step);
+            game->rotate(true, step);
         } else if (translatedCmd == "levelup") {
             // get level and increment, use step
         } else if (translatedCmd == "leveldown") {
@@ -120,7 +120,8 @@ int main () {
         } else if ((translatedCmd == "I")||(translatedCmd == "J")||(translatedCmd == "L")||
         (translatedCmd == "O")||(translatedCmd == "T")||(translatedCmd == "S")||(translatedCmd == "Z")) {
         } else if (translatedCmd == "restart") {
-            game.restart();
+            game->restart();
         }
     } 
+
 }

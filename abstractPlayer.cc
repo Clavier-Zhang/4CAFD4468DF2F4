@@ -14,7 +14,7 @@
 using namespace std;
 
 // constructor
-AbstractPlayer::AbstractPlayer(Game *game) {
+AbstractPlayer::AbstractPlayer(Game *game):level{shared_ptr<AbstractLevel>(new LevelZero())},currentBlock{level->generateBlock()},nextBlock{level->generateBlock()} {
     // initialize the grid
     for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
@@ -24,11 +24,16 @@ AbstractPlayer::AbstractPlayer(Game *game) {
         }
         grid.emplace_back(row);
     }
-    level = shared_ptr<AbstractLevel>(new LevelZero());
-    currentBlock = this->level->generateBlock();
-    nextBlock = this->level->generateBlock();
+    //level = shared_ptr<AbstractLevel>(new LevelZero());
+    //currentBlock = this->level->generateBlock();
+    //nextBlock = this->level->generateBlock();
     currentBlock->initialize(this);
     this->game = game;
+}
+
+AbstractPlayer::~AbstractPlayer(){
+//    delete currentBlock;
+  //  delete nextBlock;
 }
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
@@ -56,6 +61,7 @@ string AbstractPlayer::getGridRow(int row) {
 void AbstractPlayer::recalculateGrid() {
    bool shouldClear;
    int offset = 0;
+   cout<<"entering recalcGrid"<<endl;
    for (int row = rowNum - 1; row > reservedRowNum; row--) {
         shouldClear = false;
        for (int col = 0; col < colNum; col++) {
@@ -74,13 +80,15 @@ void AbstractPlayer::recalculateGrid() {
 }
 
 void AbstractPlayer::clearRow(int row) {
+    cout<<"entering function clearRow"<<endl;
    for(int col=0; col<colNum; col++){
         Point *p = &this->grid[row][col];
         p->setType(" ");
-        auto ab = inactiveBlocks[p->getID()];
-        for(auto cell : ab->getPoints()){
+       // auto ab = inactiveBlocks[p->getID()];
+        for(auto cell : inactiveBlocks[p->getID()]->getPoints()){
+            cout<<"were on" <<p->getID()<<endl;
             if(cell == p){
-                ab.get()->removeOnePoint(p);
+                inactiveBlocks[p->getID()].get()->removeOnePoint(p);
             }
         }
         p->setID(-1);
@@ -92,24 +100,26 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
     for (int col =0; col < colNum; col++) { // iterates through the columns in the current row
       Point *p = &grid[row][col];// gets the point to be moved
       if (p->getType() != " ") {
-        auto ab = inactiveBlocks[p->getID()];// finds the block the point is a part of
+        //auto ab = inactiveBlocks[p->getID()];// finds the block the point is a part of
         Point *newP = &grid[row+offset][col]; // finds the place the point needs to be moved
         newP->setID(p->getID());// changes id
-        p->setID(-1);
-        for (auto cell : ab->getPoints()) {
+        //p->setID(-1);
+        
+        for (auto cell : inactiveBlocks[p->getID()]->getPoints()) {
              if (cell == p) {//once we find the point in the block...
                 pair<int, int> coor = make_pair(newP->getX(), newP->getY());
-                ab.get()->addPoint(coor, this); // creates the point that it should be moved to
+                inactiveBlocks[p->getID()].get()->addPoint(coor, this); // creates the point that it should be moved to
                 grid[row][col].setType(" ");
-                ab.get()->removeOnePoint(p);// removes the current point from the block
+                inactiveBlocks[p->getID()].get()->removeOnePoint(p);// removes the current point from the block
             }
 
          }
+        p->setID(-1);
         }
     }
 }
 void AbstractPlayer::recalculateInactiveBlocks(){
-    for(auto entry : inactiveBlocks){
+    for(auto & entry : inactiveBlocks){
         if (entry.second->getPoints().size() == 0){
             currenntScore+=entry.second->getScore();
             inactiveBlocks.erase(entry.first);
