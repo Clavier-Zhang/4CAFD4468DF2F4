@@ -29,5 +29,6 @@ class AbstractBlock {
         bool contain(Point *p);
         int getScore();
         std::pair<int, int> getLowerLeft();
+        void setID(int id);
 };
 #endif

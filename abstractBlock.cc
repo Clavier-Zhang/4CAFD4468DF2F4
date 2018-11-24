@@ -28,10 +28,17 @@ void AbstractBlock::removeAllPoint() {
 void AbstractBlock::removeOnePoint(Point *p) {
     for (int i = 0; i < (int)this->points.size(); i++) {
         if (points[i] == p) {
-            points.erase(this->points.begin()+i);
+            points.erase(this->points.begin()+i);// should we set type to empty string?
             return;
         }
     }
+}
+
+void AbstractBlock::setID(int id){
+    for (int i =0; i< (int)points.size(); i++){
+        points[i]->setID(id);
+    }
+    cout<<id<<endl;
 }
 
 // getters
@@ -47,7 +54,7 @@ bool AbstractBlock::addPoint(pair<int, int> &c, AbstractPlayer *p) {
     if (p->getPoint(c)->getType() != " ") return false;
     p->getPoint(c)->setType(this->type);
     this->points.emplace_back(p->getPoint(c));
-    return true;
+    return true;// add ID aswell
 }
 
 void AbstractBlock::addPoints(vector<pair<int, int>>& coordinates, AbstractPlayer *p) {

@@ -6,6 +6,7 @@ class Point {
     private:
         int x;
         int y;
+        int id=-1;
         // for bash display, can be Z
         std::string type;
     public:
@@ -13,9 +14,11 @@ class Point {
         void draw();
         void undraw();
         void setType(std::string type);
+        void setID(int n);
         void reset();
         int getX();
         int getY();
+        int getID();
         std::string getType();
 };
 #endif

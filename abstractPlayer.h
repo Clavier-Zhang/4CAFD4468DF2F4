@@ -6,12 +6,14 @@
 #include "point.h"
 #include <string>
 #include "abstractLevel.h"
+#include <map>
 class AbstractBlock;
 class Game;
 
 class AbstractPlayer { 
     protected:
         // level on the top left
+        int currID=0;//TODO:fix this
         std::shared_ptr<AbstractLevel> level;
         // score on the top left
         int currenntScore = 0;
@@ -24,7 +26,7 @@ class AbstractPlayer {
         // grid on the bottom
         std::vector<std::vector<Point>> grid;
         // blocks already exists, will be checked and cleared
-        std::vector<std::shared_ptr<AbstractBlock>> fieldBlocks;
+        std::map<int,std::shared_ptr<AbstractBlock>> inactiveBlocks;
         // game for observer
         Game *game;
     public:
@@ -43,11 +45,11 @@ class AbstractPlayer {
         virtual void setCurrentBlock() = 0;
 
         void recalculateGrid();
-        void recalculateFieldBlocks();
-        bool isFull(int row);
+        void recalculateInactiveBlocks();
         void clearRow(int row);
-        void moveOneHigherRowDown(int row);
-        void moveAllHigherRowDown(int row);
+
+        void shiftRowDown(int row, int offset);
+
         // observer pattern
         void notifyGameover();
         void notifyTurnover();

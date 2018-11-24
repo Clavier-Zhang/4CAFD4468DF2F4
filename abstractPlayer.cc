@@ -9,6 +9,7 @@
 #include "point.h"
 #include <string.h>
 #include <memory>
+#include <map>
 #include <iostream>
 using namespace std;
 
@@ -23,10 +24,10 @@ AbstractPlayer::AbstractPlayer(Game *game) {
         }
         grid.emplace_back(row);
     }
-    this->level = shared_ptr<AbstractLevel>(new LevelZero());
-    this->currentBlock = this->level->generateBlock();
-    this->nextBlock = this->level->generateBlock();
-    this->currentBlock->initialize(this);
+    level = shared_ptr<AbstractLevel>(new LevelZero());
+    currentBlock = this->level->generateBlock();
+    nextBlock = this->level->generateBlock();
+    currentBlock->initialize(this);
     this->game = game;
 }
 
@@ -47,50 +48,76 @@ bool AbstractPlayer::isValid(pair<int, int> &c) {
 string AbstractPlayer::getGridRow(int row) {
     string s;
     for (int i = 0; i < colNum; i++) {
-        s += this->grid[row][i].getType();
+        s += grid[row][i].getType();
     }
     return s;
 }
 
 void AbstractPlayer::recalculateGrid() {
-    int count = 0;
-    for (int i = this->rowNum - 1; i >= 0; i--) {
-        if (isFull(i)) {
-            cout << "full !!!" << endl;
-            count++;
-            clearRow(i);
-            moveAllHigherRowDown(i);
+   bool shouldClear;
+   int offset = 0;
+   for (int row = rowNum - 1; row > reservedRowNum; row--) {
+        shouldClear = false;
+       for (int col = 0; col < colNum; col++) {
+            if ((grid[row][col].getType() != " ") && (col == colNum - 1)) shouldClear = true;
+            if (grid[row][col].getType() == " ") break; 
         }
-    }
-    if (count >= 2) this->notifySpecialAction();
-    if (count > 0) {
-        this->currenntScore += 
-            (this->level->getLevel() + count) * 
-            (this->level->getLevel() + count);
-        this->recalculateFieldBlocks();
-    }
-    if (this->currenntScore > this->highestScore) {
-        this->highestScore = this->currenntScore;
-    }
+
+        if(shouldClear) {
+            clearRow(row);
+            offset++;
+        } else {
+            shiftRowDown(row, offset);
+        }
+   }
+    recalculateInactiveBlocks();
 }
 
 void AbstractPlayer::clearRow(int row) {
-    // reset each point in the row
-    for (int i = 0; i < this->colNum; i++) {
-        Point *p = &this->grid[row][i];
+   for(int col=0; col<colNum; col++){
+        Point *p = &this->grid[row][col];
         p->setType(" ");
-        // check this point with each block in the block field
-        for (int j = 0; j < (int)this->fieldBlocks.size(); j++) {
-            for (Point *old : this->fieldBlocks[j].get()->getPoints()) {
-                if (old == p) {
-                    this->fieldBlocks[j].get()->removeOnePoint(p);
-                }
+        auto ab = inactiveBlocks[p->getID()];
+        for(auto cell : ab->getPoints()){
+            if(cell == p){
+                ab.get()->removeOnePoint(p);
             }
+        }
+        p->setID(-1);
+   }
+}
+
+void AbstractPlayer::shiftRowDown(int row, int offset) {
+    if (row < reservedRowNum || offset == 0) return; //checks if were within correct range
+    for (int col =0; col < colNum; col++) { // iterates through the columns in the current row
+      Point *p = &grid[row][col];// gets the point to be moved
+      if (p->getType() != " ") {
+        auto ab = inactiveBlocks[p->getID()];// finds the block the point is a part of
+        Point *newP = &grid[row+offset][col]; // finds the place the point needs to be moved
+        newP->setID(p->getID());// changes id
+        p->setID(-1);
+        for (auto cell : ab->getPoints()) {
+             if (cell == p) {//once we find the point in the block...
+                pair<int, int> coor = make_pair(newP->getX(), newP->getY());
+                ab.get()->addPoint(coor, this); // creates the point that it should be moved to
+                grid[row][col].setType(" ");
+                ab.get()->removeOnePoint(p);// removes the current point from the block
+            }
+
+         }
         }
     }
 }
+void AbstractPlayer::recalculateInactiveBlocks(){
+    for(auto entry : inactiveBlocks){
+        if (entry.second->getPoints().size() == 0){
+            currenntScore+=entry.second->getScore();
+            inactiveBlocks.erase(entry.first);
+        }
+    }
 
-void AbstractPlayer::recalculateFieldBlocks() {
+}
+/*void AbstractPlayer::recalculateFieldBlocks() {
     vector<shared_ptr<AbstractBlock>> newFieldBlocks;
     for (int i = 0; i < (int)this->fieldBlocks.size(); i++) {
         if (this->fieldBlocks[i].get()->getPoints().size()!= 0) {
@@ -102,29 +129,7 @@ void AbstractPlayer::recalculateFieldBlocks() {
     this->fieldBlocks = newFieldBlocks;
 }
 
-void AbstractPlayer::moveOneHigherRowDown(int row) {
-    if (row <= 0) return;
-    for (int i = 0; i < this->colNum; i++) {
-        this->grid[row][i].setType(this->grid[row-1][i].getType());
-        this->grid[row-1][i].setType(" ");
-    }
-}
-
-void AbstractPlayer::moveAllHigherRowDown(int row) {
-    if (row <= 0) return;
-    for (int i = row; i > 0; i--) {
-        this->moveOneHigherRowDown(i);
-    }
-}
-
-bool AbstractPlayer::isFull(int row) {
-    for (int i = 0; i < this->colNum; i++) {
-        if (this->grid[row][i].getType() == " ") {
-            return false;
-        }
-    }
-    return true;
-}
+*/
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {

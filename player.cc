@@ -117,7 +117,9 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (move("down", 1)) {}
-    fieldBlocks.emplace_back(shared_ptr<AbstractBlock>(currentBlock));
+    inactiveBlocks[currID] = shared_ptr<AbstractBlock>(currentBlock);
+    currentBlock->setID(currID);
+    currID++;
     currentBlock = nextBlock;
     currentBlock->initialize(this);
     nextBlock = level->generateBlock();

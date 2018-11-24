@@ -28,5 +28,6 @@ void BlockI::initialize(AbstractPlayer *p) {
     // set points
     for (Point *p : points) {
         p->setType(type);
+
     }
 }

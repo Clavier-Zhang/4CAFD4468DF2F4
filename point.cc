@@ -20,6 +20,10 @@ void Point::setType(string type) {
     this->type = type;
 }
 
+void Point::setID(int n){
+    id = n;
+}
+
 // getter
 int Point::getX() {
     return this->x;
@@ -33,6 +37,9 @@ string Point::getType() {
     return this->type;
 }
 
+int Point::getID(){
+    return id;
+}
 void Point::reset() {
     this->type = " ";
 }
