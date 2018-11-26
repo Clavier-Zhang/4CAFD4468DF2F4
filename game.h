@@ -10,12 +10,13 @@ class Game {
         // // player two
         std::shared_ptr<AbstractPlayer> playerTwo;
         // // player in the current turn
-        AbstractPlayer* currentPlayer;
+        //AbstractPlayer* currentPlayer;
+        std::shared_ptr<AbstractPlayer> currentPlayer;
         // status of game
         bool isOver = false;
         bool needSpecial = false;
 
-        AbstractPlayer *createDecoratedPlayer(std::string, AbstractPlayer *);
+        AbstractPlayer *createDecoratedPlayer(std::string, std::shared_ptr<AbstractPlayer>);
 
     public:
         // initialize two players

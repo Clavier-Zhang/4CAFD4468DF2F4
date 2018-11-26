@@ -79,12 +79,34 @@ int main () {
     game->print();
  // Command interpreter
      while (!game->gameOver() && !cin.eof()) {
+        
+      if (game->isNeedSpecial()) {// needs error checking
+       string action;
+       cout << "Please enter a special action" << endl;
+       cin >> action;
+       if (action == "force") {
+        char block;
+        cout << "Please enter a block to force." << endl;
+        cin >> block;
+        game->enableSpecialAction(action, block);
+        game->print();
+        } else if ((action == "heavy")||(action == "blind")) {
+         game->enableSpecialAction(action);
+         game->print();
+        }
+       }
+       // error checking
+        
+        
         cin >> command;
         if (cin.fail()) {
             cin.clear();
             cin.ignore();
             continue;
         }
+
+
+
         int step = getNumPrefix(command);
         string translatedCmd = cmdMappings[command]; // look up command in dictionary
         if (translatedCmd == " ") continue;

@@ -23,6 +23,9 @@ class Player : public AbstractPlayer {
         // target::block
         void setRandom() override;
         // display
-        void setCurrentBlock() override; 
+        void setCurrentBlock(char type = ' ') override; 
+        std::string getGridRow(int) override;
+        std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
+        void nullifyUnderlyingPlayer() override;
 };
 #endif

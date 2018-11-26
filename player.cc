@@ -22,8 +22,20 @@ void Player::setLevel(int level){
     }
 }
 
+string Player::getGridRow(int row) {
+string s;
+    for (int i = 0; i < colNum; i++) {
+        s += grid[row][i].getType();
+    }
+    return s;
+}
+shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() {
+//shared_ptr<AbstractPlayer> tmp =  make_shared(nullptr); // ??
+return /*tmp;*/nullptr;
+ }
+void Player::nullifyUnderlyingPlayer() {}
 bool Player::move(std::string type, int step) {
-    // interpret command
+   // interpret command
     int deltaX = 0;
     int deltaY = 0;
     if (type == "down") {
@@ -60,7 +72,7 @@ pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
   }
  pair<int, int> lowerLeft = make_pair(minX, maxY);
  return lowerLeft;
- }
+}
 
 void Player::rotate(bool counter, int step) {
     // rotation matrix
@@ -125,11 +137,19 @@ void Player::drop(){
     unique_ptr<AbstractBlock>tmp{level->generateBlock()};
     nextBlock = std::move(tmp);
     recalculateGrid();
-    notifyTurnover();
+  //  notifyTurnover(); // how do you know not special action?
+    notifySpecialAction();
 }
 
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
-void Player::setCurrentBlock() {}
+void Player::setCurrentBlock(char type) {
+    cout<<"player"<<endl;
+    unique_ptr<AbstractBlock>tmp{level->generateBlock(type)};
+    currentBlock->removeAllPoint();
+    currentBlock = std::move(tmp);
+    currentBlock->initialize(this);
+    cout << "curBlock was assigned" << endl;
+}
 void Player::setRandom() {} 

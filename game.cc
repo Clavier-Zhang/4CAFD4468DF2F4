@@ -11,7 +11,7 @@ using namespace std;
 Game::Game() :
     playerOne{new Player(this)}, 
     playerTwo{new Player(this)}, 
-    currentPlayer{playerOne.get()} {}
+    currentPlayer{/*playerOne.get()*/playerOne} {}
 
 void Game::restart() {
 // need to implement
@@ -54,10 +54,36 @@ void Game::setGameOver() {
 
 // next player's turn
 void Game::turnOver() {
-    if (currentPlayer == playerOne.get()) {
-        currentPlayer = playerTwo.get();
+    // remove decorations from currentPlayer if they exist
+    // at the moment, this only supports one level of decoration
+    if (currentPlayer->getIsDecorated()) {
+    shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
+    // schema for removing decoration:
+    // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
+    // 2. call on both currentPlayer and playerX; this deletes only the decorator
+    // 3. reassign the undecorated player component to playerX and currentPlayer
+        if (currentPlayer == playerOne) {
+            playerOne->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerOne.reset();
+            currentPlayer.reset();
+            playerOne = tmp;
+            currentPlayer = playerOne;
+        } else { // currentPlayer is playerTwo
+            playerTwo->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerTwo.reset();
+            currentPlayer.reset();
+            playerTwo = tmp;
+            currentPlayer = playerTwo;
+        }
+     currentPlayer->setIsDecorated(false);
+     }
+    
+    if (currentPlayer == playerOne) {
+        currentPlayer = playerTwo;
     } else {
-        currentPlayer = playerOne.get();
+        currentPlayer = playerOne;
     }
 }
 
@@ -68,58 +94,31 @@ void Game::specialAction() {
  }
 
 
-AbstractPlayer *Game::createDecoratedPlayer(string specialAction, AbstractPlayer *ap) {
+AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<AbstractPlayer> absPlayer) {
     if (specialAction == "heavy") {
     return nullptr; // TODO
     }  else if (specialAction == "blind") {
-    return nullptr; // TODO
+    return new BlindDecorator(absPlayer, this);
     }
     return nullptr;
 }
 
 void Game::enableSpecialAction(string spa, char block) {// information is gathered after the turn is switched to the oppoenent so we decorate currentPlayer
-  shared_ptr<AbstractPlayer>keepTrack2=playerTwo;
-  shared_ptr<AbstractPlayer>keepTrack1=playerOne;
-  //shared_ptr<AbstractPlayer>tmp1{new BlindDecorator (playerOne.get(), this)};
-//  shared_ptr<AbstractPlayer>tmp2{new BlindDecorator (playerTwo.get(), this)};
-  int num=0;
- if (currentPlayer == playerOne.get()) {
- // shared_ptr<AbstractPlayer>tmp{createDecoratedPlayer(spa, playerOne.get())};
-  //new ForceDecorator(playerTwo.get(), this, block)};
-  shared_ptr<AbstractPlayer>tmp{new BlindDecorator (playerOne.get(), this)};
-  playerOne = tmp;
-  currentPlayer = tmp.get(); // ????????????//
-  num = 1;
- } else { 
-//  shared_ptr<AbstractPlayer>tmp{createDecoratedPlayer(spa, playerTwo.get())};
- // new ForceDecorator(playerOne.get(), this, block)}; 
- // AbstractPlayer *thing = createDecoratedPlayer("force", playerTwo.get());
-  shared_ptr<AbstractPlayer>tmp{new BlindDecorator (playerTwo.get(), this)};
- // playerTwo = tmp;
- playerTwo=tmp;
- // currentPlayer = playerTwo.get(); // ??????????????????????????
- currentPlayer = tmp.get();
- num = 2;
- }
-  if ( nullptr == playerTwo.get())
-    cout <<"the value now is not ok"<< endl;
-  needSpecial = false;
-  if ( spa=="force"){
-  cout<<"before setCurrentBlock"<<endl;
-    currentPlayer->setCurrentBlock(block);
-  }else if( spa=="blind"){
-  
-  this->print();
-  if(num ==2){
-
-  playerTwo=keepTrack2;
- // currentPlayer = playerTwo.get();
-  }
-  else
-  playerOne=keepTrack1;
-//  currentPlayer= playerOne.get();
- 
-  }
+// only works for blind atm
+if (currentPlayer == playerOne) {
+ AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerOne); // TODO support heavy as well
+ shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
+ tmp->setIsDecorated(true);
+ playerOne = tmp;
+ currentPlayer = playerOne;
+ } else { // currentPlayer is player2
+ AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerTwo);
+ shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
+ tmp->setIsDecorated(true);
+ playerTwo = tmp;
+ currentPlayer = playerTwo;
+}
+needSpecial = false;
 }
 
 

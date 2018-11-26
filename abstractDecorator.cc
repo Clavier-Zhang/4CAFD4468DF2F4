@@ -1,10 +1,7 @@
 #include "abstractDecorator.h"
 using namespace std;
 
-AbstractDecorator::AbstractDecorator(AbstractPlayer *component, Game *g) : AbstractPlayer{g}, player{component} {
-    if ( player == nullptr) cout<<"oops"<<endl;
-    cout<<"succcess"<<endl;
-//    player->setCurrentBlock('T');
+AbstractDecorator::AbstractDecorator(shared_ptr<AbstractPlayer> component, Game *g) : AbstractPlayer{g}, player{component} {
 } 
 
 /*AbstractLevel * AbstractDecorator::getLevel(){

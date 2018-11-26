@@ -25,8 +25,8 @@
             std::unique_ptr<AbstractBlock>nextBlock;
             bool isDecorated = false;
             // grid on the bottom
-            std::vector<std::vector<Point>> grid;
-            // blocks already exists, will be checked and cleared
+    public:        std::vector<std::vector<Point>> grid;
+           protected:  // blocks already exists, will be checked and cleared
             std::map<int,std::unique_ptr<AbstractBlock>> inactiveBlocks;
             // game for observer
             Game *game;
@@ -45,6 +45,8 @@
         virtual void setRandom() = 0;
         // display
         virtual void setCurrentBlock(char type = ' ') = 0;
+        virtual std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() = 0;
+        virtual void nullifyUnderlyingPlayer() = 0;
 
         void recalculateGrid();
         void recalculateInactiveBlocks();
