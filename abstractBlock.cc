@@ -8,7 +8,10 @@ using namespace std;
 
 AbstractBlock::AbstractBlock(string type, int score) : type{type}, score{score} {}
 
-AbstractBlock::~AbstractBlock() {}
+AbstractBlock::~AbstractBlock() {
+// removeAllPoint(); 
+}
+
 bool AbstractBlock::contain(Point *p) {
     for (Point *old : this->points) {
         if (old == p) {

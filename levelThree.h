@@ -5,8 +5,9 @@
 #include "abstractBlock.h"
 class LevelThree : public AbstractLevel {
     public:
+        LevelThree();
         ~LevelThree();
-        AbstractBlock* generateBlock() override;
+        AbstractBlock* generateBlock(char type = ' ') override;
 
 };
 #endif

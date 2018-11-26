@@ -1,5 +1,7 @@
 #include "game.h"
 #include "player.h"
+#include "abstractDecorator.h"
+#include "blindDecorator.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -42,6 +44,10 @@ bool Game::gameOver() {
     return isOver;
 }
 
+bool Game::isNeedSpecial() {
+ return needSpecial;
+ }
+
 void Game::setGameOver() {
     isOver = true;
 }
@@ -56,7 +62,66 @@ void Game::turnOver() {
 }
 
 // finish later
-void Game::specialAction() {}
+void Game::specialAction() {
+  needSpecial = true; 
+  turnOver();// switch players
+ }
+
+
+AbstractPlayer *Game::createDecoratedPlayer(string specialAction, AbstractPlayer *ap) {
+    if (specialAction == "heavy") {
+    return nullptr; // TODO
+    }  else if (specialAction == "blind") {
+    return nullptr; // TODO
+    }
+    return nullptr;
+}
+
+void Game::enableSpecialAction(string spa, char block) {// information is gathered after the turn is switched to the oppoenent so we decorate currentPlayer
+  shared_ptr<AbstractPlayer>keepTrack2=playerTwo;
+  shared_ptr<AbstractPlayer>keepTrack1=playerOne;
+  //shared_ptr<AbstractPlayer>tmp1{new BlindDecorator (playerOne.get(), this)};
+//  shared_ptr<AbstractPlayer>tmp2{new BlindDecorator (playerTwo.get(), this)};
+  int num=0;
+ if (currentPlayer == playerOne.get()) {
+ // shared_ptr<AbstractPlayer>tmp{createDecoratedPlayer(spa, playerOne.get())};
+  //new ForceDecorator(playerTwo.get(), this, block)};
+  shared_ptr<AbstractPlayer>tmp{new BlindDecorator (playerOne.get(), this)};
+  playerOne = tmp;
+  currentPlayer = tmp.get(); // ????????????//
+  num = 1;
+ } else { 
+//  shared_ptr<AbstractPlayer>tmp{createDecoratedPlayer(spa, playerTwo.get())};
+ // new ForceDecorator(playerOne.get(), this, block)}; 
+ // AbstractPlayer *thing = createDecoratedPlayer("force", playerTwo.get());
+  shared_ptr<AbstractPlayer>tmp{new BlindDecorator (playerTwo.get(), this)};
+ // playerTwo = tmp;
+ playerTwo=tmp;
+ // currentPlayer = playerTwo.get(); // ??????????????????????????
+ currentPlayer = tmp.get();
+ num = 2;
+ }
+  if ( nullptr == playerTwo.get())
+    cout <<"the value now is not ok"<< endl;
+  needSpecial = false;
+  if ( spa=="force"){
+  cout<<"before setCurrentBlock"<<endl;
+    currentPlayer->setCurrentBlock(block);
+  }else if( spa=="blind"){
+  
+  this->print();
+  if(num ==2){
+
+  playerTwo=keepTrack2;
+ // currentPlayer = playerTwo.get();
+  }
+  else
+  playerOne=keepTrack1;
+//  currentPlayer= playerOne.get();
+ 
+  }
+}
+
 
 // finish later
 void Game::print() {

@@ -14,6 +14,9 @@ class Game {
         // status of game
         bool isOver = false;
         bool needSpecial = false;
+
+        AbstractPlayer *createDecoratedPlayer(std::string, AbstractPlayer *);
+
     public:
         // initialize two players
         Game();
@@ -26,9 +29,12 @@ class Game {
         void drop();
         // more command to be determined
         bool gameOver();
+        bool isNeedSpecial();
         void setGameOver();
         void turnOver();
         void specialAction();
+
+        void enableSpecialAction(std::string, char block = ' ');
         // print
         void print();
         // modify later

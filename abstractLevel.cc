@@ -1,5 +1,12 @@
 #include "abstractLevel.h"
 #include <cstdlib>
+#include "blockI.h"
+#include "blockJ.h"
+#include "blockL.h"
+#include "blockO.h"
+#include "blockS.h"
+#include "blockT.h"
+#include "blockZ.h"
 
 
 using namespace std;
@@ -50,5 +57,14 @@ int AbstractLevel::getLevel() {
     return this->level;
 }
 
-
-
+AbstractBlock* AbstractLevel::createCustomBlock(char type) {
+    switch (type) {
+     case 'I': return new BlockI((level + 1) * (level + 1));
+     case 'J': return new BlockJ((level + 1) * (level + 1));
+     case 'L': return new BlockL((level + 1) * (level + 1));
+     case 'T': return new BlockT((level + 1) * (level + 1));
+     case 'O': return new BlockO((level + 1) * (level + 1));
+     case 'S': return new BlockS((level + 1) * (level + 1));
+     default: return new BlockZ((level + 1) * (level + 1));
+     }
+}

@@ -26,32 +26,13 @@ LevelZero::LevelZero() : AbstractLevel{0, "", false} {
 
 LevelZero::~LevelZero() {}
 
-AbstractBlock* LevelZero::generateBlock() {
+AbstractBlock* LevelZero::generateBlock(char type) {
+    if (type != ' ') return createCustomBlock(type);
     if (this->seqAt == (int)this->sequence.length()) {
         this->seqAt = 0;
     }
     char c = this->sequence[this->seqAt];
     this->seqAt++;
-    if (c == 'I') {
-        return new BlockI((this->level + 1) * (this->level + 1));
-    }
-    if (c == 'J') {
-        return new BlockJ((this->level + 1) * (this->level + 1));
-    }
-    if (c == 'L') {
-        return new BlockL((this->level + 1) * (this->level + 1));
-    }
-    if (c == 'O') {
-        return new BlockO((this->level + 1) * (this->level + 1));
-    }
-    if (c == 'S') {
-        return new BlockS((this->level + 1) * (this->level + 1));
-    }
-    if (c == 'T') {
-        return new BlockT((this->level + 1) * (this->level + 1));
-    }
-    if (c == 'Z') {
-        return new BlockZ((this->level + 1) * (this->level + 1));
-    }
-    return new BlockI((this->level + 1) * (this->level + 1));
+    return createCustomBlock(c);
+
 }

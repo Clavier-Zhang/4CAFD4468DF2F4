@@ -7,6 +7,6 @@ class LevelOne : public AbstractLevel {
     public:
         LevelOne();
         ~LevelOne();
-        AbstractBlock* generateBlock() override;
+        AbstractBlock* generateBlock(char type = ' ') override;
 };
 #endif

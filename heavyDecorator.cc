@@ -1,7 +1,7 @@
 #include "heavyDecorator.h"
 using namespace std;
 
-HeavyDecorator::HeavyDecorator(AbstractDecorator *abstractDecorator) {}
+HeavyDecorator::HeavyDecorator(AbstractPlayer *absPlayer) : AbstractDecorator{absPlayer} {}
 // player's operation
 // check if it is possible to level up/down
 void HeavyDecorator::setLevel(int level) {}

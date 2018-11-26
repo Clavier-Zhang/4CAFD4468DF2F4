@@ -28,7 +28,8 @@ class AbstractLevel {
     public:
         AbstractLevel(int level, std::string sequence, bool isRandom );
         ~AbstractLevel();
-        virtual AbstractBlock* generateBlock() = 0;
+        virtual AbstractBlock* generateBlock(char type = ' ') = 0;
+        AbstractBlock *createCustomBlock(char);
         // getter
         int getLevel();
 };

@@ -1,38 +1,37 @@
-#ifndef _ABSTRACTPLAYER_H_
-#define _ABSTRACTPLAYER_H_
-#include <memory>
-#include <vector>
-#include <iostream>
-#include "point.h"
-#include <string>
-#include "abstractLevel.h"
-#include <map>
-class AbstractBlock;
-class Game;
+    #ifndef _ABSTRACTPLAYER_H_
+    #define _ABSTRACTPLAYER_H_
+    #include <memory>
+    #include <vector>
+    #include <iostream>
+    #include "point.h"
+    #include <string>
+    #include "abstractLevel.h"
+    #include <map>
+    class AbstractBlock;
+    class Game;
 
-class AbstractPlayer { 
-    protected:
-        // level on the top left
-        int currID=0;//TODO:fix this
-        std::shared_ptr<AbstractLevel> level;
-        // score on the top left
-        int currenntScore = 0;
-        int highestScore = 0;
-        int rowNum = 18;
-        int reservedRowNum = 3;
-        int colNum = 11;
-        std::unique_ptr<AbstractBlock>currentBlock;
-        std::unique_ptr<AbstractBlock>nextBlock;
-       //AbstractBlock *currentBlock;
-       // AbstractBlock *nextBlock;
-        // grid on the bottom
-        std::vector<std::vector<Point>> grid;
-        // blocks already exists, will be checked and cleared
-        std::map<int,std::unique_ptr<AbstractBlock>> inactiveBlocks;
-        // game for observer
-        Game *game;
-    public:
-        AbstractPlayer(Game *game);
+    class AbstractPlayer { 
+        protected:
+            // level on the top left
+            int currID=0;//TODO:fix this (make static method in block)
+            std::shared_ptr<AbstractLevel> level;
+            // score on the top left
+            int currenntScore = 0;
+            int highestScore = 0;
+            const int rowNum = 18;
+            const int reservedRowNum = 3;
+            const int colNum = 11;
+            std::unique_ptr<AbstractBlock>currentBlock;
+            std::unique_ptr<AbstractBlock>nextBlock;
+            bool isDecorated = false;
+            // grid on the bottom
+            std::vector<std::vector<Point>> grid;
+            // blocks already exists, will be checked and cleared
+            std::map<int,std::unique_ptr<AbstractBlock>> inactiveBlocks;
+            // game for observer
+            Game *game;
+        public:
+            AbstractPlayer(Game *game);
         ~AbstractPlayer();
         // player's operation
         // check if it is possible to level up/down
@@ -45,7 +44,7 @@ class AbstractPlayer {
         // assign the point pointer to currentBlock, can
         virtual void setRandom() = 0;
         // display
-        virtual void setCurrentBlock() = 0;
+        virtual void setCurrentBlock(char type = ' ') = 0;
 
         void recalculateGrid();
         void recalculateInactiveBlocks();
@@ -53,6 +52,8 @@ class AbstractPlayer {
 
         void shiftRowDown(int row, int offset);
 
+        void setIsDecorated(bool);
+        bool getIsDecorated();
         // observer pattern
         void notifyGameover();
         void notifyTurnover();
@@ -61,7 +62,7 @@ class AbstractPlayer {
         int getCurrentScore();
         int getHighestScore();
         int getLevel();
-        std::string getGridRow(int row);
+        virtual std::string getGridRow(int row) = 0;
         std::string getNextBlock();
         Point* getPoint(std::pair<int, int> &c);
         // check if the point at c is valid
