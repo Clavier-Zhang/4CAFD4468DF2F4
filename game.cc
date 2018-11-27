@@ -13,6 +13,37 @@ Game::Game() :
     playerTwo{new Player(this)}, 
     currentPlayer{/*playerOne.get()*/playerOne} {}
 
+Game::~Game() {
+takeOffDecorations();
+}
+
+void Game::takeOffDecorations() {
+    if (currentPlayer->getIsDecorated()) {
+    shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
+    // schema for removing decoration:
+    // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
+    // 2. call on both currentPlayer and playerX; this deletes only the decorator
+    // 3. reassign the undecorated player component to playerX and currentPlayer
+        if (currentPlayer == playerOne) {
+            playerOne->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerOne.reset();
+            currentPlayer.reset();
+            playerOne = tmp;
+            currentPlayer = playerOne;
+        } else { // currentPlayer is playerTwo
+            playerTwo->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerTwo.reset();
+            currentPlayer.reset();
+            playerTwo = tmp;
+            currentPlayer = playerTwo;
+        }
+     currentPlayer->setIsDecorated(false);
+    }
+}
+ 
+
 void Game::restart() {
 // need to implement
 }
@@ -56,30 +87,7 @@ void Game::setGameOver() {
 void Game::turnOver() {
     // remove decorations from currentPlayer if they exist
     // at the moment, this only supports one level of decoration
-    if (currentPlayer->getIsDecorated()) {
-    shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
-    // schema for removing decoration:
-    // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
-    // 2. call on both currentPlayer and playerX; this deletes only the decorator
-    // 3. reassign the undecorated player component to playerX and currentPlayer
-        if (currentPlayer == playerOne) {
-            playerOne->nullifyUnderlyingPlayer();
-            currentPlayer->nullifyUnderlyingPlayer();
-            playerOne.reset();
-            currentPlayer.reset();
-            playerOne = tmp;
-            currentPlayer = playerOne;
-        } else { // currentPlayer is playerTwo
-            playerTwo->nullifyUnderlyingPlayer();
-            currentPlayer->nullifyUnderlyingPlayer();
-            playerTwo.reset();
-            currentPlayer.reset();
-            playerTwo = tmp;
-            currentPlayer = playerTwo;
-        }
-     currentPlayer->setIsDecorated(false);
-     }
-    
+ takeOffDecorations();   
     if (currentPlayer == playerOne) {
         currentPlayer = playerTwo;
     } else {

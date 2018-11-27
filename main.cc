@@ -106,7 +106,6 @@ int main () {
         }
 
 
-
         int step = getNumPrefix(command);
         string translatedCmd = cmdMappings[command]; // look up command in dictionary
         if (translatedCmd == " ") continue;

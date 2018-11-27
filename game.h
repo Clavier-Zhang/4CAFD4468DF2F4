@@ -17,10 +17,12 @@ class Game {
         bool needSpecial = false;
 
         AbstractPlayer *createDecoratedPlayer(std::string, std::shared_ptr<AbstractPlayer>);
+        void takeOffDecorations();
 
     public:
         // initialize two players
         Game();
+        ~Game();
         void restart(); // TODO clears the board and starts a new game
         // player's operation
         // do not need to check, call currentPlayer's method directly

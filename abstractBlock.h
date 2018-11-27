@@ -6,6 +6,10 @@ class AbstractLevel;
 class Point;
 class AbstractPlayer;
 class AbstractBlock {
+       // When a block is added to the map inactiveBlocks (in abstractcPlayer), its key
+       // is an ID; upon addition, each point in the block gets this ID so it can be
+       // efficiently retrieved later
+       static int curId; // increments every time
     // set protected, so can be called in concrete block and draw
     protected:
         // have four points in the vector
@@ -30,5 +34,7 @@ class AbstractBlock {
         int getScore();
         std::pair<int, int> getLowerLeft();
         void setID(int id);
+        static int getCurId();
+        static void incrementCurId();
 };
 #endif

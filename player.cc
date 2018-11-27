@@ -11,16 +11,6 @@ using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
 Player::Player(Game *game) : AbstractPlayer{game} {}
-    
-// player's operation
-// check if it is possible to level up/down
-void Player::setLevel(int level){
-    if (level == 0) {
-        this->level.reset(new LevelZero());
-    } else if (level == 1) {
-        this->level.reset(new LevelOne());
-    }
-}
 
 string Player::getGridRow(int row) {
 string s;
@@ -29,11 +19,20 @@ string s;
     }
     return s;
 }
-shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() {
-//shared_ptr<AbstractPlayer> tmp =  make_shared(nullptr); // ??
-return /*tmp;*/nullptr;
- }
-void Player::nullifyUnderlyingPlayer() {}
+
+string Player::getGridPoint(int row, int col) {
+ return grid[row][col].getType();
+}
+
+shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() { // there is no underlying player
+ cout << "Player::getUnderlyingPlayer" << endl;
+ return nullptr;
+}
+
+void Player::nullifyUnderlyingPlayer() {
+ cout << "Player::nullify" << endl;
+} // there is no underlying player to set to null
+
 bool Player::move(std::string type, int step) {
    // interpret command
     int deltaX = 0;
@@ -129,16 +128,17 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (move("down", 1)) {}
-    currentBlock->setID(currID);
-    inactiveBlocks[currID] = std::move(currentBlock);
-    currID++;
-    currentBlock = std::move(nextBlock);
-    currentBlock->initialize(this);
-    unique_ptr<AbstractBlock>tmp{level->generateBlock()};
-    nextBlock = std::move(tmp);
-    recalculateGrid();
-  //  notifyTurnover(); // how do you know not special action?
-    notifySpecialAction();
+        currentBlock->setID(/*currID*/AbstractBlock::getCurId());
+        inactiveBlocks[/*currID*/AbstractBlock::getCurId()] = std::move(currentBlock);
+        //currID++;
+        AbstractBlock::incrementCurId();
+        currentBlock = std::move(nextBlock);
+        currentBlock->initialize(this);
+        unique_ptr<AbstractBlock>tmp{level->generateBlock()};
+        nextBlock = std::move(tmp);
+        recalculateGrid();
+        notifyTurnover(); // how do you know not special action?
+      //  notifySpecialAction();
 }
 
 // assign the point pointer to currentBlock, can
@@ -152,4 +152,3 @@ void Player::setCurrentBlock(char type) {
     currentBlock->initialize(this);
     cout << "curBlock was assigned" << endl;
 }
-void Player::setRandom() {} 

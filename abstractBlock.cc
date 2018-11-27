@@ -8,8 +8,9 @@ using namespace std;
 
 AbstractBlock::AbstractBlock(string type, int score) : type{type}, score{score} {}
 
+int AbstractBlock::curId = 0; // Initialize static member curId
+
 AbstractBlock::~AbstractBlock() {
-// removeAllPoint(); 
 }
 
 bool AbstractBlock::contain(Point *p) {
@@ -38,10 +39,9 @@ void AbstractBlock::removeOnePoint(Point *p) {
 }
 
 void AbstractBlock::setID(int id){
-    for (int i =0; i< (int)points.size(); i++){
+    for (int i = 0; i < (int) points.size(); i++){
         points[i]->setID(id);
     }
-    cout<<id<<endl;
 }
 
 // getters
@@ -85,3 +85,12 @@ pair<int, int> AbstractBlock::getLowerLeft() {
 int AbstractBlock::getScore() {
     return score;
 }
+
+int AbstractBlock::getCurId() { 
+ return AbstractBlock::curId;
+}
+
+void AbstractBlock::incrementCurId() {
+ ++AbstractBlock::curId;
+}
+

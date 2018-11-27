@@ -24,14 +24,19 @@ AbstractPlayer::AbstractPlayer(Game *game):level{shared_ptr<AbstractLevel>(new L
         }
         grid.emplace_back(row);
     }
-    //level = shared_ptr<AbstractLevel>(new LevelZero());
-    //currentBlock = this->level->generateBlock();
-    //nextBlock = this->level->generateBlock();
     currentBlock->initialize(this);
     this->game = game;
 }
 
-AbstractPlayer::~AbstractPlayer(){
+AbstractPlayer::~AbstractPlayer(){}
+
+// check if possible to level up or down
+void AbstractPlayer::setLevel(int level){
+    if (level == 0) {
+        this->level.reset(new LevelZero());
+    } else if (level == 1) {
+        this->level.reset(new LevelOne());
+    }
 }
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
@@ -47,14 +52,6 @@ bool AbstractPlayer::isValid(pair<int, int> &c) {
     }
     return true;
 }
-
-/*string AbstractPlayer::getGridRow(int row) {
-    string s;
-    for (int i = 0; i < colNum; i++) {
-        s += grid[row][i].getType();
-    }
-    return s;
-}*/
 
 void AbstractPlayer::recalculateGrid() {
    bool shouldClear;
@@ -77,16 +74,15 @@ void AbstractPlayer::recalculateGrid() {
 }
 
 void AbstractPlayer::clearRow(int row) {
-   for(int col=0; col<colNum; col++){
+   for (int col = 0; col < colNum; col++){
         Point *p = &this->grid[row][col];
         p->setType(" ");
-        for(auto cell : inactiveBlocks[p->getID()]->getPoints()){
-            cout<<"were on" <<p->getID()<<endl;
-            if(cell == p){
+        for (auto cell : inactiveBlocks[p->getID()]->getPoints()){
+            if (cell == p){
                 inactiveBlocks[p->getID()].get()->removeOnePoint(p);
             }
         }
-        p->setID(-1);
+        p->setID(-1);// reset to default
    }
 }
 
@@ -111,20 +107,24 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
         }
     }
 }
+
 void AbstractPlayer::recalculateInactiveBlocks(){
     for(auto & entry : inactiveBlocks){
         if (entry.second->getPoints().size() == 0){
-            currenntScore+=entry.second->getScore();
+            currentScore += entry.second->getScore();
             inactiveBlocks.erase(entry.first);
         }
     }
 
 }
+
 void AbstractPlayer::setIsDecorated(bool isDec) {
  isDecorated = isDec;
 }
 
 bool AbstractPlayer::getIsDecorated() { return isDecorated;}
+
+void AbstractPlayer::setRandom() {}
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {
@@ -141,7 +141,7 @@ void AbstractPlayer::notifySpecialAction() {
 
 // getter
 int AbstractPlayer::getCurrentScore() {
-    return currenntScore;
+    return currentScore;
 }
 
 int AbstractPlayer::getHighestScore() {
