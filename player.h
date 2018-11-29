@@ -7,18 +7,21 @@
 #include "abstractPlayer.h"
 
 class Player : public AbstractPlayer {
+        bool moveHelper(std::string type = "down", int step = 1);
+        bool rotateHelper(bool counter = false, int step = 1);
+
     public:
         // initialzie the player, draw in the constructor, save window pointer
         Player(Game *game);
         // check if it's movable, then call block's method to move
-        bool move(std::string type = "down", int step = 1) override;
-        void rotate(bool counter = false, int step = 1) override;
+        int move(std::string type = "down", int step = 1) override;
+        int rotate(bool counter = false, int step = 1) override;
         // add the points of blocks to grid, update the block in drop(), 
         void drop() override;
         // display
-        void setCurrentBlock(char type = ' ') override; 
         std::string getGridRow(int) override;
         std::string getGridPoint(int, int) override;
+        void setCurrentBlock(char) override;
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         void nullifyUnderlyingPlayer() override;
 };
