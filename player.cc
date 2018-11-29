@@ -1,11 +1,8 @@
 #include "player.h"
 #include "abstractPlayer.h"
 #include "game.h"
-#include <memory>
-#include "levelZero.h"
-#include "levelOne.h"
-#include "levelTwo.h"
 #include "blockI.h"
+#include <memory>
 #include <iostream>
 using namespace std;
 
@@ -128,10 +125,10 @@ void Player::rotate(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (move("down", 1)) {}
-        currentBlock->setID(/*currID*/AbstractBlock::getCurId());
-        inactiveBlocks[/*currID*/AbstractBlock::getCurId()] = std::move(currentBlock);
-        //currID++;
+        currentBlock->setID(AbstractBlock::getCurId());
+        inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
         AbstractBlock::incrementCurId();
+
         currentBlock = std::move(nextBlock);
         currentBlock->initialize(this);
         unique_ptr<AbstractBlock>tmp{level->generateBlock()};
@@ -145,10 +142,8 @@ void Player::drop(){
 // be used in moveLeft, moveRight
 // target::block
 void Player::setCurrentBlock(char type) {
-    cout<<"player"<<endl;
     unique_ptr<AbstractBlock>tmp{level->generateBlock(type)};
     currentBlock->removeAllPoint();
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);
-    cout << "curBlock was assigned" << endl;
 }

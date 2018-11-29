@@ -15,7 +15,7 @@ LevelTwo::~LevelTwo() {}
  
 AbstractBlock* LevelTwo::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);
-    const double DEFAULT = 1/7;
+    const double DEFAULT = static_cast<double>(1)/7;
     char c = this->generateChar(DEFAULT,DEFAULT,DEFAULT,DEFAULT,
     DEFAULT,DEFAULT,DEFAULT);
     return createCustomBlock(c);

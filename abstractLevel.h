@@ -32,5 +32,7 @@ class AbstractLevel {
         AbstractBlock *createCustomBlock(char);
         // getter
         int getLevel();
+
+
 };
 #endif

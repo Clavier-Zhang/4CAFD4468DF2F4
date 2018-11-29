@@ -36,6 +36,12 @@ void AbstractPlayer::setLevel(int level){
         this->level.reset(new LevelZero());
     } else if (level == 1) {
         this->level.reset(new LevelOne());
+    }else if (level == 2){
+        this->level.reset(new LevelTwo());
+    }else if (level == 3){
+        this->level.reset(new LevelThree());
+    }else if ( level == 4){
+        this->level.reset(new LevelFour());
     }
 }
 
@@ -116,6 +122,22 @@ void AbstractPlayer::recalculateInactiveBlocks(){
         }
     }
 
+}
+
+void AbstractPlayer::applyLevelEffects(){
+   if (level->getLevel() == 4){
+        LevelFour * lf = static_cast<LevelFour *>(level.get());
+        offset>0?lf->resetNumUncleared():lf->incNumUncleared();
+        int uncleared= lf->getNumUncleared();
+
+        if (uncleared>0 && uncleared%5 == 0){
+            unique_ptr<AbstractBlock> divider {lf->createCustomBlock('X')};
+            divider->initialize(this);
+            divider->setID(AbstractBlock::getCurId());
+            inactiveBlocks[AbstractBlock::getCurId()] = std::move(divider);
+            AbstractBlock::incrementCurId();
+        }
+    }
 }
 
 void AbstractPlayer::setIsDecorated(bool isDec) {

@@ -12,8 +12,8 @@ LevelOne::~LevelOne() {}
 
 AbstractBlock * LevelOne::generateBlock(char type){
     if (type != ' ') return createCustomBlock(type);
-    const double DEFAULT = 1/6;
-    const double Z_S_PROB = 1/12;
+    const double DEFAULT = static_cast<double>(1)/6;
+    const double Z_S_PROB = static_cast<double>(1)/12;
     char c = this->generateChar(DEFAULT,DEFAULT,DEFAULT,DEFAULT,
     Z_S_PROB,Z_S_PROB,DEFAULT);
     return createCustomBlock(c);

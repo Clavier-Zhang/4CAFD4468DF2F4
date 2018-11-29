@@ -7,7 +7,7 @@
 #include "blockS.h"
 #include "blockT.h"
 #include "blockZ.h"
-
+#include "blockX.h"
 
 using namespace std;
 
@@ -49,7 +49,6 @@ char AbstractLevel::generateChar(double bI, double bJ,double bL, double bT, doub
         return 'Z';
     }
 
-    
     return 'O';
 }
 
@@ -65,6 +64,7 @@ AbstractBlock* AbstractLevel::createCustomBlock(char type) {
      case 'T': return new BlockT((level + 1) * (level + 1));
      case 'O': return new BlockO((level + 1) * (level + 1));
      case 'S': return new BlockS((level + 1) * (level + 1));
+     case 'X': return new BlockX((level + 1) * (level + 1));
      default: return new BlockZ((level + 1) * (level + 1));
      }
 }
