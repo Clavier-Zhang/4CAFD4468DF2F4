@@ -45,6 +45,7 @@ void AbstractPlayer::setLevel(int level){
     }
 }
 
+
 bool AbstractPlayer::isValid(pair<int, int> &c) {
     if (c.first < 0 || c.second < 0) {
         return false;
@@ -76,6 +77,7 @@ void AbstractPlayer::recalculateGrid() {
             shiftRowDown(row, offset);
         }
    }
+    applyLevelEffects(offset);
     recalculateInactiveBlocks();
 }
 
@@ -124,7 +126,7 @@ void AbstractPlayer::recalculateInactiveBlocks(){
 
 }
 
-void AbstractPlayer::applyLevelEffects(){
+void AbstractPlayer::applyLevelEffects(int offset){
    if (level->getLevel() == 4){
         LevelFour * lf = static_cast<LevelFour *>(level.get());
         offset>0?lf->resetNumUncleared():lf->incNumUncleared();

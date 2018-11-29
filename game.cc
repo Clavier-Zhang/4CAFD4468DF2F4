@@ -55,6 +55,10 @@ void Game::setLevel(int level) {
     print();
 }
 
+int Game::getLevel(){
+    return currentPlayer->getLevel();
+}
+
 void Game::move(string type, int step) {
     currentPlayer->move(type, step);
     print();

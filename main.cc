@@ -73,6 +73,8 @@ int main () {
     addCommands(commands);
     map<string, string> cmdMappings;
     initializeDict(cmdMappings, commands);
+    const int MAX_LEVEL=4;
+    const int MIN_LEVEL=0;
 
     string command;
     unique_ptr<Game>game{new Game};
@@ -127,8 +129,18 @@ int main () {
         } else if (translatedCmd == "counterclockwise") {
             game->rotate(true, step);
         } else if (translatedCmd == "levelup") {
+            int level=game->getLevel();
+            if(level!=MAX_LEVEL){
+                level++;
+                game->setLevel(level);
+            }
             // get level and increment, use step
         } else if (translatedCmd == "leveldown") {
+            int level=game->getLevel();
+            if(level!=MIN_LEVEL){
+                level--;
+                game->setLevel(level);
+            }
             // get level and decrement, use step
         } else if (translatedCmd == "norandom") {
             string randomFile;

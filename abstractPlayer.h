@@ -52,7 +52,7 @@
         void recalculateInactiveBlocks();
         void clearRow(int row);
         //checks if you need to apply any special affects to player at the end of turn
-        void applyLevelEffects();
+        void applyLevelEffects(int);
 
         void shiftRowDown(int row, int offset);
 
