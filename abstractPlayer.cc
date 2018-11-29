@@ -128,7 +128,7 @@ void AbstractPlayer::recalculateInactiveBlocks(){
 
 void AbstractPlayer::applyLevelEffects(int offset){
    if (level->getLevel() == 4){
-        LevelFour * lf = static_cast<LevelFour *>(level.get());
+        shared_ptr<LevelFour> lf = static_pointer_cast<LevelFour>(level);
         offset>0?lf->resetNumUncleared():lf->incNumUncleared();
         int uncleared= lf->getNumUncleared();
 

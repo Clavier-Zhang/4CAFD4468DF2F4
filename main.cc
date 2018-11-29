@@ -73,7 +73,7 @@ int main () {
     addCommands(commands);
     map<string, string> cmdMappings;
     initializeDict(cmdMappings, commands);
-    const int MAX_LEVEL=4;
+    const int MAX_LEVEL=4; // maybe put these in game?
     const int MIN_LEVEL=0;
 
     string command;
