@@ -4,17 +4,35 @@
 using namespace std;
 
 BlockX::BlockX(int score) : AbstractBlock{"X", score} {
-
-    auto c1 = make_pair(0, 0);
-    this->positions.emplace_back(c1);
+/*    auto c1 = make_pair(0, 5);
+    this->positions.emplace_back(c1);*/
 }
 
 BlockX::~BlockX() {}
 
 void BlockX::initialize(AbstractPlayer *p) {
     // get point pointers
+    string row;
+    for (int i =17; i>2; i--){
+
+        row = p->getGridRow(i);
+        if (row[5] == ' '){
+        cout<<"the value of i is " <<i<<endl;
+            auto c1 = make_pair(5,i);
+            positions.emplace_back(c1);
+            break;
+        }
+
+    }
+    if ((int)positions.size() == 0){
+        p->notifyGameover();
+        return;
+    }
+
      for (pair<int, int> &c : positions) {
-        this->addPoint(c, p);
+        cout <<"hii"<<endl;
+        addPoint(c, p);
+        cout<<"success"<<endl;
     }
     // set points
     for (Point *p : this->points) {

@@ -44,5 +44,6 @@ class Game {
         // modify later
         std::string getNextBlockFirstRow(std::string type);
         std::string getNextBlockSecondRow(std::string type);
+        int getLevel(); // gets currentPlayer's level
 };
 #endif

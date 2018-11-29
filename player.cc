@@ -1,11 +1,8 @@
 #include "player.h"
 #include "abstractPlayer.h"
 #include "game.h"
-#include <memory>
-#include "levelZero.h"
-#include "levelOne.h"
-#include "levelTwo.h"
 #include "blockI.h"
+#include <memory>
 #include <iostream>
 using namespace std;
 
@@ -170,6 +167,7 @@ void Player::drop(){
         currentBlock->setID(AbstractBlock::getCurId());
         inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
         AbstractBlock::incrementCurId();
+
         currentBlock = std::move(nextBlock);
         currentBlock->initialize(this);
         unique_ptr<AbstractBlock>tmp{level->generateBlock()};
@@ -178,5 +176,15 @@ void Player::drop(){
         // some logic for determining correct notify will need to go here
         notifyTurnover(); // how do you know not special action?
 //      notifySpecialAction();
+}
+
+// assign the point pointer to currentBlock, can
+// be used in moveLeft, moveRight
+// target::block
+void Player::setCurrentBlock(char type) {
+    unique_ptr<AbstractBlock>tmp{level->generateBlock(type)};
+    currentBlock->removeAllPoint();
+    currentBlock = std::move(tmp);
+    currentBlock->initialize(this);
 }
 

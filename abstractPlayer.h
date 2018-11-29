@@ -22,6 +22,9 @@
             const int colNum = 11;
             std::unique_ptr<AbstractBlock>currentBlock;
             std::unique_ptr<AbstractBlock>nextBlock;
+
+            bool isDecorated = false;
+
             // grid on the bottom
             std::vector<std::vector<Point>> grid;
             // blocks already exists, will be checked and cleared
@@ -49,6 +52,8 @@
             void recalculateGrid();
             void recalculateInactiveBlocks();
             void clearRow(int row);
+            //checks if you need to apply any special affects to player at the end of turn
+            void applyLevelEffects(int);
 
             void shiftRowDown(int row, int offset);
 
