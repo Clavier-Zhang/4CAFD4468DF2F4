@@ -118,12 +118,6 @@ void AbstractPlayer::recalculateInactiveBlocks(){
 
 }
 
-void AbstractPlayer::setIsDecorated(bool isDec) {
- isDecorated = isDec;
-}
-
-bool AbstractPlayer::getIsDecorated() { return isDecorated;}
-
 void AbstractPlayer::setRandom() {}
 
 // observer pattern

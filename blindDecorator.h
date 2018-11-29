@@ -9,15 +9,15 @@ class BlindDecorator : public AbstractDecorator {
 
         void drop() override;
 
-        void rotate(bool, int) override;
+        int rotate(bool, int) override;
 
-        bool move(std::string, int) override;
-
-        void setCurrentBlock(char) override;
+        int move(std::string, int) override;
 
         std::string getGridRow(int) override;
 
         std::string getGridPoint(int, int) override;
+
+        void setCurrentBlock(char) override;
 
         // Methods for destroying the decorator without destroying underlying component
 

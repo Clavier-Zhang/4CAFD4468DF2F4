@@ -36,8 +36,9 @@ class Game {
         void setGameOver();
         void turnOver();
         void specialAction();
+        void force(char);
 
-        void enableSpecialAction(std::string, char block = ' ');
+        void enableSpecialAction(std::string);
         // print
         void print();
         // modify later

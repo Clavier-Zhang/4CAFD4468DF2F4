@@ -67,6 +67,33 @@ int getNumPrefix(string &command) {
  }
 } 
 
+bool validSpecialAction(string action) {
+ if (action == "force") return true;
+ if (action == "heavy") return true;
+ if (action == "blind") return true;
+ return false;
+}
+
+bool validBlock(char c) {
+ switch (c) {
+  case 'S' : return true;
+  case 's' : return true;
+  case 'Z' : return true;
+  case 'z' : return true;
+  case 'I' : return true;
+  case 'i' : return true;
+  case 'J' : return true;
+  case 'j' : return true;
+  case 'L' : return true;
+  case 'l' : return true;
+  case 'O' : return true;
+  case 'o' : return true;
+  case 'T' : return true;
+  case 't' : return true;
+  default : return false;
+ }
+}
+
 int main () {
     srand(time(NULL));
     vector<string> commands;
@@ -79,24 +106,46 @@ int main () {
     game->print();
  // Command interpreter
      while (!game->gameOver() && !cin.eof()) {
-        
+      
       if (game->isNeedSpecial()) {// needs error checking
        string action;
        cout << "Please enter a special action" << endl;
-       cin >> action;
+       
+        while (true) {
+         cin >> action;
+         if (cin.fail()) {
+          cin.clear();
+          cin.ignore();
+          continue;
+          }
+         
+         if (validSpecialAction(action)) break;
+         cout << "Invalid action. Please enter 'blind', 'heavy', or 'force.'" << endl;
+         }
+
        if (action == "force") {
         char block;
         cout << "Please enter a block to force." << endl;
-        cin >> block;
-        game->enableSpecialAction(action, block);
-        game->print();
+        
+        while (true) {
+         cin >> block;
+         if (cin.fail()) {
+          cin.clear();
+          cin.ignore();
+          continue;
+          }
+         
+         if (validBlock(block)) break;
+         cout << "Invalid block. Please enter I, J, L, T, S, Z, or O." << endl;
+         }        
+         game->force(block); 
         } else if ((action == "heavy")||(action == "blind")) {
          game->enableSpecialAction(action);
-         game->print();
         }
+        game->print();
        }
+
        // error checking
-        
         
         cin >> command;
         if (cin.fail()) {
@@ -104,7 +153,6 @@ int main () {
             cin.ignore();
             continue;
         }
-
 
         int step = getNumPrefix(command);
         string translatedCmd = cmdMappings[command]; // look up command in dictionary
