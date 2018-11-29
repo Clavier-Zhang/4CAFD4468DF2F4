@@ -2,6 +2,7 @@
 #include "player.h"
 #include "abstractDecorator.h"
 #include "blindDecorator.h"
+#include "heavyDecorator.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -11,38 +12,11 @@ using namespace std;
 Game::Game() :
     playerOne{new Player(this)}, 
     playerTwo{new Player(this)}, 
-    currentPlayer{/*playerOne.get()*/playerOne} {}
+    currentPlayer{playerOne} {}
 
 Game::~Game() {
-takeOffDecorations();
+ takeOffDecorations();
 }
-
-void Game::takeOffDecorations() {
-    if (currentPlayer->getIsDecorated()) {
-    shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
-    // schema for removing decoration:
-    // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
-    // 2. call on both currentPlayer and playerX; this deletes only the decorator
-    // 3. reassign the undecorated player component to playerX and currentPlayer
-        if (currentPlayer == playerOne) {
-            playerOne->nullifyUnderlyingPlayer();
-            currentPlayer->nullifyUnderlyingPlayer();
-            playerOne.reset();
-            currentPlayer.reset();
-            playerOne = tmp;
-            currentPlayer = playerOne;
-        } else { // currentPlayer is playerTwo
-            playerTwo->nullifyUnderlyingPlayer();
-            currentPlayer->nullifyUnderlyingPlayer();
-            playerTwo.reset();
-            currentPlayer.reset();
-            playerTwo = tmp;
-            currentPlayer = playerTwo;
-        }
-     currentPlayer->setIsDecorated(false);
-    }
-}
- 
 
 void Game::restart() {
 // need to implement
@@ -51,8 +25,8 @@ void Game::restart() {
 // player's operation
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
-    currentPlayer->setLevel(level);
-    print();
+ currentPlayer->setLevel(level);
+ print();
 }
 
 int Game::getLevel(){
@@ -60,8 +34,8 @@ int Game::getLevel(){
 }
 
 void Game::move(string type, int step) {
-    currentPlayer->move(type, step);
-    print();
+ currentPlayer->move(type, step);
+ print();
 }
 
 void Game::rotate(bool counter, int step) {
@@ -71,12 +45,12 @@ void Game::rotate(bool counter, int step) {
 
 // later, clear row
 void Game::drop() {
-    currentPlayer->drop();
-    print();
+ currentPlayer->drop();
+ print();
 }
 
 bool Game::gameOver() {
-    return isOver;
+ return isOver;
 }
 
 bool Game::isNeedSpecial() {
@@ -84,19 +58,25 @@ bool Game::isNeedSpecial() {
  }
 
 void Game::setGameOver() {
-    isOver = true;
+ isOver = true;
 }
 
 // next player's turn
 void Game::turnOver() {
-    // remove decorations from currentPlayer if they exist
-    // at the moment, this only supports one level of decoration
  takeOffDecorations();   
-    if (currentPlayer == playerOne) {
-        currentPlayer = playerTwo;
-    } else {
-        currentPlayer = playerOne;
-    }
+ if (currentPlayer == playerOne) {
+    currentPlayer = playerTwo;
+ } else {
+    currentPlayer = playerOne;
+ }
+/*
+ if (currentPlayer->getLevel() == 0) {// should be 3 or 4, just for testing
+        enableSpecialAction("heavy");
+        // call to enbleSpecialAction sets needSpecial to false
+        needSpecial = true;
+        enableSpecialAction("heavy");
+        needSpecial = true;
+     }*/
 }
 
 // finish later
@@ -105,34 +85,25 @@ void Game::specialAction() {
   turnOver();// switch players
  }
 
-
-AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<AbstractPlayer> absPlayer) {
-    if (specialAction == "heavy") {
-    return nullptr; // TODO
-    }  else if (specialAction == "blind") {
-    return new BlindDecorator(absPlayer, this);
-    }
-    return nullptr;
-}
-
-void Game::enableSpecialAction(string spa, char block) {// information is gathered after the turn is switched to the oppoenent so we decorate currentPlayer
-// only works for blind atm
-if (currentPlayer == playerOne) {
- AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerOne); // TODO support heavy as well
- shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
- tmp->setIsDecorated(true);
- playerOne = tmp;
- currentPlayer = playerOne;
+void Game::enableSpecialAction(string spa) {// information is gathered after the turn is switched to the oppoenent so we decorate currentPlayer
+ if (currentPlayer == playerOne) {
+    AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerOne);
+    shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
+    playerOne = tmp;
+    currentPlayer = playerOne;
  } else { // currentPlayer is player2
- AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerTwo);
- shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
- tmp->setIsDecorated(true);
- playerTwo = tmp;
- currentPlayer = playerTwo;
-}
-needSpecial = false;
+    AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerTwo);
+    shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
+    playerTwo = tmp;
+    currentPlayer = playerTwo;
+ }
+  needSpecial = false;
 }
 
+void Game::force(char c) { 
+ currentPlayer->setCurrentBlock(c);
+ needSpecial = false;
+}
 
 // finish later
 void Game::print() {
@@ -216,4 +187,40 @@ string Game::getNextBlockSecondRow(string type) {
         return " ZZ        ";
     }
     return " T         ";
+}
+
+// Private helper functions
+void Game::takeOffDecorations() {
+    shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
+    while (tmp != nullptr) { // the player still has decorations
+    // schema for removing decoration:
+    // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
+    // 2. call on both currentPlayer and playerX; this deletes only the decorator
+    // 3. reassign the undecorated player component to playerX and currentPlayer
+        if (currentPlayer == playerOne) {
+            playerOne->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerOne.reset();
+            currentPlayer.reset();
+            playerOne = tmp;
+            currentPlayer = playerOne;
+        } else { // currentPlayer is playerTwo
+            playerTwo->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerTwo.reset();
+            currentPlayer.reset();
+            playerTwo = tmp;
+            currentPlayer = playerTwo;
+        }
+        tmp = currentPlayer->getUnderlyingPlayer();
+    }
+}
+
+AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<AbstractPlayer> absPlayer) {
+    if (specialAction == "heavy") {
+    return new HeavyDecorator(absPlayer, this);
+    }  else if (specialAction == "blind") {
+    return new BlindDecorator(absPlayer, this);
+    }
+    return nullptr; // maybe throw an exception instead later
 }

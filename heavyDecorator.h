@@ -2,12 +2,28 @@
 #define _HEAVYDECORATOR_H_
 #include "abstractDecorator.h"
 class HeavyDecorator : public AbstractDecorator {
-    public:
-        HeavyDecorator(AbstractPlayer *absPlayer );
-        // player's operation
-        // check if it is possible to level up/down
-        void setLevel(int level);
-        // add the points of blocks to grid, update the block in drop(), 
-        void drop();
+    
+        std::shared_ptr<AbstractPlayer> getBasePlayer();
+    
+   public:
+        HeavyDecorator(std::shared_ptr<AbstractPlayer>, Game *g);
+        
+        void drop() override;
+
+        int rotate(bool, int) override;
+
+        int move(std::string, int) override;
+
+        std::string getGridRow(int) override;
+
+        std::string getGridPoint(int, int) override;
+
+        void setCurrentBlock(char) override;
+
+        // Methods for destroying the decorator without destroying underlying component
+
+        std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
+        
+        void nullifyUnderlyingPlayer() override;
 };
 #endif
