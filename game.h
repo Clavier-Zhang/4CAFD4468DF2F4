@@ -21,13 +21,14 @@ class Game {
         bool needSpecial = false;
         const int MAX_LEVEL = 4;
         const int MIN_LEVEL = 0;
+        bool isGraphical = false;
 
         AbstractPlayer *createDecoratedPlayer(std::string, std::shared_ptr<AbstractPlayer>);
         void takeOffDecorations();
 
     public:
         // initialize two players
-        Game();
+        Game(bool isGraphical);
         ~Game();
         void restart(); // TODO clears the board and starts a new game
         // player's operation
@@ -53,6 +54,7 @@ class Game {
         std::string getNextBlockFirstRow(std::string type);
         std::string getNextBlockSecondRow(std::string type);
         int getLevel(); // gets currentPlayer's level
+        Xwindow * getWindow();
         void drawBigString(int x, int y, std::string s, int playerNum);
         void drawPoint(int x, int y, int w, int h, int c, int playerNum);
         void undrawBigString(int x, int y, std::string s, int playerNum);

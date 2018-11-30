@@ -11,16 +11,17 @@
 #include <memory>
 #include <map>
 #include <iostream>
+#include "window.h"
 using namespace std;
 
 // constructor
-AbstractPlayer::AbstractPlayer(Game *game, int no):level{shared_ptr<AbstractLevel>(new LevelZero())},currentBlock{level->generateBlock()},nextBlock{level->generateBlock()}, no{no} {
+AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w):level{shared_ptr<AbstractLevel>(new LevelZero())},currentBlock{level->generateBlock()},nextBlock{level->generateBlock()}, no{no} {
     // initialize the grid
     for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
         for (int j = 0; j < colNum; j++) {
             string empty = " ";
-            row.emplace_back(Point(j,i,empty));
+            row.emplace_back(Point(j,i,empty, this->no, w));
         }
         grid.emplace_back(row);
     }
@@ -34,13 +35,14 @@ AbstractPlayer::AbstractPlayer(Game *game, int no):level{shared_ptr<AbstractLeve
     game->drawBigString(1, 2, "Score:", this->no);
 }
 
+// important
 AbstractPlayer::AbstractPlayer(Game *game):level{shared_ptr<AbstractLevel>(new LevelZero())},currentBlock{level->generateBlock()},nextBlock{level->generateBlock()} {
     // initialize the grid
     for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
         for (int j = 0; j < colNum; j++) {
             string empty = " ";
-            row.emplace_back(Point(j,i,empty));
+            row.emplace_back(Point(j,i,empty, this->no, nullptr));
         }
         grid.emplace_back(row);
     }

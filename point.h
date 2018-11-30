@@ -2,6 +2,8 @@
 #define _POINT_H_
 #include <string>
 #include <iostream>
+#include "window.h"
+class Game;
 class Point {
     private:
         int x;
@@ -11,10 +13,12 @@ class Point {
         // the ID of the block to which is belongs
         // for bash display, can be Z
         std::string type;
+        Game *g;
+        // who it belongs to
+        int playerNum;
+        Xwindow *w;
     public:
-        Point(int x, int y, std::string type);
-        void draw();
-        void undraw();
+        Point(int x, int y, std::string type, int playerNum, Xwindow *w);
         void setType(std::string type);
         void setID(int n);
         void reset();

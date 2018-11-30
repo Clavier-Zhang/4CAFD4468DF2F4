@@ -2,22 +2,52 @@
 #include <string>
 #include <iostream>
 #include "point.h"
+#include "game.h"
+#include "window.h"
 using namespace std;
 
-Point::Point(int x, int y, string type) 
-    : x{x}, y{y}, type{type} {}
-
-void Point::draw() {
-
-}
-
-void Point::undraw() {
-
-}
+Point::Point(int x, int y, string type, int no, Xwindow *w) 
+    : x{x}, y{y}, type{type}, playerNum{no}, w{w} {}
 
 // setter
 void Point::setType(string type) {
     this->type = type;
+    int colour = 0;
+    if (type == " ") {
+        colour = 0;
+    }
+    if (type == "I") {
+        colour = 2;
+    }
+    if (type == "J") {
+        colour = 3;
+    }
+    if (type == "L") {
+        colour = 4;
+    }
+    if (type == "O") {
+        colour = 5;
+    }
+    if (type == "S") {
+        colour = 6;
+    }
+    if (type == "T") {
+        colour = 7;
+    }
+    if (type == "X") {
+        colour = 0;
+    }
+    if (type == "Z") {
+        colour = 9;
+    }
+    if (this->w != nullptr) {
+        int unit = 19;
+        int realX = (x + (playerNum - 1) * 18) * unit;
+        int realY = y * unit;
+        int realW = unit;
+        int realH = unit;
+        this->w->fillRectangle(realX, realY, realW, realH, colour);
+    }
 }
 
 void Point::setID(int n){
@@ -42,4 +72,5 @@ int Point::getID(){
 }
 void Point::reset() {
     this->type = " ";
+    this->setType(" ");
 }

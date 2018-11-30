@@ -7,6 +7,7 @@
     #include <string>
     #include "abstractLevel.h"
     #include <map>
+    #include "window.h"
     class AbstractBlock;
     class Game;
 
@@ -33,8 +34,9 @@
             std::map<int,std::unique_ptr<AbstractBlock>> inactiveBlocks;
             // game for observer
             Game *game;
+            Xwindow *w;
         public:
-            AbstractPlayer(Game *game, int no);
+            AbstractPlayer(Game *game, int no, Xwindow *w);
             AbstractPlayer(Game *game);
             ~AbstractPlayer();
             // player's operation

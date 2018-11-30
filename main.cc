@@ -7,6 +7,7 @@
 #include "game.h"
 using namespace std;
 
+bool isGraphical = true;
 // add possible short version commands into map
 // notice we will not add unambiguous commands shorthand
 const vector<const string> baseCommands = {
@@ -76,7 +77,7 @@ int main () {
     const int MAX_LEVEL=4; // maybe put these in game?
     const int MIN_LEVEL=0;
     string command;
-    unique_ptr<Game>game{new Game};
+    unique_ptr<Game>game{new Game(isGraphical)};
     game->print();
 
     // Command interpreter

@@ -10,15 +10,16 @@ using namespace std;
 
 // initialize two players
 // more constructor for differnnt mode in command line
-Game::Game() :
-    playerOne{new Player(this, 1)}, 
-    playerTwo{new Player(this, 2)}, 
-    currentPlayer{playerOne} {
+Game::Game(bool isGraphical) : isGraphical{isGraphical} {
     // else set to nullptr, important
-    this->w.reset(new Xwindow(this->width, this->height));
-    this->playerOne.reset(new Player(this, 1));
-    this->playerTwo.reset(new Player(this, 2));
-    this->currentPlayer.reset(this->playerOne.get());
+    if (isGraphical) {
+        this->w.reset(new Xwindow(this->width, this->height));
+    } else {
+        this->w.reset(nullptr);
+    }
+    this->playerOne.reset(new Player(this, 1, this->w.get()));
+    this->playerTwo.reset(new Player(this, 2, this->w.get()));
+    this->currentPlayer = this->playerOne;
 }
 
 
@@ -90,12 +91,12 @@ void Game::setGameOver() {
 
 // next player's turn
 void Game::turnOver() {
- takeOffDecorations();   
- if (currentPlayer == playerOne) {
-    currentPlayer = playerTwo;
- } else {
-    currentPlayer = playerOne;
- }
+    takeOffDecorations();
+    if (currentPlayer.get() == playerOne.get()) {
+        currentPlayer = playerTwo;
+    } else {
+        currentPlayer = playerOne;
+    }
 /*
  if (currentPlayer->getLevel() == 0) {// should be 3 or 4, just for testing
         enableSpecialAction("heavy");
@@ -217,6 +218,10 @@ string Game::getNextBlockSecondRow(string type) {
     return " T         ";
 }
 
+Xwindow * Game::getWindow() {
+    return this->w.get();
+}
+
 // Private helper functions
 void Game::takeOffDecorations() {
     shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
@@ -263,6 +268,17 @@ void Game::drawBigString(int x, int y, string s, int playerNum) {
     }
 }
 
+void Game::undrawBigString(int x, int y, string s, int playerNum) {
+    if (this->w.get() != nullptr) {
+        x = x + (playerNum - 1) * 18;
+        int unit = this->width / 29;
+        int realX = x * unit;
+        int realY = y * unit;
+        w->drawString(realX, realY, s, 0);
+    }
+}
+
+
 void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
     if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
@@ -275,21 +291,11 @@ void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
     }
 }
 
-void Game::undrawBigString(int x, int y, string s, int playerNum) {
-    if (this->w.get() != nullptr) {
-        x = x + (playerNum - 1) * 18;
-        int unit = this->width / 29;
-        int realX = x * unit;
-        int realY = y * unit;
-        w->drawString(realX, realY, s, 0);
-    }
-}
-
 void Game::undrawPoint(int x, int y, int w, int h, int playerNum) {
     if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
         int unit = this->width / 29;
-        int realX = x * unit;
+        int realX = (x + (playerNum - 1) * 18) * unit;
         int realY = y * unit;
         int realW = w * unit;
         int realH = h * unit;

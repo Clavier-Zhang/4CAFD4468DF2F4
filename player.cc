@@ -4,10 +4,11 @@
 #include "blockI.h"
 #include <memory>
 #include <iostream>
+#include "window.h"
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game, int no) : AbstractPlayer{game, no} {}
+Player::Player(Game *game, int no, Xwindow *w) : AbstractPlayer{game, no, w} {}
 
 string Player::getGridRow(int row) {
 string s;
@@ -167,7 +168,6 @@ void Player::drop(){
         currentBlock->setID(AbstractBlock::getCurId());
         inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
         AbstractBlock::incrementCurId();
-
         currentBlock = std::move(nextBlock);
         currentBlock->initialize(this);
         unique_ptr<AbstractBlock>tmp{level->generateBlock()};
