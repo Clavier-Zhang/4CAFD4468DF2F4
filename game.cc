@@ -131,7 +131,6 @@ void Game::force(char c) {
 
 // finish later
 void Game::print() {
-    this->drawBigString(10, 5, "23");
     // print level
     cout << "Level:";
     cout << setw(5) << playerOne->getLevel();
