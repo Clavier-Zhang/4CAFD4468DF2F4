@@ -53,7 +53,9 @@ class Game {
         std::string getNextBlockFirstRow(std::string type);
         std::string getNextBlockSecondRow(std::string type);
         int getLevel(); // gets currentPlayer's level
-        void drawBigString(int x, int y, std::string s);
-        void drawPoint(int x, int y, int w, int h, int c);
+        void drawBigString(int x, int y, std::string s, int playerNum);
+        void drawPoint(int x, int y, int w, int h, int c, int playerNum);
+        void undrawBigString(int x, int y, std::string s, int playerNum);
+        void undrawPoint(int x, int y, int w, int h, int playerNum);
 };
 #endif

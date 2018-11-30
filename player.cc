@@ -7,7 +7,7 @@
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game) : AbstractPlayer{game} {}
+Player::Player(Game *game, int no) : AbstractPlayer{game, no} {}
 
 string Player::getGridRow(int row) {
 string s;

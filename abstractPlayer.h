@@ -12,6 +12,8 @@
 
     class AbstractPlayer { 
         protected:
+            // plahyer number
+            int no = 1;
             // level on the top left
             std::shared_ptr<AbstractLevel> level;
             // score on the top left
@@ -32,6 +34,7 @@
             // game for observer
             Game *game;
         public:
+            AbstractPlayer(Game *game, int no);
             AbstractPlayer(Game *game);
             ~AbstractPlayer();
             // player's operation

@@ -11,11 +11,14 @@ using namespace std;
 // initialize two players
 // more constructor for differnnt mode in command line
 Game::Game() :
-    playerOne{new Player(this)}, 
-    playerTwo{new Player(this)}, 
+    playerOne{new Player(this, 1)}, 
+    playerTwo{new Player(this, 2)}, 
     currentPlayer{playerOne} {
     // else set to nullptr, important
-    this->w.reset(new Xwindow(this->width, this->height)); 
+    this->w.reset(new Xwindow(this->width, this->height));
+    this->playerOne.reset(new Player(this, 1));
+    this->playerTwo.reset(new Player(this, 2));
+    this->currentPlayer.reset(this->playerOne.get());
 }
 
 
@@ -131,6 +134,7 @@ void Game::force(char c) {
 
 // finish later
 void Game::print() {
+    // this->drawBigString(2,2,"-",1);
     // print level
     cout << "Level:";
     cout << setw(5) << playerOne->getLevel();
@@ -249,28 +253,46 @@ AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<Abs
     return nullptr; // maybe throw an exception instead later
 }
 
-void Game::drawBigString(int x, int y, string s) {
-    if (this->currentPlayer == this->playerTwo) {
-        x += 18;
-    }
-    int unit = this->width / 29;
-    int realX = x * unit;
-    int realY = y * unit;
+void Game::drawBigString(int x, int y, string s, int playerNum) {
     if (this->w.get() != nullptr) {
+        x = x + (playerNum - 1) * 18;
+        int unit = this->width / 29;
+        int realX = x * unit;
+        int realY = y * unit;
         w->drawString(realX, realY, s, Xwindow::Black);
     }
 }
 
-void Game::drawPoint(int x, int y, int w, int h, int c) {
+void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
     if (this->w.get() != nullptr) {
-        if (this->currentPlayer == this->playerTwo) {
-            x += 18;
-        }
+        x = x + (playerNum - 1) * 18;
         int unit = this->width / 29;
         int realX = x * unit;
         int realY = y * unit;
         int realW = w * unit;
         int realH = h * unit;
         this->w->fillRectangle(realX, realY, realW, realH, c);
+    }
+}
+
+void Game::undrawBigString(int x, int y, string s, int playerNum) {
+    if (this->w.get() != nullptr) {
+        x = x + (playerNum - 1) * 18;
+        int unit = this->width / 29;
+        int realX = x * unit;
+        int realY = y * unit;
+        w->drawString(realX, realY, s, 0);
+    }
+}
+
+void Game::undrawPoint(int x, int y, int w, int h, int playerNum) {
+    if (this->w.get() != nullptr) {
+        x = x + (playerNum - 1) * 18;
+        int unit = this->width / 29;
+        int realX = x * unit;
+        int realY = y * unit;
+        int realW = w * unit;
+        int realH = h * unit;
+        this->w->fillRectangle(realX, realY, realW, realH, 0);
     }
 }
