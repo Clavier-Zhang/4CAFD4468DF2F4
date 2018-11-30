@@ -25,8 +25,26 @@ void Game::restart() {
 // player's operation
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
- currentPlayer->setLevel(level);
- print();
+    if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
+        currentPlayer->setLevel(level);
+        print();
+    }
+}
+
+void Game::levelUp(int step) {
+    int targetLevel = currentPlayer->getLevel() + step;
+    if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
+        currentPlayer->setLevel(targetLevel);
+        print();
+    }
+}
+
+void Game::levelDown(int step) {
+    int targetLevel = currentPlayer->getLevel() - step;
+    if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
+        currentPlayer->setLevel(targetLevel);
+        print();
+    }
 }
 
 int Game::getLevel(){
@@ -43,10 +61,11 @@ void Game::rotate(bool counter, int step) {
     print();
 }
 
-// later, clear row
-void Game::drop() {
- currentPlayer->drop();
- print();
+void Game::drop(int step) {
+    for (int i = 0; i < step; i++) {
+        currentPlayer->drop();
+    }
+    print();
 }
 
 bool Game::gameOver() {

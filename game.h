@@ -15,6 +15,8 @@ class Game {
         // status of game
         bool isOver = false;
         bool needSpecial = false;
+        const int MAX_LEVEL = 4;
+        const int MIN_LEVEL = 0;
 
         AbstractPlayer *createDecoratedPlayer(std::string, std::shared_ptr<AbstractPlayer>);
         void takeOffDecorations();
@@ -29,7 +31,9 @@ class Game {
         void setLevel(int level);
         void move(std::string type = "down", int step = 1);
         void rotate(bool counter = false, int step = 1);
-        void drop();
+        void drop(int step = 1);
+        void levelUp(int step = 1);
+        void levelDown(int step = 1);
         // more command to be determined
         bool gameOver();
         bool isNeedSpecial();
