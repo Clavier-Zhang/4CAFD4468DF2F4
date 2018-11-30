@@ -27,7 +27,7 @@ shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() { // there is no underl
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
-void Player::setCurrentBlock(char type) {
+/*void Player::setCurrentBlock(char type) {
     // if is lowercase make uppercase
     if ((97 <= type)&&(type <= 122)) { // is lowercase
      int offset = 97-65;
@@ -37,7 +37,7 @@ void Player::setCurrentBlock(char type) {
     currentBlock->removeAllPoint();
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);
-}
+}*/
 
 void Player::nullifyUnderlyingPlayer() {
 } // there is no underlying player to set to null

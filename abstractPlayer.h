@@ -57,6 +57,9 @@
 
             void shiftRowDown(int row, int offset);
 
+            void setIsDecorated(bool);
+            bool getIsDecorated();
+
             // observer pattern
             void notifyGameover();
             void notifyTurnover();
