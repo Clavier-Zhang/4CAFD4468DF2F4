@@ -74,5 +74,7 @@
             Point* getPoint(std::pair<int, int> &c);
             // check if the point at c is valid
             bool isValid(std::pair<int, int> &c);
+            // draw
+            void drawScore();
 };
 #endif

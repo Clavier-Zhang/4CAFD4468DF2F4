@@ -3,6 +3,7 @@
 #include "abstractPlayer.h"
 #include <memory>
 #include <iostream>
+#include "window.h"
 class Game {
     private:
         // // player one
@@ -12,6 +13,9 @@ class Game {
         // // player in the current turn
         //AbstractPlayer* currentPlayer;
         std::shared_ptr<AbstractPlayer> currentPlayer;
+        std::unique_ptr<Xwindow> w;
+        int width = 600;
+        int height = 400;
         // status of game
         bool isOver = false;
         bool needSpecial = false;
@@ -49,5 +53,7 @@ class Game {
         std::string getNextBlockFirstRow(std::string type);
         std::string getNextBlockSecondRow(std::string type);
         int getLevel(); // gets currentPlayer's level
+        void drawBigString(int x, int y, std::string s);
+        void drawPoint(int x, int y, int w, int h, int c);
 };
 #endif

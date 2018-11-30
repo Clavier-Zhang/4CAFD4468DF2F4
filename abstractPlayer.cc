@@ -184,3 +184,7 @@ string AbstractPlayer::getNextBlock() {
 Point* AbstractPlayer::getPoint(pair<int, int> &c) {
   return &grid[c.second][c.first];
 }
+
+void AbstractPlayer::drawScore(){
+    
+}

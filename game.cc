@@ -5,6 +5,7 @@
 #include "heavyDecorator.h"
 #include <iostream>
 #include <iomanip>
+#include "window.h"
 using namespace std;
 
 // initialize two players
@@ -12,7 +13,11 @@ using namespace std;
 Game::Game() :
     playerOne{new Player(this)}, 
     playerTwo{new Player(this)}, 
-    currentPlayer{playerOne} {}
+    currentPlayer{playerOne} {
+    // else set to nullptr, important
+    this->w.reset(new Xwindow(this->width, this->height)); 
+}
+
 
 Game::~Game() {
  takeOffDecorations();
@@ -126,6 +131,7 @@ void Game::force(char c) {
 
 // finish later
 void Game::print() {
+    this->drawBigString(10, 5, "23");
     // print level
     cout << "Level:";
     cout << setw(5) << playerOne->getLevel();
@@ -242,4 +248,30 @@ AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<Abs
     return new BlindDecorator(absPlayer, this);
     }
     return nullptr; // maybe throw an exception instead later
+}
+
+void Game::drawBigString(int x, int y, string s) {
+    if (this->currentPlayer == this->playerTwo) {
+        x += 18;
+    }
+    int unit = this->width / 29;
+    int realX = x * unit;
+    int realY = y * unit;
+    if (this->w.get() != nullptr) {
+        w->drawString(realX, realY, s, Xwindow::Black);
+    }
+}
+
+void Game::drawPoint(int x, int y, int w, int h, int c) {
+    if (this->w.get() != nullptr) {
+        if (this->currentPlayer == this->playerTwo) {
+            x += 18;
+        }
+        int unit = this->width / 29;
+        int realX = x * unit;
+        int realY = y * unit;
+        int realW = w * unit;
+        int realH = h * unit;
+        this->w->fillRectangle(realX, realY, realW, realH, c);
+    }
 }
