@@ -22,8 +22,8 @@ isGraphical{isGraphical} {
     this->playerTwo.reset(new Player(this, 2, this->w.get(), scpt2));
     // TODO: so it does set the starting level but the starting blocks are a problem
     // solution: probably should move the block initialization to the player class
-    playerOne->setLevel(startLvl);
-    playerTwo->setLevel(startLvl);
+//    playerOne->setLevel(startLvl);
+//    playerTwo->setLevel(startLvl);
     this->currentPlayer = this->playerOne;
 }
 
