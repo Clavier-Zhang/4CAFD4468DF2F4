@@ -8,13 +8,19 @@
 using namespace std;
 
 bool isGraphical = true;
+string seq="";
+string scpt1="sequence1.txt";
+string scpt2="sequence2.txt";
+int startLvl=0;
+int seed=-1;
+
 // add possible short version commands into map
 // notice we will not add unambiguous commands shorthand
 vector<string> baseCommands = {
     "left", "right", "down", "clockwise", "counterclockwise", "drop", "levelup", "leveldown", 
     "I", "J", "L", "O", "S", "T", "Z", 
     "random", "norandom", "sequence" // this line need to be checked later
-    };
+};
 
 bool validSpecialAction(string action) {
     if (action == "force") return true;
@@ -24,27 +30,69 @@ bool validSpecialAction(string action) {
 }
 
 bool validBlock(char c) {
- switch (c) {
-  case 'S' : return true;
-  case 's' : return true;
-  case 'Z' : return true;
-  case 'z' : return true;
-  case 'I' : return true;
-  case 'i' : return true;
-  case 'J' : return true;
-  case 'j' : return true;
-  case 'L' : return true;
-  case 'l' : return true;
-  case 'O' : return true;
-  case 'o' : return true;
-  case 'T' : return true;
-  case 't' : return true;
-  default : return false;
- }
+    switch (c) {
+        case 'S' : return true;
+        case 's' : return true;
+        case 'Z' : return true;
+        case 'z' : return true;
+        case 'I' : return true;
+        case 'i' : return true;
+        case 'J' : return true;
+        case 'j' : return true;
+        case 'L' : return true;
+        case 'l' : return true;
+        case 'O' : return true;
+        case 'o' : return true;
+        case 'T' : return true;
+        case 't' : return true;
+        default : return false;
+    }
 }
 
-int main () {
+//if there is a sequence of commands, use the sequence. Otherwise, cin into string cmd
+void determineInput(string & cmd){
+    if (seq.length()>0){
+        istringstream iss{seq};
+        iss>>cmd;
+        seq=seq.substr((int)cmd.length()+1,(int)seq.length());
+    }else cin >> cmd;
+}
 
+void setInitialState(int argc, char * argv[]){
+    string s;
+    for (int i =1; i< argc; ++i){
+        s=argv[i];
+        if (s == "-text"){
+            isGraphical=false;
+        }else if(s == "-seed"){
+            if (i+1 <argc){
+                ++i;
+                s= argv[i];
+                seed = stoi(s);
+            }
+        }else if(s == "-scriptfile1"){
+            if (i+1 <argc){
+                ++i;
+                scpt1 = argv[i];
+            }
+        }else if(s == "-scriptfile2"){
+            if (i+1 <argc){
+                ++i;
+                scpt2 = argv[i];
+            }
+        }else if (s == "-startlevel"){
+            if (i+1 <argc){
+                ++i;
+                s=argv[i];
+                startLvl = stoi(s);
+            }
+        }
+    }
+}
+
+
+int main (int argc, char * argv[]) {
+    setInitialState(argc, argv);
     // possible short version commands
     map<string, string> commandMap;
     // duplicates means the string in this vector (short version command)
@@ -53,7 +101,7 @@ int main () {
     // start to add possible short command
     for (string &baseCommand : baseCommands) {
         string possibleCommand = "";
-        for (int i = 0; i < baseCommand.length(); i++) {
+        for (int i = 0; i < static_cast<int>(baseCommand.length()); i++) {
             possibleCommand += baseCommand[i];
             if (commandMap.count(possibleCommand) != 0) {
                 duplicates.emplace_back(possibleCommand);
@@ -71,58 +119,68 @@ int main () {
     // for (const auto &p : commandMap) {
     //     cout << p.first << " " << p.second << endl;
     // }
-
-
-    srand(time(NULL));
+    if ( seed >-1)
+        srand(seed);
+    else
+        srand(time(NULL));
     string command;
-    unique_ptr<Game>game{new Game(isGraphical)};
+    unique_ptr<Game>game{new Game(isGraphical, startLvl,scpt1,scpt2)};
     game->print();
 
     // Command interpreter
     while (!game->gameOver() && !cin.eof()) {
-      
         if (game->isNeedSpecial()) {// needs error checking
             string action;
             cout << "Please enter a special action" << endl;
-       
             while (true) {
-                cin >> action;
+/*                if((int)seq.length()>0){
+                    istringstream iss{seq};
+                    iss>>action;
+                    seq=seq.substr((int)action.length()+1,(int)seq.length());
+                }else cin >> action;*/
+                determineInput(action);
                 if (cin.fail()) {
-                cin.clear();
-                cin.ignore();
-                continue;
+                    cin.clear();
+                    cin.ignore();
+                    continue;
                 }
-                
+
                 if (validSpecialAction(action)) break;
                 cout << "Invalid action. Please enter 'blind', 'heavy', or 'force.'" << endl;
             }
 
             if (action == "force") {
-                char block;
+                string block;
                 cout << "Please enter a block to force." << endl;
-                
+
                 while (true) {
-                cin >> block;
-                if (cin.fail()) {
-                cin.clear();
-                cin.ignore();
-                continue;
-                }
-                
-                if (validBlock(block)) break;
-                cout << "Invalid block. Please enter I, J, L, T, S, Z, or O." << endl;
+                    determineInput(block);
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore();
+                        continue;
+                    }
+
+                    if (validBlock(block[0]) && (int) block.length() == 1) break;
+                    cout << "Invalid block. Please enter I, J, L, T, S, Z, or O." << endl;
                 }        
-                game->force(block); 
+                game->force(block[0]); 
             } else if ((action == "heavy")||(action == "blind")) {
                 game->enableSpecialAction(action);
             }
             game->print();
-       }
+        }
 
-       // error checking
-        
+        // error checking
+
         string word;
-        cin >> word;
+        determineInput(word);
+        /*if (seq.length()>0){
+            istringstream iss{seq};
+            iss>>word;
+            seq=seq.substr((int)word.length()+1,(int)seq.length());
+        }else cin >> word;*/
+
         if (cin.fail()) {
             cin.clear();
             cin.ignore();
@@ -132,7 +190,7 @@ int main () {
         // analyze the word, convert it to command and number
         string rawCommand = "";
         string numText = "";
-        for (int i = 0; i < word.length(); i++) {
+        for (int i = 0; i < static_cast<int>(word.length()); i++) {
             if ( '0' <= word[i] && word[i] <= '9') {
                 numText += word[i];
             } else {
@@ -164,19 +222,29 @@ int main () {
         } else if (translatedCmd == "counterclockwise") {
             game->rotate(true, step);
         } else if (translatedCmd == "levelup") {
-            game->levelUp(step);
+            game->levelUp(1);
         } else if (translatedCmd == "leveldown") {
-            game->levelDown(step);
+            game->levelDown(1);
         } else if (translatedCmd == "norandom") {
             string randomFile;
             cin >> randomFile;
             // use this file
+            game->setRandom(false,randomFile);
         } else if (translatedCmd == "random") {
+            game->setRandom(true);
         } else if (translatedCmd == "sequence") {
             string sequenceFile;
             cin >> sequenceFile;
+            ifstream file{sequenceFile};
+            string txtCmd;
+            while(file>>txtCmd){
+                seq+=txtCmd;
+                seq+=" ";
+            }
         } else if ((translatedCmd == "I")||(translatedCmd == "J")||(translatedCmd == "L")||
-        (translatedCmd == "O")||(translatedCmd == "T")||(translatedCmd == "S")||(translatedCmd == "Z")) {
+                (translatedCmd == "O")||(translatedCmd == "T")||(translatedCmd == "S")||(translatedCmd == "Z")) {
+            game->force(translatedCmd[0]);
+            game->print();
         } else if (translatedCmd == "restart") {
             game->restart();
         }

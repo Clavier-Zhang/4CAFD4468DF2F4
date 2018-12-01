@@ -2,7 +2,7 @@
 #define _LEVELONE_H_
 #include <string>
 #include "abstractLevel.h"
-#include "abstractBlock.h"
+class AbstractBlock;
 class LevelOne : public AbstractLevel {
     public:
         LevelOne();

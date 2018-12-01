@@ -15,7 +15,9 @@
 using namespace std;
 
 // constructor
-AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w):level{shared_ptr<AbstractLevel>(new LevelZero())},currentBlock{level->generateBlock()},nextBlock{level->generateBlock()}, no{no} {
+AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w,string scpt):no{no},
+initScpt{scpt},level{shared_ptr<AbstractLevel>(new LevelZero{initScpt})}, 
+currentBlock{level->generateBlock()},nextBlock{level->generateBlock()}{
     // initialize the grid
     for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
@@ -25,8 +27,13 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w):level{shared_ptr<
         }
         grid.emplace_back(row);
     }
+
+    //initliaze blocks and level
+
+
     currentBlock->initialize(this);
     this->game = game;
+
     // initialize the graphical
     for (int x = 0; x < this->colNum; x++) {
         game->drawPoint(x, 2, 1, 1, 11, this->no);
@@ -76,7 +83,8 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w):level{shared_ptr<
 }
 
 // important
-AbstractPlayer::AbstractPlayer(Game *game):level{shared_ptr<AbstractLevel>(new LevelZero())},currentBlock{level->generateBlock()},nextBlock{level->generateBlock()} {
+/*AbstractPlayer::AbstractPlayer(Game *game):,currentBlock{level->generateBlock()},
+nextBlock{level->generateBlock()} {
     // initialize the grid
     for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
@@ -88,7 +96,7 @@ AbstractPlayer::AbstractPlayer(Game *game):level{shared_ptr<AbstractLevel>(new L
     }
     currentBlock->initialize(this);
     this->game = game;
-}
+}*/
 
 AbstractPlayer::~AbstractPlayer(){}
 
@@ -96,15 +104,15 @@ AbstractPlayer::~AbstractPlayer(){}
 void AbstractPlayer::setLevel(int level){
     this->undrawLevel();
     if (level == 0) {
-        this->level.reset(new LevelZero());
+        this->level.reset(new LevelZero{initScpt});
     } else if (level == 1) {
-        this->level.reset(new LevelOne());
+        this->level.reset(new LevelOne);
     }else if (level == 2){
-        this->level.reset(new LevelTwo());
+        this->level.reset(new LevelTwo);
     }else if (level == 3){
-        this->level.reset(new LevelThree());
+        this->level.reset(new LevelThree);
     }else if ( level == 4){
-        this->level.reset(new LevelFour());
+        this->level.reset(new LevelFour);
     }
     this->drawLevel();
 }
@@ -141,6 +149,8 @@ void AbstractPlayer::recalculateGrid() {
             shiftRowDown(row, offset);
         }
    }
+   if (offset>=2) notifySpecialAction();
+   else notifyTurnover();
     applyLevelEffects(offset);
     recalculateInactiveBlocks();
 }
@@ -208,13 +218,15 @@ void AbstractPlayer::applyLevelEffects(int offset){
 }
 
 void AbstractPlayer::setIsDecorated(bool isDec) {
- isDecorated = isDec;
+    isDecorated = isDec;
 }
 
 bool AbstractPlayer::getIsDecorated() { return isDecorated;}
 
 
-void AbstractPlayer::setRandom() {}
+void AbstractPlayer::setRandom(bool rand, string file) {
+    level->setRandom(rand, file);
+}
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {
@@ -240,6 +252,14 @@ int AbstractPlayer::getHighestScore() {
 
 int AbstractPlayer::getLevel() {
     return level->getLevel();
+}
+
+int AbstractPlayer::getNo(){
+    return no;
+}
+
+string AbstractPlayer::getInitScpt(){
+    return initScpt;
 }
 
 string AbstractPlayer::getNextBlock() {

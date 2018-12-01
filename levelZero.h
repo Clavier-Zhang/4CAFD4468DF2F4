@@ -4,8 +4,9 @@
 #include "abstractLevel.h"
 #include "abstractBlock.h"
 class LevelZero : public AbstractLevel {
+    std::string scpt;
     public:
-        LevelZero();
+        LevelZero(std::string scpt);
         ~LevelZero();
         AbstractBlock* generateBlock(char type = ' ') override;
 };

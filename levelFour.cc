@@ -9,16 +9,21 @@
 #include "blockZ.h"
 using namespace std;
 
-LevelFour::LevelFour() : AbstractLevel{4, "", true} {} 
+LevelFour::LevelFour(): AbstractLevel{4, "", true}{} 
 
 LevelFour::~LevelFour() {}
 
 AbstractBlock* LevelFour::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);
-    const double DEFAULT = static_cast<double>(1)/9;
-    const double Z_S_PROB = static_cast<double>(2)/9;
-    char c = this->generateChar(DEFAULT,DEFAULT,DEFAULT,DEFAULT,
-    Z_S_PROB,Z_S_PROB,DEFAULT);
+    char c;
+    if (isRandom){
+        const double DEFAULT = static_cast<double>(1)/9;
+        const double Z_S_PROB = static_cast<double>(2)/9;
+        c = this->generateChar(DEFAULT,DEFAULT,DEFAULT,DEFAULT,
+                Z_S_PROB,Z_S_PROB,DEFAULT);
+    }else{
+        c = nonRandomBlock();
+    }
     return createCustomBlock(c);
 }
 

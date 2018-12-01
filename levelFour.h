@@ -12,5 +12,6 @@ class LevelFour : public AbstractLevel {
         int getNumUncleared() const;
         void incNumUncleared();
         void resetNumUncleared();
+        void setRandom(bool newRand);
 };
 #endif

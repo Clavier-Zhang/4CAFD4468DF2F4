@@ -10,15 +10,20 @@ using namespace std;
 
 // initialize two players
 // more constructor for differnnt mode in command line
-Game::Game(bool isGraphical) : isGraphical{isGraphical} {
+Game::Game(bool isGraphical, int startLvl, string scpt1, string scpt2):
+isGraphical{isGraphical} {
     // else set to nullptr, important
     if (isGraphical) {
         this->w.reset(new Xwindow(this->width, this->height));
     } else {
         this->w.reset(nullptr);
     }
-    this->playerOne.reset(new Player(this, 1, this->w.get()));
-    this->playerTwo.reset(new Player(this, 2, this->w.get()));
+    this->playerOne.reset(new Player(this, 1, this->w.get(), scpt1));
+    this->playerTwo.reset(new Player(this, 2, this->w.get(), scpt2));
+    // TODO: so it does set the starting level but the starting blocks are a problem
+    // solution: probably should move the block initialization to the player class
+    playerOne->setLevel(startLvl);
+    playerTwo->setLevel(startLvl);
     this->currentPlayer = this->playerOne;
 }
 
@@ -54,6 +59,10 @@ void Game::levelDown(int step) {
         currentPlayer->setLevel(targetLevel);
         print();
     }
+}
+
+void Game::setRandom(bool rand, string file){
+    currentPlayer->setRandom(rand, file);
 }
 
 int Game::getLevel(){
@@ -251,9 +260,9 @@ void Game::takeOffDecorations() {
 
 AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<AbstractPlayer> absPlayer) {
     if (specialAction == "heavy") {
-    return new HeavyDecorator(absPlayer, this);
+    return new HeavyDecorator(absPlayer, this, w.get());
     }  else if (specialAction == "blind") {
-    return new BlindDecorator(absPlayer, this);
+    return new BlindDecorator(absPlayer, this, w.get());
     }
     return nullptr; // maybe throw an exception instead later
 }

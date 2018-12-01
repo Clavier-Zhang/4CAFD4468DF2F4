@@ -13,8 +13,9 @@
 
     class AbstractPlayer { 
         protected:
-            // plahyer number
+            // player number
             int no = 1;
+            std::string initScpt; // if the player goes back to lvl 0 this is the used file name
             // level on the top left
             std::shared_ptr<AbstractLevel> level;
             // score on the top left
@@ -36,7 +37,7 @@
             Game *game;
             Xwindow *w;
         public:
-            AbstractPlayer(Game *game, int no, Xwindow *w);
+            AbstractPlayer(Game *game, int no, Xwindow *w, std::string scpt);
             AbstractPlayer(Game *game);
             ~AbstractPlayer();
             // player's operation
@@ -48,7 +49,7 @@
             // add the points of blocks to grid, update the block in drop(), 
             virtual void drop() = 0;
             // assign the point pointer to currentBlock, can
-            void setRandom();
+            void setRandom(bool rand, std::string file = "");
             // display
             virtual void setCurrentBlock(char type = ' ') = 0;
             virtual std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() = 0;
@@ -73,6 +74,8 @@
             int getCurrentScore();
             int getHighestScore();
             int getLevel();
+            int getNo();
+            std::string getInitScpt();
             virtual std::string getGridRow(int row) = 0;
             virtual std::string getGridPoint(int row, int col) = 0;
             std::string getNextBlock();

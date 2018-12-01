@@ -8,7 +8,8 @@
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game, int no, Xwindow *w) : AbstractPlayer{game, no, w} {}
+Player::Player(Game *game, int no, Xwindow *w, std::string scpt):
+AbstractPlayer{game, no, w, scpt} {}
 
 string Player::getGridRow(int row) {
 string s;
@@ -176,7 +177,7 @@ void Player::drop(){
     this->drawNextBlock();
     recalculateGrid();
     // some logic for determining correct notify will need to go here
-    notifyTurnover(); // how do you know not special action?
+    //notifyTurnover(); // how do you know not special action?
     // notifySpecialAction();
 }
 

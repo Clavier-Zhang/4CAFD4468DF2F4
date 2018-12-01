@@ -3,7 +3,7 @@
 #include "abstractDecorator.h"
 class BlindDecorator : public AbstractDecorator {
     public:
-        BlindDecorator(std::shared_ptr<AbstractPlayer> , Game *g);
+        BlindDecorator(std::shared_ptr<AbstractPlayer> , Game *g, Xwindow * w);
         // add the points of blocks to grid, update the block in drop(), 
         ~BlindDecorator();
 

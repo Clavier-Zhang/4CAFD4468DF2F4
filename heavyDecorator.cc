@@ -2,7 +2,8 @@
 #include "abstractBlock.h"
 using namespace std;
 
-HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g) : AbstractDecorator{absPlayer, g} {}
+HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) :
+AbstractDecorator{absPlayer, g, w} {}
 
 void HeavyDecorator::drop() {
  player->drop();

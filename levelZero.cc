@@ -8,31 +8,19 @@
 #include "blockS.h"
 #include "blockT.h"
 #include "blockZ.h"
-#include <fstream>
-#include <sstream>
 #include <string>
 
 using namespace std;
 
-LevelZero::LevelZero() : AbstractLevel{0, "", false} {
-    fstream file{"sequence1.txt"};
-    string s;
-    string all = "";
-    while (file >> s) {
-        all += s;
-    }
-    this->sequence = all;
+LevelZero::LevelZero(string scpt) : AbstractLevel{0, "", false}, scpt{scpt} {
+    setRandom(false,scpt);
 };
 
 LevelZero::~LevelZero() {}
 
 AbstractBlock* LevelZero::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);
-    if (this->seqAt == (int)this->sequence.length()) {
-        this->seqAt = 0;
-    }
-    char c = this->sequence[this->seqAt];
-    this->seqAt++;
+    char c = nonRandomBlock();
     return createCustomBlock(c);
 
 }

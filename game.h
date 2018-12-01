@@ -28,12 +28,13 @@ class Game {
 
     public:
         // initialize two players
-        Game(bool isGraphical);
+        Game(bool isGraphical, int startLvl, std::string scpt1, std::string scpt2);
         ~Game();
         void restart(); // TODO clears the board and starts a new game
         // player's operation
         // do not need to check, call currentPlayer's method directly
         void setLevel(int level);
+        void setRandom(bool rand, std::string file = "");
         void move(std::string type = "down", int step = 1);
         void rotate(bool counter = false, int step = 1);
         void drop(int step = 1);

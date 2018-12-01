@@ -1,12 +1,11 @@
-//#include "abstractBlock.h"
+#include "abstractBlock.h"
 #include "levelOne.h"
 #include "abstractLevel.h"
 
 
 using namespace std;
 
-LevelOne::LevelOne() : AbstractLevel{1, "", true} {
-};
+LevelOne::LevelOne() : AbstractLevel{1, "", true} {};
 
 LevelOne::~LevelOne() {}
 

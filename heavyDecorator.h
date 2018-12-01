@@ -6,7 +6,7 @@ class HeavyDecorator : public AbstractDecorator {
         std::shared_ptr<AbstractPlayer> getBasePlayer();
     
    public:
-        HeavyDecorator(std::shared_ptr<AbstractPlayer>, Game *g);
+        HeavyDecorator(std::shared_ptr<AbstractPlayer>, Game *g, Xwindow *w);
         
         void drop() override;
 
