@@ -81,5 +81,10 @@
             bool isValid(std::pair<int, int> &c);
             // draw
             void drawScore();
+            void undrawScore();
+            void drawLevel();
+            void undrawLevel();
+            void drawNextBlock();
+            void undrawNextBlock();
 };
 #endif

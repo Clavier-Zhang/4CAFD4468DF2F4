@@ -49,6 +49,10 @@ string AbstractBlock::getType() {
     return type;
 }
 
+vector<std::pair<int, int>> & AbstractBlock::getPositions() {
+    return this->positions;
+}
+
 std::vector<Point*>& AbstractBlock::getPoints() {
     return points;
 }

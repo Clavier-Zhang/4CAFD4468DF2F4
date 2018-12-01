@@ -32,6 +32,7 @@ class AbstractBlock {
         std::vector<Point*>& getPoints();
         bool contain(Point *p);
         int getScore();
+        std::vector<std::pair<int, int>> & getPositions();
         std::pair<int, int> getLowerLeft();
         void setID(int id);
         static int getCurId();

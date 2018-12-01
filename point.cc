@@ -41,9 +41,9 @@ void Point::setType(string type) {
         colour = 9;
     }
     if (this->w != nullptr) {
-        int unit = 19;
+        int unit = 18;
         int realX = (x + (playerNum - 1) * 18) * unit;
-        int realY = y * unit;
+        int realY = 5 + (y + 3) * unit;
         int realW = unit;
         int realH = unit;
         this->w->fillRectangle(realX, realY, realW, realH, colour);

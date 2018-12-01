@@ -261,7 +261,7 @@ AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<Abs
 void Game::drawBigString(int x, int y, string s, int playerNum) {
     if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
-        int unit = this->width / 29;
+        int unit = 18;
         int realX = x * unit;
         int realY = y * unit;
         w->drawString(realX, realY, s, Xwindow::Black);
@@ -271,7 +271,7 @@ void Game::drawBigString(int x, int y, string s, int playerNum) {
 void Game::undrawBigString(int x, int y, string s, int playerNum) {
     if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
-        int unit = this->width / 29;
+        int unit = 18;
         int realX = x * unit;
         int realY = y * unit;
         w->drawString(realX, realY, s, 0);
@@ -282,9 +282,9 @@ void Game::undrawBigString(int x, int y, string s, int playerNum) {
 void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
     if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
-        int unit = this->width / 29;
+        int unit = 18;
         int realX = x * unit;
-        int realY = y * unit;
+        int realY = y * unit + 5;
         int realW = w * unit;
         int realH = h * unit;
         this->w->fillRectangle(realX, realY, realW, realH, c);
@@ -294,7 +294,7 @@ void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
 void Game::undrawPoint(int x, int y, int w, int h, int playerNum) {
     if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
-        int unit = this->width / 29;
+        int unit = 18;
         int realX = (x + (playerNum - 1) * 18) * unit;
         int realY = y * unit;
         int realW = w * unit;

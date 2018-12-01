@@ -165,17 +165,19 @@ bool Player::rotateHelper(bool counter, int step) {
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(){
     while (move("down", 1)) {}
-        currentBlock->setID(AbstractBlock::getCurId());
-        inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
-        AbstractBlock::incrementCurId();
-        currentBlock = std::move(nextBlock);
-        currentBlock->initialize(this);
-        unique_ptr<AbstractBlock>tmp{level->generateBlock()};
-        nextBlock = std::move(tmp);
-        recalculateGrid();
-        // some logic for determining correct notify will need to go here
-        notifyTurnover(); // how do you know not special action?
-//      notifySpecialAction();
+    currentBlock->setID(AbstractBlock::getCurId());
+    inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
+    AbstractBlock::incrementCurId();
+    this->undrawNextBlock();
+    currentBlock = std::move(nextBlock);
+    currentBlock->initialize(this);
+    unique_ptr<AbstractBlock>tmp{level->generateBlock()};
+    nextBlock = std::move(tmp);
+    this->drawNextBlock();
+    recalculateGrid();
+    // some logic for determining correct notify will need to go here
+    notifyTurnover(); // how do you know not special action?
+    // notifySpecialAction();
 }
 
 // assign the point pointer to currentBlock, can

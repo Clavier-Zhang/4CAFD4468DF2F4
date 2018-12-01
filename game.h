@@ -15,7 +15,7 @@ class Game {
         std::shared_ptr<AbstractPlayer> currentPlayer;
         std::unique_ptr<Xwindow> w;
         int width = 600;
-        int height = 400;
+        int height = 500;
         // status of game
         bool isOver = false;
         bool needSpecial = false;

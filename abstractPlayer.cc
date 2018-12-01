@@ -29,10 +29,50 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w):level{shared_ptr<
     this->game = game;
     // initialize the graphical
     for (int x = 0; x < this->colNum; x++) {
-        game->drawBigString(x, 3, "-", this->no);
+        game->drawPoint(x, 2, 1, 1, 11, this->no);
     }
     game->drawBigString(1, 1, "Level:", this->no);
     game->drawBigString(1, 2, "Score:", this->no);
+    game->drawBigString(9, 2, "0", this->no);
+    game->drawBigString(9, 1, "0", this->no);
+    for (int x = 0; x < this->colNum; x++) {
+        game->drawPoint(x, 21, 1, 1, 11, this->no);
+    }
+    game->drawBigString(1, 24, "Next:", this->no);
+    if (game->getWindow() != nullptr) {
+        for (auto &p : this->nextBlock->getPositions()) {
+            int colour = 0;
+            string type = this->nextBlock->getType();
+            if (type == " ") {
+                colour = 0;
+            }
+            if (type == "I") {
+                colour = 2;
+            }
+            if (type == "J") {
+                colour = 3;
+            }
+            if (type == "L") {
+                colour = 4;
+            }
+            if (type == "O") {
+                colour = 5;
+            }
+            if (type == "S") {
+                colour = 6;
+            }
+            if (type == "T") {
+                colour = 7;
+            }
+            if (type == "X") {
+                colour = 0;
+            }
+            if (type == "Z") {
+                colour = 9;
+            }
+            game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, colour, this->no);
+        }
+    }
 }
 
 // important
@@ -54,6 +94,7 @@ AbstractPlayer::~AbstractPlayer(){}
 
 // check if possible to level up or down
 void AbstractPlayer::setLevel(int level){
+    this->undrawLevel();
     if (level == 0) {
         this->level.reset(new LevelZero());
     } else if (level == 1) {
@@ -65,6 +106,7 @@ void AbstractPlayer::setLevel(int level){
     }else if ( level == 4){
         this->level.reset(new LevelFour());
     }
+    this->drawLevel();
 }
 
 
@@ -141,11 +183,12 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
 void AbstractPlayer::recalculateInactiveBlocks(){
     for(auto & entry : inactiveBlocks){
         if (entry.second->getPoints().size() == 0){
+            this->undrawScore();
             currentScore += entry.second->getScore();
+            this->drawScore();
             inactiveBlocks.erase(entry.first);
         }
     }
-
 }
 
 void AbstractPlayer::applyLevelEffects(int offset){
@@ -208,5 +251,71 @@ Point* AbstractPlayer::getPoint(pair<int, int> &c) {
 }
 
 void AbstractPlayer::drawScore(){
-    
+    if (game->getWindow() != nullptr) {
+        game->drawBigString(9, 2, std::to_string(this->currentScore), this->no);
+    }
+}
+
+void AbstractPlayer::undrawScore(){
+    if (game->getWindow() != nullptr) {
+        game->undrawBigString(9, 2, std::to_string(this->currentScore), this->no);
+    }
+}
+
+void AbstractPlayer::drawLevel(){
+    if (game->getWindow() != nullptr) {
+        game->drawBigString(9, 2, std::to_string(this->level->getLevel()), this->no);
+    }
+}
+
+void AbstractPlayer::undrawLevel(){
+    if (game->getWindow() != nullptr) {
+        game->undrawBigString(9, 2, std::to_string(this->level->getLevel()), this->no);
+    }
+}
+
+void AbstractPlayer::drawNextBlock(){
+    if (game->getWindow() != nullptr) {
+        for (auto &p : this->nextBlock->getPositions()) {
+            int colour = 0;
+            string type = this->nextBlock->getType();
+            if (type == " ") {
+                colour = 0;
+            }
+            if (type == "I") {
+                colour = 2;
+            }
+            if (type == "J") {
+                colour = 3;
+            }
+            if (type == "L") {
+                colour = 4;
+            }
+            if (type == "O") {
+                colour = 5;
+            }
+            if (type == "S") {
+                colour = 6;
+            }
+            if (type == "T") {
+                colour = 7;
+            }
+            if (type == "X") {
+                colour = 0;
+            }
+            if (type == "Z") {
+                colour = 9;
+            }
+            game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, colour, this->no);
+        }
+    }
+}
+
+void AbstractPlayer::undrawNextBlock(){
+    if (game->getWindow() != nullptr) {
+        cout << this->nextBlock->getScore() << endl;
+        for (pair<int, int> &p : this->nextBlock->getPositions()) {
+            game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, 0, this->no);
+        }
+    }
 }
