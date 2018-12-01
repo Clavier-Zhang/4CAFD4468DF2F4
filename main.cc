@@ -10,7 +10,7 @@ using namespace std;
 bool isGraphical = true;
 // add possible short version commands into map
 // notice we will not add unambiguous commands shorthand
-const vector<const string> baseCommands = {
+vector<string> baseCommands = {
     "left", "right", "down", "clockwise", "counterclockwise", "drop", "levelup", "leveldown", 
     "I", "J", "L", "O", "S", "T", "Z", 
     "random", "norandom", "sequence" // this line need to be checked later
@@ -51,7 +51,7 @@ int main () {
     // can not be used, use this vector to remove them in the map
     vector<string> duplicates;
     // start to add possible short command
-    for (const string &baseCommand : baseCommands) {
+    for (string &baseCommand : baseCommands) {
         string possibleCommand = "";
         for (int i = 0; i < baseCommand.length(); i++) {
             possibleCommand += baseCommand[i];
@@ -74,8 +74,6 @@ int main () {
 
 
     srand(time(NULL));
-    const int MAX_LEVEL=4; // maybe put these in game?
-    const int MIN_LEVEL=0;
     string command;
     unique_ptr<Game>game{new Game(isGraphical)};
     game->print();
