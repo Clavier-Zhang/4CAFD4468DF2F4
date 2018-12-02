@@ -3,13 +3,14 @@
 using namespace std;
 
 // Useful constants
-const int MIN_ROW_BOUND = 2;
-const int MAX_ROW_BOUND = 11;
+const int MIN_ROW_BOUND = 3;
+const int MAX_ROW_BOUND = 12;
 const int MIN_COL_BOUND = 2;
 const int MAX_COL_BOUND = 8;
 
 BlindDecorator::BlindDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) : 
-AbstractDecorator{absPlayer, g, w} {}
+AbstractDecorator{absPlayer, g, w} {
+}
 
 BlindDecorator::~BlindDecorator() {}
 

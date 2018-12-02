@@ -8,8 +8,62 @@
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game, int no, Xwindow *w, std::string scpt):
-AbstractPlayer{game, no, w, scpt} {}
+Player::Player(Game *game, int no, Xwindow *w, int startLvl, std::string scpt):
+AbstractPlayer{game, no, w, scpt}{
+    //initialize
+        if(startLvl==1){
+            level.reset(new LevelOne);
+        }else if(startLvl==2){
+            level.reset(new LevelTwo);
+
+        }else if(startLvl==3){
+            level.reset(new LevelThree);
+
+        }else if(startLvl ==4){
+            level.reset(new LevelFour);
+
+        }else{
+            //default to 0
+            level.reset(new LevelZero{scpt});
+        }
+        currentBlock.reset(level->generateBlock());
+        currentBlock->initialize(this);
+        nextBlock.reset(level->generateBlock());
+        if (game->getWindow() != nullptr) {
+            for (auto &p : this->nextBlock->getPositions()) {
+                int colour = 0;
+                string type = this->nextBlock->getType();
+                if (type == " ") {
+                    colour = 0;
+                }
+                if (type == "I") {
+                    colour = 2;
+                }
+                if (type == "J") {
+                    colour = 3;
+                }
+                if (type == "L") {
+                    colour = 4;
+                }
+                if (type == "O") {
+                    colour = 5;
+                }
+                if (type == "S") {
+                    colour = 6;
+                }
+                if (type == "T") {
+                    colour = 7;
+                }
+                if (type == "X") {
+                    colour = 0;
+                }
+                if (type == "Z") {
+                    colour = 9;
+                }
+                game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, colour, this->no);
+            }
+        }
+}
 
 string Player::getGridRow(int row) {
 string s;
@@ -177,8 +231,7 @@ void Player::drop(){
     this->drawNextBlock();
     recalculateGrid();
     // some logic for determining correct notify will need to go here
-    //notifyTurnover(); // how do you know not special action?
-    // notifySpecialAction();
+    if (getIsDecorated())setIsDecorated(false);
 }
 
 // assign the point pointer to currentBlock, can
