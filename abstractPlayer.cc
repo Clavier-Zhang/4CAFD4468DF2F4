@@ -15,9 +15,9 @@
 using namespace std;
 
 // constructor
-AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w,string scpt):no{no},
-initScpt{scpt},level{shared_ptr<AbstractLevel>(new LevelZero{initScpt})}, 
-currentBlock{level->generateBlock()},nextBlock{level->generateBlock()}{
+AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt): no{no},
+initScpt{scpt}, level{shared_ptr<AbstractLevel> (new LevelZero{initScpt})}, 
+currentBlock{level->generateBlock()}, nextBlock{level->generateBlock()}{
     // initialize the grid
     for (int i = 0; i < rowNum; i++) {
         vector<Point> row;
@@ -99,6 +99,8 @@ nextBlock{level->generateBlock()} {
 }*/
 
 AbstractPlayer::~AbstractPlayer(){}
+
+Game *AbstractPlayer::getGame() { return game;}
 
 // check if possible to level up or down
 void AbstractPlayer::setLevel(int level){
@@ -207,7 +209,7 @@ void AbstractPlayer::applyLevelEffects(int offset){
         offset>0?lf->resetNumUncleared():lf->incNumUncleared();
         int uncleared= lf->getNumUncleared();
 
-        if (uncleared>0 && uncleared%5 == 0){
+        if (uncleared > 0 && uncleared % 5 == 0) {
             unique_ptr<AbstractBlock> divider {lf->createCustomBlock('X')};
             divider->initialize(this);
             divider->setID(AbstractBlock::getCurId());

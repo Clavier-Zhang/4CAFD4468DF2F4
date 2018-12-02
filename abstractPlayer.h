@@ -39,6 +39,7 @@
         public:
             AbstractPlayer(Game *game, int no, Xwindow *w, std::string scpt);
             AbstractPlayer(Game *game);
+            Game *getGame();
             ~AbstractPlayer();
             // player's operation
             // check if it is possible to level up/down

@@ -1,5 +1,6 @@
 #include "blindDecorator.h"
 #include "abstractDecorator.h"
+#include "game.h"
 using namespace std;
 
 // Useful constants
@@ -26,12 +27,23 @@ void BlindDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
 }
 
+shared_ptr<AbstractPlayer> BlindDecorator::getBasePlayer() {
+ shared_ptr<AbstractPlayer> tmp = getUnderlyingPlayer();
+ while (tmp->getUnderlyingPlayer() != nullptr) {
+  tmp = tmp->getUnderlyingPlayer();
+  }
+  return tmp;
+}
+
 int BlindDecorator::rotate(bool counter, int step){
  return player->rotate(counter, step);
 }
 
 string BlindDecorator::getGridPoint(int row, int col) {
- if (((MIN_ROW_BOUND + reservedRowNum  <= row) && (row <= MAX_ROW_BOUND + reservedRowNum)) && ((MIN_COL_BOUND <= col) && (col <= MAX_COL_BOUND))) return "?";
+ if (((MIN_ROW_BOUND + reservedRowNum  <= row) && (row <= MAX_ROW_BOUND + reservedRowNum)) && ((MIN_COL_BOUND <= col) && (col <= MAX_COL_BOUND))) {
+ getBasePlayer()->getGame()->drawPoint(col, row, 1, 1, 8, getBasePlayer()->getNo());
+ return "?";
+ }
  return player->getGridPoint(row, col);
 }
 

@@ -24,5 +24,7 @@ class BlindDecorator : public AbstractDecorator {
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         
         void nullifyUnderlyingPlayer() override;
+
+        std::shared_ptr<AbstractPlayer> getBasePlayer();
 };
 #endif

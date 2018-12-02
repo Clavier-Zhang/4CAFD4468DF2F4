@@ -6,6 +6,5 @@ class AbstractDecorator : public AbstractPlayer {
     protected:
         std::shared_ptr<AbstractPlayer> player;
         AbstractDecorator(std::shared_ptr<AbstractPlayer> , Game *, Xwindow *);
-//        AbstractLevel * getLevel();// TODO: fix later
 };
 #endif
