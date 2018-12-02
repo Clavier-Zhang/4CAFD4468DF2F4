@@ -13,7 +13,7 @@ class Player : public AbstractPlayer {
 
     public:
         // initialzie the player, draw in the constructor, save window pointer
-        Player(Game *game, int no, Xwindow *w, std::string scpt);
+        Player(Game *game, int no, Xwindow *w, int startLevel,std::string scpt);
         // check if it's movable, then call block's method to move
         int move(std::string type = "down", int step = 1) override;
         int rotate(bool counter = false, int step = 1) override;
@@ -23,6 +23,7 @@ class Player : public AbstractPlayer {
         std::string getGridRow(int) override;
         std::string getGridPoint(int, int) override;
         void setCurrentBlock(char) override;
+        // check if it is possible to level up/down
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         void nullifyUnderlyingPlayer() override;
 };

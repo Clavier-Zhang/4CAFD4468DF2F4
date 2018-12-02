@@ -18,8 +18,8 @@ isGraphical{isGraphical} {
     } else {
         this->w.reset(nullptr);
     }
-    this->playerOne.reset(new Player(this, 1, this->w.get(), scpt1));
-    this->playerTwo.reset(new Player(this, 2, this->w.get(), scpt2));
+    this->playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
+    this->playerTwo.reset(new Player(this, 2, this->w.get(), startLvl, scpt2));
     // TODO: so it does set the starting level but the starting blocks are a problem
     // solution: probably should move the block initialization to the player class
 //    playerOne->setLevel(startLvl);
@@ -134,7 +134,9 @@ void Game::enableSpecialAction(string spa) {// information is gathered after the
     playerTwo = tmp;
     currentPlayer = playerTwo;
  }
+ currentPlayer->setIsDecorated(true);
   needSpecial = false;
+cout<<playerTwo->getLevel()<<endl;
 }
 
 void Game::force(char c) { 
