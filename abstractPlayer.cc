@@ -39,7 +39,9 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
         for (int x = 0; x < this->colNum; x++) {
             game->drawPoint(x, 21, 1, 1, 11, this->no);
         }
-        game->drawBigString(1, 24, "Next:", this->no);
+        game->drawBigString(0, 24, " Next:", this->no);
+        game->drawBigString(4, 24, "Highest Score:", this->no);
+        game->drawBigString(10, 24, "0", this->no);
 }
 
 // important
@@ -158,6 +160,9 @@ void AbstractPlayer::recalculateInactiveBlocks(){
         if (entry.second->getPoints().size() == 0){
             this->undrawScore();
             currentScore += entry.second->getScore();
+            if (this->currentScore > this->highestScore) {
+                this->highestScore = this->currentScore;
+            }
             this->drawScore();
             inactiveBlocks.erase(entry.first);
         }
@@ -256,12 +261,14 @@ Point* AbstractPlayer::getPoint(pair<int, int> &c) {
 
 void AbstractPlayer::drawScore(){
     if (game->getWindow() != nullptr) {
+        game->drawBigString(10, 24, std::to_string(this->highestScore), this->no);
         game->drawBigString(9, 2, std::to_string(this->currentScore), this->no);
     }
 }
 
 void AbstractPlayer::undrawScore(){
     if (game->getWindow() != nullptr) {
+        game->undrawBigString(10, 24, std::to_string(this->highestScore), this->no);
         game->undrawBigString(9, 2, std::to_string(this->currentScore), this->no);
     }
 }
