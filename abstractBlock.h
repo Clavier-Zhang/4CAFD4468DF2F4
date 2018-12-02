@@ -26,7 +26,7 @@ class AbstractBlock {
         virtual void initialize(AbstractPlayer *p) = 0;
         bool addPoint(std::pair<int, int> &c, AbstractPlayer *p, bool isBlind=false);
         void addPoints(std::vector<std::pair<int, int>>& coordinates, AbstractPlayer *p, bool isBlind=false);
-        void removeAllPoint();
+        void removeAllPoint(bool isBlind=false);
         void removeOnePoint(Point *p);
         std::string getType();
         std::vector<Point*>& getPoints();

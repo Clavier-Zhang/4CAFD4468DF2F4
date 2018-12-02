@@ -21,7 +21,7 @@ class Point {
         Point(int x, int y, std::string type, int playerNum, Xwindow *w);
         void setType(std::string type, bool isBlind = false);
         void setID(int n);
-        void reset();
+        void reset(bool isBlind);
         int getX();
         int getY();
         int getID();

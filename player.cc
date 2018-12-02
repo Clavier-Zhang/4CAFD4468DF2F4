@@ -110,7 +110,7 @@ void Player::nullifyUnderlyingPlayer() {
 } // there is no underlying player to set to null
 
 int Player::move(string type, int step, bool isBlind) {
-bool succeeded = moveHelper(type, step);
+bool succeeded = moveHelper(type, step, isBlind);
  int newStep = step;
  // if unable to move step times, move max allowed times strictly less than step and return how
  // many moves were able to be made
@@ -146,7 +146,7 @@ bool succeeded = moveHelper(type, step);
             }
         }
         // clear block first, then add points
-        currentBlock->removeAllPoint();
+        currentBlock->removeAllPoint(isBlind);
         currentBlock->addPoints(coordinates, this, isBlind);
         return true;
     }
@@ -223,7 +223,7 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
        }
      }
     // clear block first, then add points
-    currentBlock->removeAllPoint();
+    currentBlock->removeAllPoint(isBlind);
     currentBlock->addPoints(coordinates, this, isBlind);
     return true;
 }
@@ -242,7 +242,6 @@ for (int i = 3; i <= 12 + reservedRowNum; ++i) {
 
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(bool shouldClearBlind){
-    cout << "player::drop " << endl;
     while (move("down", 1, shouldClearBlind)) {}
     currentBlock->setID(AbstractBlock::getCurId());
     inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);

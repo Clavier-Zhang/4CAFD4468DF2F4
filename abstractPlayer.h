@@ -33,6 +33,7 @@ class AbstractPlayer {
         std::unique_ptr<AbstractBlock>nextBlock;
 
         bool isDecorated = false;
+        int numDrop = 1;
 
         // grid on the bottom
         std::vector<std::vector<Point>> grid;
@@ -80,6 +81,7 @@ class AbstractPlayer {
         int getHighestScore();
         int getLevel();
         int getNo();
+        int getNumDrop();
         Game *getGame();
         std::string getInitScpt();
         virtual std::string getGridRow(int row) = 0;
@@ -87,6 +89,7 @@ class AbstractPlayer {
         virtual void drawGridPoint(int x, int y, int col) = 0;
         virtual void undrawGridPoint(int x, int y) = 0;
         std::string getNextBlock();
+        void setNumDrop(int);
         void setNextBlock(std::string);
         void setCurrentBlock(std::string);
         std::string getCurrentBlock();

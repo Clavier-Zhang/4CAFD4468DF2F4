@@ -22,9 +22,9 @@ bool AbstractBlock::contain(Point *p) {
     return false;
 }
 
-void AbstractBlock::removeAllPoint() {
+void AbstractBlock::removeAllPoint(bool isBlind) {
     for (Point *p : this->points) {
-        p->reset();
+        p->reset(isBlind);
     }
     this->points.clear();
 }

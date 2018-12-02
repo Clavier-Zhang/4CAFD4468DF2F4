@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include <string>
 #include <iostream>
 #include "point.h"
@@ -12,6 +12,7 @@ Point::Point(int x, int y, string type, int no, Xwindow *w)
 // setter
 void Point::setType(string type, bool isBlind) {
     this->type = type;
+    bool within=6<=y && y<=15 && 2<=x && x<=8; 
     int colour = 0;
     if (type == " ") {
         colour = 0;
@@ -40,7 +41,7 @@ void Point::setType(string type, bool isBlind) {
     if (type == "Z") {
         colour = 9;
     }
-    if (isBlind) return;
+    if (isBlind && within) return;
     if (this->w != nullptr) {
         int unit = 18;
         int realX = (x + (playerNum - 1) * 18) * unit;
@@ -71,7 +72,7 @@ string Point::getType() {
 int Point::getID(){
     return id;
 }
-void Point::reset() {
+void Point::reset(bool isBlind) {
     this->type = " ";
-    this->setType(" ");
+    this->setType(" ", isBlind);
 }

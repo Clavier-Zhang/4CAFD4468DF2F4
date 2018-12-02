@@ -224,6 +224,14 @@ string AbstractPlayer::getInitScpt(){
     return initScpt;
 }
 
+int AbstractPlayer::getNumDrop(){
+    return numDrop;
+}
+
+void AbstractPlayer::setNumDrop(int n){
+    numDrop = n;
+}
+
 string AbstractPlayer::getNextBlock() {
     return nextBlock->getType();
 }

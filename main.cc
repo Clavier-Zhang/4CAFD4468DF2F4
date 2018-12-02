@@ -55,7 +55,9 @@ void determineInput(string & cmd){
         istringstream iss{seq};
         iss>>cmd;
         seq=seq.substr((int)cmd.length()+1,(int)seq.length());
-    }else cin >> cmd;
+    }else{
+        cin >> cmd;
+    }
 }
 
 void setInitialState(int argc, char * argv[]){
@@ -174,7 +176,13 @@ int main (int argc, char * argv[]) {
         // error checking
 
         string word;
-        determineInput(word);
+        if(game->getNumDrop() >1){
+            word = "drop";
+            game->setNumDrop(game->getNumDrop()-1);
+            cout<<"for this player it is"<<game->getNumDrop()<<endl;
+        }else{
+            determineInput(word);
+        }
         /*if (seq.length()>0){
             istringstream iss{seq};
             iss>>word;
@@ -208,7 +216,7 @@ int main (int argc, char * argv[]) {
         }
         int step = 1;
         if (numText != "") step = stoi(numText);
-
+        cout<<step<<endl;
         if (translatedCmd == "left") {
             game->move("left", step);
         } else if (translatedCmd == "right") {
@@ -216,6 +224,11 @@ int main (int argc, char * argv[]) {
         } else if (translatedCmd == "down") {
             game->move("down", step);
         } else if (translatedCmd == "drop") {
+            if (game->getNumDrop() == 1 && step != 0)  game->setNumDrop(step);
+            else if (step == 0){ 
+                game->print();
+                continue;
+            } //TODO: FIX THE 0 CASE
             game->drop(step);
         } else if (translatedCmd == "clockwise") {
             game->rotate(false, step);

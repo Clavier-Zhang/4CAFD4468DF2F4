@@ -36,6 +36,8 @@ class Game {
         void setLevel(int level);
         void setRandom(bool rand, std::string file = "");
         void move(std::string type = "down", int step = 1);
+        int getNumDrop();
+        void setNumDrop(int);
         void rotate(bool counter = false, int step = 1);
         void drop(int step = 1);
         void levelUp(int step = 1);
