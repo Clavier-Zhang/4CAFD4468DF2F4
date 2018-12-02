@@ -10,7 +10,7 @@ Point::Point(int x, int y, string type, int no, Xwindow *w)
     : x{x}, y{y}, type{type}, playerNum{no}, w{w} {}
 
 // setter
-void Point::setType(string type) {
+void Point::setType(string type, bool isBlind) {
     this->type = type;
     int colour = 0;
     if (type == " ") {
@@ -40,6 +40,7 @@ void Point::setType(string type) {
     if (type == "Z") {
         colour = 9;
     }
+    if (isBlind) return;
     if (this->w != nullptr) {
         int unit = 18;
         int realX = (x + (playerNum - 1) * 18) * unit;

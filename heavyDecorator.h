@@ -8,11 +8,11 @@ class HeavyDecorator : public AbstractDecorator {
    public:
         HeavyDecorator(std::shared_ptr<AbstractPlayer>, Game *g, Xwindow *w);
         
-        void drop() override;
+        void drop(bool) override;
 
-        int rotate(bool, int) override;
+        int rotate(bool, int, bool isBlind=false) override;
 
-        int move(std::string, int) override;
+        int move(std::string, int, bool isBlind=false) override;
 
         std::string getGridRow(int) override;
 
@@ -25,5 +25,9 @@ class HeavyDecorator : public AbstractDecorator {
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         
         void nullifyUnderlyingPlayer() override;
+        
+        void drawGridPoint(int x, int y, int col) override ;
+        
+        void undrawGridPoint(int x, int y) override;
 };
 #endif

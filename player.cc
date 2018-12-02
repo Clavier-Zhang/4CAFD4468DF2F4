@@ -8,8 +8,62 @@
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
-Player::Player(Game *game, int no, Xwindow *w, std::string scpt):
-AbstractPlayer{game, no, w, scpt} {}
+Player::Player(Game *game, int no, Xwindow *w, int startLvl, std::string scpt):
+AbstractPlayer{game, no, w, scpt}{
+    //initialize
+        if(startLvl==1){
+            level.reset(new LevelOne);
+        }else if(startLvl==2){
+            level.reset(new LevelTwo);
+
+        }else if(startLvl==3){
+            level.reset(new LevelThree);
+
+        }else if(startLvl ==4){
+            level.reset(new LevelFour);
+
+        }else{
+            //default to 0
+            level.reset(new LevelZero{scpt});
+        }
+        currentBlock.reset(level->generateBlock());
+        currentBlock->initialize(this);
+        nextBlock.reset(level->generateBlock());
+        if (game->getWindow() != nullptr) {
+            for (auto &p : this->nextBlock->getPositions()) {
+                int colour = 0;
+                string type = this->nextBlock->getType();
+                if (type == " ") {
+                    colour = 0;
+                }
+                if (type == "I") {
+                    colour = 2;
+                }
+                if (type == "J") {
+                    colour = 3;
+                }
+                if (type == "L") {
+                    colour = 4;
+                }
+                if (type == "O") {
+                    colour = 5;
+                }
+                if (type == "S") {
+                    colour = 6;
+                }
+                if (type == "T") {
+                    colour = 7;
+                }
+                if (type == "X") {
+                    colour = 0;
+                }
+                if (type == "Z") {
+                    colour = 9;
+                }
+                game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, colour, this->no);
+            }
+        }
+}
 
 string Player::getGridRow(int row) {
 string s;
@@ -22,6 +76,17 @@ string s;
 string Player::getGridPoint(int row, int col) {
  return grid[row][col].getType();
 }
+
+
+
+void Player::drawGridPoint(int x, int y, int col) {
+ game->drawPoint(x, y, 1, 1, col, no);
+ }
+
+void Player::undrawGridPoint(int x, int y) {
+cout << "player:: undrawGridPoint" << endl;
+game->undrawPoint(x, y, 1, 1, no);
+ }
 
 shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() { // there is no underlying player
  return nullptr;
@@ -44,72 +109,72 @@ shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() { // there is no underl
 void Player::nullifyUnderlyingPlayer() {
 } // there is no underlying player to set to null
 
-int Player::move(string type, int step) {
+int Player::move(string type, int step, bool isBlind) {
 bool succeeded = moveHelper(type, step);
  int newStep = step;
  // if unable to move step times, move max allowed times strictly less than step and return how
  // many moves were able to be made
  while (!succeeded) { // && (newStep - i >= 0)) {
   newStep -= 1;
-  succeeded = moveHelper(type, newStep);
+  succeeded = moveHelper(type, newStep, isBlind);
   }
   return newStep;
 }
 
-bool Player::moveHelper(std::string type, int step) {
-if (step == 0) return true; // no movement required
-    // interpret command
-    int deltaX = 0;
-    int deltaY = 0;
-    if (type == "down") {
-        deltaY = step;
-    }
-    if (type == "left") {
-        deltaX = -step;
-    }
-    if (type == "right") {
-        deltaX = step;
-    }
-    // check if it's movable
-    vector<pair<int, int>> coordinates;
-    for (Point *p : currentBlock->getPoints()) {
-        pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
-        if (isValid(c)) {
-            coordinates.emplace_back(c);
-        } else {
-            return false;
+    bool Player::moveHelper(std::string type, int step, bool isBlind) {
+    if (step == 0) return true; // no movement required
+        // interpret command
+        int deltaX = 0;
+        int deltaY = 0;
+        if (type == "down") {
+            deltaY = step;
         }
+        if (type == "left") {
+            deltaX = -step;
+        }
+        if (type == "right") {
+            deltaX = step;
+        }
+        // check if it's movable
+        vector<pair<int, int>> coordinates;
+        for (Point *p : currentBlock->getPoints()) {
+            pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
+            if (isValid(c)) {
+                coordinates.emplace_back(c);
+            } else {
+                return false;
+            }
+        }
+        // clear block first, then add points
+        currentBlock->removeAllPoint();
+        currentBlock->addPoints(coordinates, this, isBlind);
+        return true;
     }
-    // clear block first, then add points
-    currentBlock->removeAllPoint();
-    currentBlock->addPoints(coordinates, this);
-    return true;
-}
 
-pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
- int minX = coordinates[0].first;
- int maxY = coordinates[0].second;
- for (int i = 0; i < (int)coordinates.size(); ++i) {
-  if (coordinates[i].first < minX) minX = coordinates[i].first;
-  if (coordinates[i].second > maxY) maxY = coordinates[i].second;
-  }
- pair<int, int> lowerLeft = make_pair(minX, maxY);
- return lowerLeft;
-}
+    pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
+     int minX = coordinates[0].first;
+     int maxY = coordinates[0].second;
+     for (int i = 0; i < (int)coordinates.size(); ++i) {
+      if (coordinates[i].first < minX) minX = coordinates[i].first;
+      if (coordinates[i].second > maxY) maxY = coordinates[i].second;
+      }
+     pair<int, int> lowerLeft = make_pair(minX, maxY);
+     return lowerLeft;
+    }
 
-int Player::rotate(bool counter, int step) {
-bool succeeded = rotateHelper(counter, step);
- int newStep = step;
- // if unable to move step times, move max allowed times strictly less than step and return how
- // many moves were able to be made
+int Player::rotate(bool counter, int step, bool isBlind) {
+    bool succeeded = rotateHelper(counter, step, isBlind);
+     int newStep = step;
+     // if unable to move step times, move max allowed times strictly less than step and return how
+     // many moves were able to be made
  while (!succeeded) { // && (newStep - i >= 0)) {
   newStep -= 1;
-  succeeded = rotateHelper(counter, newStep);
+  succeeded = rotateHelper(counter, newStep, isBlind);
   }
   return newStep;
 }
 
-bool Player::rotateHelper(bool counter, int step) {
+bool Player::rotateHelper(bool counter, int step, bool isBlind) {
     // if it's a multiple of 4 it ends up in the same place
     if (step % 4 == 0) return true; // end position will be same as start position
 
@@ -159,13 +224,26 @@ bool Player::rotateHelper(bool counter, int step) {
      }
     // clear block first, then add points
     currentBlock->removeAllPoint();
-    currentBlock->addPoints(coordinates, this);
+    currentBlock->addPoints(coordinates, this, isBlind);
     return true;
 }
 
+
+void Player::clearBlind() {
+ 
+
+for (int i = 3; i <= 12 + reservedRowNum; ++i) {
+  for (int j = 2; j <= 8; ++j) {
+        string type = getGridPoint(i, j); 
+        setGridType(i,j,type);
+  }
+ }
+ }
+
 // add the points of blocks to grid, update the block in drop(), 
-void Player::drop(){
-    while (move("down", 1)) {}
+void Player::drop(bool shouldClearBlind){
+    cout << "player::drop " << endl;
+    while (move("down", 1, shouldClearBlind)) {}
     currentBlock->setID(AbstractBlock::getCurId());
     inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
     AbstractBlock::incrementCurId();
@@ -175,10 +253,10 @@ void Player::drop(){
     unique_ptr<AbstractBlock>tmp{level->generateBlock()};
     nextBlock = std::move(tmp);
     this->drawNextBlock();
+    if (shouldClearBlind) clearBlind();
     recalculateGrid();
     // some logic for determining correct notify will need to go here
-    //notifyTurnover(); // how do you know not special action?
-    // notifySpecialAction();
+    //if (getIsDecorated())setIsDecorated(false);
 }
 
 // assign the point pointer to currentBlock, can

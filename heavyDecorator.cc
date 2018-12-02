@@ -5,8 +5,8 @@ using namespace std;
 HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) :
 AbstractDecorator{absPlayer, g, w} {}
 
-void HeavyDecorator::drop() {
- player->drop();
+void HeavyDecorator::drop(bool shouldClearBlind) {
+ player->drop(shouldClearBlind);
 }
 
 shared_ptr<AbstractPlayer> HeavyDecorator::getUnderlyingPlayer() {
@@ -17,9 +17,18 @@ void HeavyDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
 }
 
-int HeavyDecorator::rotate(bool counter, int step) {
-int newStep = player->rotate(counter, step);
-getBasePlayer()->move("down", newStep);
+void HeavyDecorator::drawGridPoint(int x, int y, int col) {
+ player->drawGridPoint(x, y, col);
+ }
+
+void HeavyDecorator::undrawGridPoint(int x, int y) {
+cout << "just in case" << endl;
+player->undrawGridPoint(x, y);
+ }
+
+int HeavyDecorator::rotate(bool counter, int step, bool isBlind) {
+int newStep = player->rotate(counter, step, isBlind);
+getBasePlayer()->move("down", newStep, isBlind);
 return newStep;// return this r the retval of the preceding line?
 }
 
@@ -35,9 +44,9 @@ void HeavyDecorator::setCurrentBlock(char c) {
  player->setCurrentBlock(c);
  }
 
-int HeavyDecorator::move(string type, int step) {
-int newStep = player->move(type, step);
-getBasePlayer()->move("down", newStep);
+int HeavyDecorator::move(string type, int step, bool isBlind) {
+int newStep = player->move(type, step, isBlind);
+getBasePlayer()->move("down", newStep, isBlind);
 return newStep;// return this r the retval of the preceding line?
 }
 

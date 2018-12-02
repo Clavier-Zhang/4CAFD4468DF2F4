@@ -8,22 +8,25 @@
 #include "window.h"
 
 class Player : public AbstractPlayer {
-        bool moveHelper(std::string type = "down", int step = 1);
-        bool rotateHelper(bool counter = false, int step = 1);
-
+        bool moveHelper(std::string type = "down", int step = 1, bool isBlind=false);
+        bool rotateHelper(bool counter = false, int step = 1, bool isBlind=false);
+        void clearBlind();
     public:
         // initialzie the player, draw in the constructor, save window pointer
-        Player(Game *game, int no, Xwindow *w, std::string scpt);
+        Player(Game *game, int no, Xwindow *w, int startLevel,std::string scpt);
         // check if it's movable, then call block's method to move
-        int move(std::string type = "down", int step = 1) override;
-        int rotate(bool counter = false, int step = 1) override;
+        int move(std::string type = "down", int step = 1, bool isBlind=false) override;
+        int rotate(bool counter = false, int step = 1, bool isBlind =false) override;
         // add the points of blocks to grid, update the block in drop(), 
-        void drop() override;
+        void drop(bool) override;
         // display
         std::string getGridRow(int) override;
         std::string getGridPoint(int, int) override;
         void setCurrentBlock(char) override;
+        // check if it is possible to level up/down
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         void nullifyUnderlyingPlayer() override;
+        void drawGridPoint(int x, int y, int col) override ;
+        void undrawGridPoint(int x, int y) override;
 };
 #endif

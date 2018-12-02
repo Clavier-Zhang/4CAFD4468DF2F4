@@ -57,16 +57,16 @@ std::vector<Point*>& AbstractBlock::getPoints() {
     return points;
 }
 
-bool AbstractBlock::addPoint(pair<int, int> &c, AbstractPlayer *p) {
+bool AbstractBlock::addPoint(pair<int, int> &c, AbstractPlayer *p, bool isBlind) {
     if (p->getPoint(c)->getType() != " ") return false;
-    p->getPoint(c)->setType(this->type);
+    p->getPoint(c)->setType(this->type, isBlind);
     this->points.emplace_back(p->getPoint(c));
     return true;// add ID aswell
 }
 
-void AbstractBlock::addPoints(vector<pair<int, int>>& coordinates, AbstractPlayer *p) {
+void AbstractBlock::addPoints(vector<pair<int, int>>& coordinates, AbstractPlayer *p, bool isBlind) {
         for (pair<int, int> c : coordinates) {
-            this->addPoint(c, p);
+            this->addPoint(c, p, isBlind);
         }
 }
 

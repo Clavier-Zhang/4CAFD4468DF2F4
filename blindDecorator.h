@@ -7,11 +7,11 @@ class BlindDecorator : public AbstractDecorator {
         // add the points of blocks to grid, update the block in drop(), 
         ~BlindDecorator();
 
-        void drop() override;
+        void drop(bool) override;
 
-        int rotate(bool, int) override;
+        int rotate(bool, int, bool isBlind=false) override;
 
-        int move(std::string, int) override;
+        int move(std::string, int, bool isBlind=false) override;
 
         std::string getGridRow(int) override;
 
@@ -26,5 +26,9 @@ class BlindDecorator : public AbstractDecorator {
         void nullifyUnderlyingPlayer() override;
 
         std::shared_ptr<AbstractPlayer> getBasePlayer();
+        
+        void drawGridPoint(int x, int y, int col) override ;
+
+        void undrawGridPoint(int x, int y) override;
 };
 #endif
