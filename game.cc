@@ -177,6 +177,13 @@ void Game::print() {
     cout << "Score:";
     cout << setw(5) << playerTwo->getCurrentScore();
     cout << endl;
+    // print highest score
+    cout << "Highest:";
+    cout << setw(3) << playerOne->getHighestScore();
+    cout  << setw(7) << " ";
+    cout << "Highest:";
+    cout << setw(3) << playerTwo->getHighestScore();
+    cout << endl;
     // print dash
     cout << "-----------";
     cout << setw(7) << " ";
