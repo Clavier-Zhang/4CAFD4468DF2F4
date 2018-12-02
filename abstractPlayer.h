@@ -92,6 +92,7 @@ class AbstractPlayer {
         void setNumDrop(int);
         void setNextBlock(std::string);
         void setCurrentBlock(std::string);
+        void setHighScore(int );
         std::string getCurrentBlock();
         Point* getPoint(std::pair<int, int> &c);
 

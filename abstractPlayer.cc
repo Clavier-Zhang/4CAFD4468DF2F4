@@ -58,7 +58,8 @@ currentBlock->initialize(this);
 this->game = game;
 }*/
 
-AbstractPlayer::~AbstractPlayer(){}
+AbstractPlayer::~AbstractPlayer(){
+}
 
 Game *AbstractPlayer::getGame() { return game;}
 
@@ -179,12 +180,9 @@ void AbstractPlayer::applyLevelEffects(int offset){
     }
 }
 
-void AbstractPlayer::setIsDecorated(bool isDec) {
-    isDecorated = isDec;
-}
-
-bool AbstractPlayer::getIsDecorated() { return isDecorated;}
-
+void AbstractPlayer::setHighScore(int hi) {
+ highestScore = hi;
+ }
 
 void AbstractPlayer::setRandom(bool rand, string file) {
     level->setRandom(rand, file);
@@ -323,21 +321,6 @@ void AbstractPlayer::undrawNextBlock(){
             game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, 0, this->no);
         }
     }
-}
-
-void AbstractPlayer::undrawTopBlock(){
-    if (game->getWindow() != nullptr) {
-        for (int row =2; row<4; row++) {
-            for (int col = 0; col < 4; col++)
-            {
-                game->drawPoint(col, row+ this->rowNum + 5, 1, 1, 0, this->no);
-            }
-        }
-    }
-}
-
-void AbstractPlayer::undrawBottomBlock(){
-
 }
 
 void AbstractPlayer::setGridType(int row, int col, string c){

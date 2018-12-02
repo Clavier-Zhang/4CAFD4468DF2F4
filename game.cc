@@ -29,7 +29,21 @@ Game::~Game() {
 }
 
 void Game::restart() {
-// need to implement
+ int highScoreP1 = playerOne->getHighestScore();
+ int highScoreP2 = playerTwo->getHighestScore();
+ int lvl1 = playerOne->getLevel();
+ int lvl2 = playerTwo->getLevel();
+ string scpt1 = playerOne->getInitScpt();
+ string scpt2 = playerTwo->getInitScpt();
+ 
+ this->w->fillRectangle(0, 0, this->width, this->height, 0);
+ currentPlayer.reset();
+ playerOne.reset(new Player(this, 1, this->w.get(), lvl1, scpt1));
+ playerTwo.reset(new Player(this, 2, this->w.get(), lvl2, scpt2));
+ playerOne->setHighScore(highScoreP1);
+ playerTwo->setHighScore(highScoreP2);
+ currentPlayer = playerOne;
+ print();
 }
 
 // player's operation

@@ -19,7 +19,7 @@ BlockO::~BlockO() {}
 // initialize, only call once for each block
 void BlockO::initialize(AbstractPlayer *p) {
     // get point pointers
-     for (pair<int, int> &c : positions) {
+    for (pair<int, int> &c : positions) {
         if (!this->addPoint(c, p)) {
             p->notifyGameover();
             return;

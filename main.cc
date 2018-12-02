@@ -19,7 +19,7 @@ int seed=-1;
 vector<string> baseCommands = {
     "left", "right", "down", "clockwise", "counterclockwise", "drop", "levelup", "leveldown", 
     "I", "J", "L", "O", "S", "T", "Z", 
-    "random", "norandom", "sequence" // this line need to be checked later
+    "random", "norandom", "sequence", "restart" // this line need to be checked later
 };
 
 bool validSpecialAction(string action) {
