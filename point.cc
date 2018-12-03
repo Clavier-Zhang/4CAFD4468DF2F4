@@ -36,7 +36,7 @@ void Point::setType(string type, bool isBlind) {
         colour = 7;
     }
     if (type == "X") {
-        colour = 0;
+        colour = 1;
     }
     if (type == "Z") {
         colour = 9;

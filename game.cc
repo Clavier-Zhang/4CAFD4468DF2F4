@@ -21,6 +21,10 @@ isGraphical{isGraphical} {
     this->playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
     this->playerTwo.reset(new Player(this, 2, this->w.get(), startLvl, scpt2));
     this->currentPlayer = this->playerOne;
+
+    if (startLvl >= 3) {
+        enableSpecialAction("heavy");
+      }
 }
 
 Game::~Game() {
