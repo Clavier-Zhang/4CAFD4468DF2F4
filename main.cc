@@ -178,9 +178,7 @@ int main (int argc, char * argv[]) {
             } else if (action == "blind") {
                game->enableSpecialAction(action);
             }
-            cout<<"printing game"<<endl;
             game->print();
-            cout<<"done printing"<<endl;
         }
 
         // error checking
@@ -292,9 +290,15 @@ int main (int argc, char * argv[]) {
             string randomFile;
             determineInput(randomFile);
             // use this file
-            game->setRandom(false,randomFile);
+            if ( game->getLevel()>=3){
+                 cout<<"Block generation will generate from " << randomFile <<endl;
+                 game->setRandom(false,randomFile);
+                 }else cout<<"Not applicable to this level"<<endl;
         } else if (translatedCmd == "random") {
-            game->setRandom(true);
+            if ( game->getLevel()>=3){
+                cout<<"Activating random generation"<<endl;
+                game->setRandom(true);
+            }else cout<<"Not applicable to this level"<<endl;
         } else if (translatedCmd == "sequence") {
             string sequenceFile;
             cin >> sequenceFile;
@@ -312,5 +316,6 @@ int main (int argc, char * argv[]) {
         }
         game->print();
     } 
+    cout<<"GAME OVER"<<endl;
 
 }

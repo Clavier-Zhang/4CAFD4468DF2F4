@@ -301,3 +301,6 @@ int Player::getNumDrop() {
 void Player::setNumDrop(int n) {
     numDrop = n;
 }
+int Player::getCurrentScore() {
+    return currentScore;
+}
