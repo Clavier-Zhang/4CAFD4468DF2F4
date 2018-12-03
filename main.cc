@@ -135,11 +135,6 @@ int main (int argc, char * argv[]) {
             string action;
             cout << "Please enter a special action" << endl;
             while (true) {
-/*                if((int)seq.length()>0){
-                    istringstream iss{seq};
-                    iss>>action;
-                    seq=seq.substr((int)action.length()+1,(int)seq.length());
-                }else cin >> action;*/
                 determineInput(action);
                 if (cin.fail()) {
                     cin.clear();
@@ -230,7 +225,7 @@ int main (int argc, char * argv[]) {
         } else if (translatedCmd == "down") {
             game->move("down", step);
         } else if (translatedCmd == "drop") {
-            if (game->getNumDrop() == 1 && step != 0)  game->setNumDrop(step);
+            if (game->getNumDrop() == 1 && step > 0)  game->setNumDrop(step);
             else if (step == 0){ 
                 game->print();
                 continue;
