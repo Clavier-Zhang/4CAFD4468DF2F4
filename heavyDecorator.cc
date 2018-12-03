@@ -30,6 +30,9 @@ int HeavyDecorator::getLevel() {return player->getLevel();}
 int HeavyDecorator::getNumDrop(){
     return player->getNumDrop();
 }
+void HeavyDecorator::setRandom(bool rand, string file) {
+    player->setRandom(rand, file);
+}
 
 void HeavyDecorator::setNumDrop(int n){
     player->setNumDrop(n);

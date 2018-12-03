@@ -272,6 +272,9 @@ void Player::setLevel(int level){
     this->drawLevel();
 }
 
+void Player::setRandom(bool rand, string file) {
+    level->setRandom(rand, file);
+}
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block

@@ -56,7 +56,7 @@ class AbstractPlayer {
         // check if it is possible to level up/down
         virtual void setLevel(int level) = 0;
         // assign the point pointer to currentBlock, can
-        void setRandom(bool rand, std::string file = "");
+        virtual void setRandom(bool rand, std::string file = "")=0;
         // display
         virtual void setCurrentBlock(char type = ' ') = 0;
         virtual std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() = 0;

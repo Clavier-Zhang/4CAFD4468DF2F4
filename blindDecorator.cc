@@ -45,6 +45,9 @@ int BlindDecorator::getLevel() {return player->getLevel();}
 int BlindDecorator::getNumDrop(){
     return player->getNumDrop();
 }
+void BlindDecorator::setRandom(bool rand, string file) {
+    player->setRandom(rand, file);
+}
 
 void BlindDecorator::setNumDrop(int n){
     player->setNumDrop(n);

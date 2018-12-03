@@ -38,5 +38,6 @@ class BlindDecorator : public AbstractDecorator {
         void setHighScore(int) override;
         int getNumDrop() override;
         void setNumDrop(int) override;
+        void setRandom(bool rand, std::string file) override;
 };
 #endif

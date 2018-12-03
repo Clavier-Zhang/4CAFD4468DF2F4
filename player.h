@@ -36,7 +36,7 @@ class Player : public AbstractPlayer {
         void setHighScore(int)override;
         int getNumDrop()override;
         void setNumDrop(int)override;
-
+        void setRandom(bool rand, std::string file = "") override;
 //        bool canMoveDown(int step); //used in heavy dec
 };
 #endif

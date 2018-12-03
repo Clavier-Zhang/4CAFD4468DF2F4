@@ -216,9 +216,6 @@ void AbstractPlayer::applyLevelEffects(int offset){
 }
 
 
-void AbstractPlayer::setRandom(bool rand, string file) {
-    level->setRandom(rand, file);
-}
 
 // observer pattern
 void AbstractPlayer::notifyGameover() {
