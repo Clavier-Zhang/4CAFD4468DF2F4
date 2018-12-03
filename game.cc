@@ -157,7 +157,7 @@ void Game::move(string type, int step) {
 }
 
 void Game::rotate(bool counter, int step) {
-    currentPlayer->rotate(counter, step);
+ if (currentPlayer->rotate(counter, step) == -1) currentPlayer->drop();
     print();
 }
 
@@ -257,7 +257,7 @@ void Game::print() {
     // print grid
     for (int i = 0; i < 18; i++) {
         cout << playerOne->getGridRow(i);
-        cout << setw(7) << " ";
+        cout << setw(7) << "*";
         cout << playerTwo->getGridRow(i);
         cout << endl;
     }

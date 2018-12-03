@@ -98,6 +98,20 @@ bool AbstractPlayer::isValid(pair<int, int> &c) {
     return true;
 }
 
+bool AbstractPlayer::canMoveDown(int step){
+    if (step ==0) return true;
+    int deltaX=0;
+    int deltaY=step;
+
+    for (Point *p : currentBlock->getPoints()) {
+            pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
+            if (!isValid(c)) {
+                return false;
+            }
+        }
+        return true;
+
+}
 void AbstractPlayer::recalculateGrid() {
     bool shouldClear;
     int offset = 0;

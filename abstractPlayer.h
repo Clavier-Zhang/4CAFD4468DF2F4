@@ -109,5 +109,7 @@ class AbstractPlayer {
         void undrawLevel();
         void drawNextBlock();
         void undrawNextBlock();
+
+        bool canMoveDown(int step); //used in heavy dec
 };
 #endif
