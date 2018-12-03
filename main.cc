@@ -205,7 +205,7 @@ int main (int argc, char * argv[]) {
             cout << "drop" << endl;
             continue;
         }
-        if (key == ' ') {
+        if (key == ord(' ') {
             game->move("down", 1);
             cout << "drop" << endl;
             continue;
