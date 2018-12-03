@@ -36,6 +36,10 @@ void BlindDecorator::setLevel(int level) {
 int BlindDecorator::getHighScore(){
     return player->getHighScore();
 }
+int BlindDecorator::getCurrentScore() {
+    return player->getCurrentScore();
+}
+
 
 void BlindDecorator::setHighScore(int hi){
     player->setHighScore(hi);

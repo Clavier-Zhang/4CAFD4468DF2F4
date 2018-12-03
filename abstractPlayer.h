@@ -76,7 +76,7 @@ class AbstractPlayer {
         void notifyTurnover();
         void notifySpecialAction();
         // getter
-        int getCurrentScore();
+        virtual int getCurrentScore()=0;
         virtual int getHighScore()=0;
         virtual int getLevel() = 0;
         int getNo();

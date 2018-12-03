@@ -231,9 +231,6 @@ void AbstractPlayer::notifySpecialAction() {
 }
 
 // getter
-int AbstractPlayer::getCurrentScore() {
-    return currentScore;
-}
 
 /*int AbstractPlayer::getHighestScore() {
     return highestScore;

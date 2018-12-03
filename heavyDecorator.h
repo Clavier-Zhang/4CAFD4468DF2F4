@@ -39,5 +39,6 @@ class HeavyDecorator : public AbstractDecorator {
         int getNumDrop() override;
         void setNumDrop(int)override;
         void setRandom(bool rand, std::string file) override;
+        int getCurrentScore() override;
 };
 #endif

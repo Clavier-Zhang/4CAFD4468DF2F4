@@ -21,6 +21,9 @@ void HeavyDecorator::setLevel(int level) {
 int HeavyDecorator::getHighScore(){
     return player->getHighScore();
 }
+int HeavyDecorator::getCurrentScore() {
+    return player->getCurrentScore();
+}
 
 void HeavyDecorator::setHighScore(int hi){
     player->setHighScore(hi);
