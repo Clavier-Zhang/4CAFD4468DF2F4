@@ -13,7 +13,6 @@ using namespace std;
 AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
     no{no}, initScpt{scpt},level{nullptr},currentBlock{nullptr},nextBlock{nullptr}{
         // initialize the grid
-        cout << "abstractplayer ctr" << endl;
         for (int i = 0; i < rowNum; i++) {
             vector<Point> row;
             for (int j = 0; j < colNum; j++) {
@@ -146,7 +145,6 @@ void AbstractPlayer::clearRow(int row) {
     for (int col = 0; col < colNum; col++){
         Point *p = &this->grid[row][col];
         p->setType(" ");
-        cout << "AbstractPlayer::clearRow" << endl;
         for (auto cell : inactiveBlocks[p->getID()]->getPoints()){
             if (cell == p){
                 inactiveBlocks[p->getID()].get()->removeOnePoint(p);
@@ -167,9 +165,7 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
             for (auto cell : inactiveBlocks[p->getID()]->getPoints()) {
                 if (cell == p) {//once we find the point in the block...
                     pair<int, int> coor = make_pair(newP->getX(), newP->getY());
-                    cout << "call addPoint from AbstractPlayer::shiftDown" << endl;
                     inactiveBlocks[p->getID()].get()->addPoint(coor, this); // creates the point that it should be moved to
-                    cout << "AbstractPlayer::shiftRowDown" << endl;
                     grid[row][col].setType(" ");
                     inactiveBlocks[p->getID()].get()->removeOnePoint(p);// removes the current point from the block
                 }
@@ -186,7 +182,7 @@ void AbstractPlayer::recalculateInactiveBlocks(){
         if (it->second->getPoints().size() == 0){
             currentScore+=it->second->getScore();
             auto toErase = it;
-            cout<<it->first<<endl;
+            //cout<<it->first<<endl;
             it++;
             it=inactiveBlocks.erase(toErase);
         }else{
@@ -274,7 +270,6 @@ void AbstractPlayer::setNextBlock(string type){
 }
 
 void AbstractPlayer::setCurrentBlock(string type){
-cout << "set current bloc in absplayer" << endl;
     unique_ptr<AbstractBlock>tmp{level->generateBlock(type[0])};
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);
@@ -306,7 +301,6 @@ void AbstractPlayer::drawLevel(){
 
 void AbstractPlayer::undrawLevel(){
     if (game->getWindow() != nullptr) {
-    cout<<"UNDDDDRRRRAAAAWWWWW"<<endl;
         game->undrawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
@@ -357,6 +351,5 @@ void AbstractPlayer::undrawNextBlock(){
 }
 
 void AbstractPlayer::setGridType(int row, int col, string c){
-    cout << "AbstractPlayer::setGridType" << endl;
     grid[row][col].setType(c);
 }

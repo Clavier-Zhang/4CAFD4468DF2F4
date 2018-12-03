@@ -236,7 +236,6 @@ void Game::force(char c) {
 void Game::print() {
     // this->drawBigString(2,2,"-",1);
     // print level
-    cout<<"entering print"<<endl;
     cout << "Level:";
     cout << setw(5) << playerOne->getLevel();
     cout  << setw(7) << " ";
@@ -331,7 +330,6 @@ Xwindow * Game::getWindow() {
 
 // Private helper functions
 void Game::takeOffDecorations() {
-    cout<<"I RAAAAAAAAAAAAAAAAAAAAAAAAANNNNNNNNNN"<<endl;
     shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
     while (tmp != nullptr) { // the player still has decorations
         // schema for removing decoration:

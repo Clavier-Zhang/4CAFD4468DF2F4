@@ -4,7 +4,6 @@ using namespace std;
 
 HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) :
 AbstractDecorator{absPlayer, g, w} {
-cout<<"PLAYER LEVEL ISSS" <<endl;
 }
 
 void HeavyDecorator::drop(bool shouldClearBlind) {
@@ -49,25 +48,18 @@ void HeavyDecorator::drawGridPoint(int x, int y, int col) {
  }
 
 void HeavyDecorator::undrawGridPoint(int x, int y) {
-player->undrawGridPoint(x, y);
+player->undrawGridPoint(x, y); // dnt think this is needed
  }
 
 int HeavyDecorator::rotate(bool counter, int step, bool isBlind) {
-cout << "ENTER HEAVY MOVE" << endl;
 int newStep = player->rotate(counter, step, isBlind);
 int test =1;
-cout<<"finished new step"<<endl;
 int result = getBasePlayer()->move("down", newStep, isBlind);
-cout<<"finished result"<<endl;
-cout<< "RESULT" << result<<endl;
-cout<<"NEWSTEP"<<result<<endl;
 if (result == newStep)
     test = getBasePlayer()->canMoveDown(1);
-cout<<"ROTATE TEST" <<test <<endl;
 if ((newStep == -1)||(result < newStep )||test==0){ 
     return -1;
     }
-cout << "EXIT HEAVY MOVE" << endl;
 return newStep;// return this r the retval of the preceding line?
 }
 
@@ -89,7 +81,6 @@ int test=1;
 int result = getBasePlayer()->move("down", newStep, isBlind);
 if (result == newStep)
     test = getBasePlayer()->canMoveDown(1);
-cout<<"MOVE TEST" <<test <<endl;
 if ((newStep == -1)||(result < newStep )||test==0){ 
     return -1;
     }

@@ -17,7 +17,6 @@ void BlockX::initialize(AbstractPlayer *p) {
 
         row = p->getGridRow(i);
         if (row[5] == ' '){
-        cout<<"the value of i is " <<i<<endl;
             auto c1 = make_pair(5,i);
             positions.emplace_back(c1);
             break;
@@ -30,9 +29,7 @@ void BlockX::initialize(AbstractPlayer *p) {
     }
 
      for (pair<int, int> &c : positions) {
-        cout <<"hii"<<endl;
         addPoint(c, p);
-        cout<<"success"<<endl;
     }
     // set points
     for (Point *p : this->points) {

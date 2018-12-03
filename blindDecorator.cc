@@ -72,7 +72,7 @@ void BlindDecorator::drawGridPoint(int x, int y, int col) {
  }
 
 void BlindDecorator::undrawGridPoint(int x, int y) {
-player->undrawGridPoint(x, y);
+player->undrawGridPoint(x, y);// dont think this is neeed
  }
 
 string BlindDecorator::getGridPoint(int row, int col) {

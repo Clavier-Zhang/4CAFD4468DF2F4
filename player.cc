@@ -108,7 +108,6 @@ void Player::drawGridPoint(int x, int y, int col) {
  }
 
 void Player::undrawGridPoint(int x, int y) {
-cout << "player:: undrawGridPoint" << endl;
 game->undrawPoint(x, y, 1, 1, no);
  }
 
@@ -124,9 +123,7 @@ void Player::nullifyUnderlyingPlayer() {
 } // there is no underlying player to set to null
 
 int Player::move(string type, int step, bool isBlind) {
-cout<<"entering player move"<<endl;
 bool succeeded = moveHelper(type, step, isBlind);
-cout<<"finished succeed"<<endl;
  int newStep = step;
  // if unable to move step times, move max allowed times strictly less than step and return how
  // many moves were able to be made
@@ -163,7 +160,6 @@ cout<<"finished succeed"<<endl;
         }
         // clear block first, then add points
         currentBlock->removeAllPoint(isBlind);
-        cout << "add points in move" << endl;
         currentBlock->addPoints(coordinates, this, isBlind);
         return true;
     }
@@ -241,7 +237,6 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
      }
     // clear block first, then add points
     currentBlock->removeAllPoint(isBlind);
-    cout << "add points in roaotte" << endl;
     currentBlock->addPoints(coordinates, this, isBlind);
     return true;
 }
@@ -270,8 +265,6 @@ void Player::drop(bool shouldClearBlind){
     this->drawNextBlock();
     if (shouldClearBlind) clearBlind();
     recalculateGrid();
-    // some logic for determining correct notify will need to go here
-    //if (getIsDecorated())setIsDecorated(false);
 }
 
 // assign the point pointer to currentBlock, can

@@ -49,7 +49,6 @@ void Point::setType(string type, bool isBlind) {
         int realW = unit;
         int realH = unit;
         this->w->fillRectangle(realX, realY, realW, realH, colour);
-        //cout << "fill rectanglei " << x << y << endl;
     }
 }
 
