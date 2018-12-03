@@ -187,6 +187,7 @@ int main (int argc, char * argv[]) {
         key = getch();
         if (key == KEY_RIGHT) {
             game->move("right", 1);
+            cout << "test" << endl;
             continue;
         }
         // end of key feature
