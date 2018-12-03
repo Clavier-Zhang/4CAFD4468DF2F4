@@ -130,10 +130,12 @@ int main (int argc, char * argv[]) {
     game->print();
 
     // key feature
-    initscr();
-    keypad(stdscr, TRUE);
-    cbreak();
-    noecho();
+    if (keyMode) {
+        initscr();
+        keypad(stdscr, TRUE);
+        cbreak();
+        noecho();
+    }
     // end of key feature
 
     // Command interpreter
