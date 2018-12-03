@@ -200,7 +200,7 @@ int main (int argc, char * argv[]) {
             cout << "down" << endl;
             continue;
         }
-        if (key == KEY_UP) {
+        if (key == KEY_ENTER) {
             game->drop(1);
             cout << "drop" << endl;
             continue;
