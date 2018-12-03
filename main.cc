@@ -215,6 +215,16 @@ int main (int argc, char * argv[]) {
             cout << "counterclockwise" << endl;
             continue;
         }
+        if (key == 'c') {
+            game->levelUp(1);
+            cout << "level up" << endl;
+            continue;
+        }
+        if (key == 'v') {
+            game->levelDown(1);
+            cout << "level down" << endl;
+            continue;
+        }
         // end of key feature
 
         string word;
