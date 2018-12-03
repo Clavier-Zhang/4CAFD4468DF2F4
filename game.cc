@@ -23,7 +23,6 @@ isGraphical{isGraphical} {
     this->currentPlayer = this->playerOne;
 }
 
-
 Game::~Game() {
  takeOffDecorations();
 }
@@ -80,10 +79,9 @@ if (currentPlayer->getUnderlyingPlayer() != nullptr) { // the player is decorate
 void Game::levelUp(int step) {
     int targetLevel = currentPlayer->getLevel() + step;
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
-        currentPlayer->setLevel(targetLevel);
-//        cout << "inside levelUp" << endl;
       if (!((targetLevel == 4)&&(step == 1))) addLevelDecorator(targetLevel);
-        print();
+      currentPlayer->setLevel(targetLevel);
+      print();
     }
 }
 
@@ -105,7 +103,10 @@ void Game::removeLevelDecorator(int level) {
    shared_ptr<AbstractPlayer> cpy = playerOne->getUnderlyingPlayer();
    playerOne->nullifyUnderlyingPlayer();
    currentPlayer->nullifyUnderlyingPlayer();
-   playerOne->setUnderlyingPlayer(cpy);
+   playerOne.reset();
+   currentPlayer.reset();
+   playerOne = cpy;
+  // playerOne->setUnderlyingPlayer(cpy);
    currentPlayer = playerOne;
    } else {
    shared_ptr<AbstractPlayer> cpy = playerTwo->getUnderlyingPlayer();
@@ -127,8 +128,9 @@ void Game::removeLevelDecorator(int level) {
 void Game::levelDown(int step) {
     int targetLevel = currentPlayer->getLevel() - step;
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
-        currentPlayer->setLevel(targetLevel);
+        //currentPlayer->setLevel(targetLevel);
         if (!((targetLevel == 3)&&(step == 1))) removeLevelDecorator(targetLevel); 
+        currentPlayer->setLevel(targetLevel);
         print();
     }
 }
