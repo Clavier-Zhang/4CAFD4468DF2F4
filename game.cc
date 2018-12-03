@@ -52,7 +52,6 @@ void Game::restart(int startLvl) {
     playerOne->setHighScore(highScoreP1);
     playerTwo->setHighScore(highScoreP2);
     currentPlayer=playerOne;
-    print();
 }
 
 // player's operation
@@ -61,7 +60,6 @@ void Game::setLevel(int level) {
     if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
         //undrawBigString(10, 24, to_string(playerOne->getHighScore()), 1);
         currentPlayer->setLevel(level);
-        print();
     }
 }
 
@@ -92,7 +90,6 @@ void Game::levelUp(int step) {
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
         if (!((targetLevel == 4)&&(step == 1))) addLevelDecorator(targetLevel);
         currentPlayer->setLevel(targetLevel);
-        print();
     }
 }
 
@@ -146,7 +143,6 @@ void Game::levelDown(int step) {
         //currentPlayer->setLevel(targetLevel);
         if (!((targetLevel == 3)&&(step == 1))) removeLevelDecorator(targetLevel); 
         currentPlayer->setLevel(targetLevel);
-        print();
     }
 }
 
@@ -161,17 +157,14 @@ int Game::getLevel(){
 void Game::move(string type, int step) {
     if (currentPlayer->move(type, step) == -1) currentPlayer->drop();
     //cout <<"finished current player move"<<endl;
-    print();
 }
 
 void Game::rotate(bool counter, int step) {
     if (currentPlayer->rotate(counter, step) == -1) currentPlayer->drop();
-    print();
 }
 
 void Game::drop(int step) {
     currentPlayer->drop();
-    print();
 }
 
 int Game::getNumDrop(){
@@ -337,7 +330,6 @@ void Game::takeOffDecorations() {
         // 2. call on both currentPlayer and playerX; this deletes only the decorator
         // 3. reassign the undecorated player component to playerX and currentPlayer
         if (currentPlayer == playerOne) {
-            int highScore=playerOne->getHighScore();
             currentPlayer->nullifyUnderlyingPlayer();
             playerOne.reset();
             currentPlayer.reset();

@@ -7,6 +7,7 @@
 #include "game.h"
 using namespace std;
 
+// Global values to determine initial state of the game
 bool isGraphical = true;
 string seq="";
 string scpt1="sequence1.txt";
@@ -64,6 +65,7 @@ void setInitialState(int argc, char * argv[]){
     string s;
     for (int i =1; i< argc; ++i){
         s=argv[i];
+        cout<<s<<endl;
         if (s == "-text"){
             isGraphical=false;
         }else if(s == "-seed"){
@@ -117,10 +119,6 @@ int main (int argc, char * argv[]) {
         commandMap.erase(duplicate);
     }
 
-    // test for commandMap
-    // for (const auto &p : commandMap) {
-    //     cout << p.first << " " << p.second << endl;
-    // }
     if ( seed >-1)
         srand(seed);
     else
@@ -180,15 +178,9 @@ int main (int argc, char * argv[]) {
         if(game->getNumDrop() >1){
             word = "drop";
             game->setNumDrop(game->getNumDrop()-1);
-            cout<<"for this player it is"<<game->getNumDrop()<<endl;
         }else{
             determineInput(word);
         }
-        /*if (seq.length()>0){
-            istringstream iss{seq};
-            iss>>word;
-            seq=seq.substr((int)word.length()+1,(int)seq.length());
-        }else cin >> word;*/
 
         if (cin.fail()) {
             cin.clear();
@@ -217,7 +209,6 @@ int main (int argc, char * argv[]) {
         }
         int step = 1;
         if (numText != "") step = stoi(numText);
-        cout<<step<<endl;
         if (translatedCmd == "left") {
             game->move("left", step);
         } else if (translatedCmd == "right") {
@@ -227,7 +218,6 @@ int main (int argc, char * argv[]) {
         } else if (translatedCmd == "drop") {
             if (game->getNumDrop() == 1 && step > 0)  game->setNumDrop(step);
             else if (step == 0){ 
-                game->print();
                 continue;
             } 
             game->drop(step);
@@ -241,7 +231,7 @@ int main (int argc, char * argv[]) {
             game->levelDown(step);
         } else if (translatedCmd == "norandom") {
             string randomFile;
-            cin >> randomFile;
+            determineInput(randomFile);
             // use this file
             game->setRandom(false,randomFile);
         } else if (translatedCmd == "random") {
@@ -258,10 +248,10 @@ int main (int argc, char * argv[]) {
         } else if ((translatedCmd == "I")||(translatedCmd == "J")||(translatedCmd == "L")||
                 (translatedCmd == "O")||(translatedCmd == "T")||(translatedCmd == "S")||(translatedCmd == "Z")) {
             game->force(translatedCmd[0]);
-            game->print();
         } else if (translatedCmd == "restart") {
             game->restart(startLvl);
         }
+        game->print();
     } 
 
 }
