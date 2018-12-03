@@ -142,6 +142,7 @@ void AbstractPlayer::clearRow(int row) {
     for (int col = 0; col < colNum; col++){
         Point *p = &this->grid[row][col];
         p->setType(" ");
+        cout << "AbstractPlayer::clearRow" << endl;
         for (auto cell : inactiveBlocks[p->getID()]->getPoints()){
             if (cell == p){
                 inactiveBlocks[p->getID()].get()->removeOnePoint(p);
@@ -162,7 +163,9 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
             for (auto cell : inactiveBlocks[p->getID()]->getPoints()) {
                 if (cell == p) {//once we find the point in the block...
                     pair<int, int> coor = make_pair(newP->getX(), newP->getY());
+                    cout << "call addPoint from AbstractPlayer::shiftDown" << endl;
                     inactiveBlocks[p->getID()].get()->addPoint(coor, this); // creates the point that it should be moved to
+                    cout << "AbstractPlayer::shiftRowDown" << endl;
                     grid[row][col].setType(" ");
                     inactiveBlocks[p->getID()].get()->removeOnePoint(p);// removes the current point from the block
                 }
@@ -344,5 +347,6 @@ void AbstractPlayer::undrawNextBlock(){
 }
 
 void AbstractPlayer::setGridType(int row, int col, string c){
+    cout << "AbstractPlayer::setGridType" << endl;
     grid[row][col].setType(c);
 }
