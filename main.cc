@@ -206,12 +206,12 @@ int main (int argc, char * argv[]) {
             continue;
         }
         if (key == ',') {
-            game->rotate(false, step);
+            game->rotate(false, 1);
             cout << "clockwise" << endl;
             continue;
         }
         if (key == '.') {
-            game->rotate(true, step);
+            game->rotate(true, 1);
             cout << "counterclockwise" << endl;
             continue;
         }
