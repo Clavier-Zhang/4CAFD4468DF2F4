@@ -40,9 +40,9 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
             game->drawPoint(x, 21, 1, 1, 11, this->no);
         }
         game->drawBigString(0, 24, " Next:", this->no);
-        game->drawBigString(4, 24, "Highest Score:", this->no);
+        game->drawBigString(4, 24, "High Score:", this->no);
         game->drawBigString(10, 24, "0", this->no);
-}
+    }
 
 // important
 /*AbstractPlayer::AbstractPlayer(Game *game):,currentBlock{level->generateBlock()},
@@ -118,6 +118,18 @@ void AbstractPlayer::recalculateGrid() {
     else notifyTurnover();
     applyLevelEffects(offset);
     recalculateInactiveBlocks();
+    currentScore+=((getLevel()+offset)*(getLevel()+offset));
+    updateScore();
+}
+
+void AbstractPlayer::updateScore(){
+
+    this->undrawScore();
+    if (this->currentScore > this->highestScore) {
+        this->highestScore = this->currentScore;
+    }
+    this->drawScore();
+
 }
 
 void AbstractPlayer::clearRow(int row) {
@@ -158,12 +170,7 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
 void AbstractPlayer::recalculateInactiveBlocks(){
     for(auto & entry : inactiveBlocks){
         if (entry.second->getPoints().size() == 0){
-            this->undrawScore();
             currentScore += entry.second->getScore();
-            if (this->currentScore > this->highestScore) {
-                this->highestScore = this->currentScore;
-            }
-            this->drawScore();
             inactiveBlocks.erase(entry.first);
         }
     }
@@ -186,8 +193,8 @@ void AbstractPlayer::applyLevelEffects(int offset){
 }
 
 void AbstractPlayer::setHighScore(int hi) {
- highestScore = hi;
- }
+    highestScore = hi;
+}
 
 void AbstractPlayer::setRandom(bool rand, string file) {
     level->setRandom(rand, file);
@@ -263,6 +270,8 @@ void AbstractPlayer::drawScore(){
     if (game->getWindow() != nullptr) {
         game->drawBigString(10, 24, std::to_string(this->highestScore), this->no);
         game->drawBigString(9, 2, std::to_string(this->currentScore), this->no);
+        game->drawBigString(4, 24, "High Score:", this->no);
+        game->drawBigString(10, 24, "0", this->no);
     }
 }
 
@@ -270,6 +279,8 @@ void AbstractPlayer::undrawScore(){
     if (game->getWindow() != nullptr) {
         game->undrawBigString(10, 24, std::to_string(this->highestScore), this->no);
         game->undrawBigString(9, 2, std::to_string(this->currentScore), this->no);
+        game->undrawBigString(4, 24, "High Score:", this->no);
+        game->undrawBigString(10, 24, "0", this->no);
     }
 }
 

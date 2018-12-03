@@ -17,6 +17,7 @@ class AbstractBlock;
 class Game;
 
 class AbstractPlayer { 
+    void updateScore();
     protected:
         // player number
         int no = 1;

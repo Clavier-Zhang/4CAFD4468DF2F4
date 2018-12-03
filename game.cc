@@ -326,7 +326,6 @@ void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
 }
 
 void Game::undrawPoint(int x, int y, int w, int h, int playerNum) {
-   cout << "called for " << x << " " << y << endl;
    if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
         int unit = 18;
