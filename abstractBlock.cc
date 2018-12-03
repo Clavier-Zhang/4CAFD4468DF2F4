@@ -6,9 +6,9 @@
 #include <vector>
 using namespace std;
 
-AbstractBlock::AbstractBlock(string type, int score) : type{type}, score{score} {}
-
 int AbstractBlock::curId = 0; // Initialize static member curId
+
+AbstractBlock::AbstractBlock(string type, int score) : type{type}, score{score} {}
 
 AbstractBlock::~AbstractBlock() {
 }

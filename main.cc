@@ -265,7 +265,7 @@ int main (int argc, char * argv[]) {
             game->force(translatedCmd[0]);
             game->print();
         } else if (translatedCmd == "restart") {
-            game->restart();
+            game->restart(startLvl);
         }
     } 
 

@@ -32,7 +32,7 @@ class Game {
         // initialize two players
         Game(bool isGraphical, int startLvl, std::string scpt1, std::string scpt2);
         ~Game();
-        void restart(); // TODO clears the board and starts a new game
+        void restart(int); // TODO clears the board and starts a new game
         // player's operation
         // do not need to check, call currentPlayer's method directly
         void setLevel(int level);

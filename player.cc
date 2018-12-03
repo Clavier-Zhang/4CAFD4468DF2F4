@@ -31,6 +31,8 @@ if(startLvl==1){
         currentBlock->initialize(this);
         nextBlock.reset(level->generateBlock());
         if (game->getWindow() != nullptr) {
+        game->drawBigString(1, 1, "Level:", this->no);
+        game->drawBigString(9, 1, to_string(startLvl), this->no);
             for (auto &p : this->nextBlock->getPositions()) {
                 int colour = 0;
                 string type = this->nextBlock->getType();

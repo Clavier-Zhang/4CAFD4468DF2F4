@@ -4,6 +4,7 @@ using namespace std;
 
 HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) :
 AbstractDecorator{absPlayer, g, w} {
+cout<<"PLAYER LEVEL ISSS" <<endl;
 }
 
 void HeavyDecorator::drop(bool shouldClearBlind) {
