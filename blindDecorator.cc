@@ -14,6 +14,8 @@ AbstractDecorator{absPlayer, g, w} {
 }
 
 BlindDecorator::~BlindDecorator() {
+    cout<<player->getHighestScore()<<"HIIIIIGHHHHHHHSCCCCCCCOOOOOOOOREEEEE"<<endl;
+    getBasePlayer()->setHighScore(player->getHighestScore());
 }
 
 // add the points of blocks to grid, update the block in drop(), 

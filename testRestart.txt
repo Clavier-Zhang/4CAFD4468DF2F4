@@ -31,8 +31,4 @@ cl
 dro
 heavy
 3ri
-I
-cl
-11ri
-blind
 restart

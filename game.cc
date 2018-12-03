@@ -43,6 +43,7 @@ void Game::restart(int startLvl) {
         this->w->fillRectangle(0, 0, this->width, this->height, 0);
     }
     cout<<"if this is the problem I'll laugh"<<endl;
+    takeOffDecorations();
     currentPlayer.reset();
     cout<<"still good"<<endl;
     playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
@@ -53,7 +54,7 @@ void Game::restart(int startLvl) {
     }
     playerOne->setHighScore(highScoreP1);
     playerTwo->setHighScore(highScoreP2);
-    currentPlayer = playerOne;
+    currentPlayer=playerOne;
     print();
 }
 

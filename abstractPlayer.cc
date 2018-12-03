@@ -33,14 +33,9 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
         for (int x = 0; x < this->colNum; x++) {
             game->drawPoint(x, 2, 1, 1, 11, this->no);
         }
-        game->drawBigString(1, 2, "Score:", this->no);
-        game->drawBigString(9, 2, "0", this->no);
         for (int x = 0; x < this->colNum; x++) {
             game->drawPoint(x, 21, 1, 1, 11, this->no);
         }
-        game->drawBigString(0, 24, " Next:", this->no);
-        game->drawBigString(4, 24, "High Score:", this->no);
-        game->drawBigString(10, 24, to_string(highestScore), this->no);
     }
 
 // important
@@ -225,8 +220,8 @@ void AbstractPlayer::applyLevelEffects(int offset){
 }
 
 void AbstractPlayer::setHighScore(int hi) {
-    if(w!=nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
     highestScore = hi;
+    if(w!=nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
 }
 
 void AbstractPlayer::setRandom(bool rand, string file) {

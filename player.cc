@@ -11,7 +11,6 @@ using namespace std;
 Player::Player(Game *game, int no, Xwindow *w, int startLvl, std::string scpt):
 AbstractPlayer{game, no, w, scpt}{
     //initialize
-cout << "Player ctor" << endl;
 if(startLvl==1){
             level.reset(new LevelOne);
         }else if(startLvl==2){
@@ -33,6 +32,11 @@ if(startLvl==1){
         if (game->getWindow() != nullptr) {
         game->drawBigString(1, 1, "Level:", this->no);
         game->drawBigString(9, 1, to_string(startLvl), this->no);
+        game->drawBigString(1, 2, "Score:", this->no);
+        game->drawBigString(9, 2, to_string(currentScore), this->no);
+        game->drawBigString(0, 24, " Next:", this->no);
+        game->drawBigString(4, 24, "High Score:", this->no);
+        game->drawBigString(10, 24, to_string(highestScore), this->no);
             for (auto &p : this->nextBlock->getPositions()) {
                 int colour = 0;
                 string type = this->nextBlock->getType();
