@@ -183,7 +183,7 @@ int main (int argc, char * argv[]) {
         // error checking
 
         // key feature
-        char key;
+        int key;
         key = getch();
         if (key == KEY_RIGHT) {
             game->move("right", 1);
