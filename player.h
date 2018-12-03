@@ -33,6 +33,8 @@ class Player : public AbstractPlayer {
         int getLevel() override;
         int getHighScore() override;
         void setHighScore(int)override;
+        int getNumDrop()override;
+        void setNumDrop(int)override;
 
 //        bool canMoveDown(int step); //used in heavy dec
 };

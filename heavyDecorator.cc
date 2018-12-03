@@ -28,6 +28,13 @@ void HeavyDecorator::setHighScore(int hi){
 }
 
 int HeavyDecorator::getLevel() {return player->getLevel();}
+int HeavyDecorator::getNumDrop(){
+    return player->getNumDrop();
+}
+
+void HeavyDecorator::setNumDrop(int n){
+    player->setNumDrop(n);
+}
 void HeavyDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
 }

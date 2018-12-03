@@ -303,3 +303,10 @@ void Player::setHighScore(int hi) {
     highestScore = hi;
     if(w!=nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
 }
+int Player::getNumDrop(){
+    return numDrop;
+}
+
+void Player::setNumDrop(int n){
+    numDrop = n;
+}

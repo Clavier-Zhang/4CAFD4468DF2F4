@@ -83,7 +83,7 @@ class AbstractPlayer {
         virtual int getHighScore()=0;
         virtual int getLevel() = 0;
         int getNo();
-        int getNumDrop();
+        virtual int getNumDrop()=0;
         Game *getGame();
         std::string getInitScpt();
         virtual std::string getGridRow(int row) = 0;
@@ -91,7 +91,7 @@ class AbstractPlayer {
         virtual void drawGridPoint(int x, int y, int col) = 0;
         virtual void undrawGridPoint(int x, int y) = 0;
         std::string getNextBlock();
-        void setNumDrop(int);
+        virtual void setNumDrop(int)=0;
         void setNextBlock(std::string);
         void setCurrentBlock(std::string);
         virtual void setHighScore(int)=0;
