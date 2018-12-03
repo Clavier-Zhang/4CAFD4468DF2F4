@@ -100,6 +100,9 @@ int main (int argc, char * argv[]) {
     // key feature
     int key;
     initscr();
+    keypad(stdscr, TRUE);
+    cbreak();
+    noecho();
     // end of key feature
     setInitialState(argc, argv);
     // possible short version commands
