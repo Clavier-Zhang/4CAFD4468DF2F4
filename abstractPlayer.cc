@@ -11,7 +11,7 @@ using namespace std;
 
 // constructor
 AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
-    no{no}, initScpt{scpt}{
+    no{no}, initScpt{scpt},level{nullptr},currentBlock{nullptr},nextBlock{nullptr}{
         // initialize the grid
         for (int i = 0; i < rowNum; i++) {
             vector<Point> row;
@@ -67,7 +67,7 @@ Game *AbstractPlayer::getGame() { return game;}
 
 // check if possible to level up or down
 void AbstractPlayer::setLevel(int level){
-    this->undrawLevel();
+    if(this->level != nullptr) this->undrawLevel();
     if (level == 0) {
         this->level.reset(new LevelZero{initScpt});
     } else if (level == 1) {
@@ -115,10 +115,13 @@ void AbstractPlayer::recalculateGrid() {
         }
     }
     if (offset>=1){
+        cout<<"undrawscore"<<endl;
         this->undrawScore();
+        cout<<"finished undrawscore"<<endl;
         currentScore+=((getLevel()+offset)*(getLevel()+offset));
+        if(offset>=2)notifySpecialAction();
+        else notifyTurnover();
     }
-    else if(offset>=2)notifySpecialAction();
     else notifyTurnover();
     applyLevelEffects(offset);
     recalculateInactiveBlocks();

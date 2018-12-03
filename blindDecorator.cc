@@ -38,7 +38,6 @@ shared_ptr<AbstractPlayer> BlindDecorator::getBasePlayer() {
 }
 
 int BlindDecorator::rotate(bool counter, int step, bool isBlind){
-cout << "BD rotate called" << endl;
 return player->rotate(counter, step, true);
 }
 
@@ -73,7 +72,6 @@ void BlindDecorator::setCurrentBlock(char c) {
  }
 
 int BlindDecorator::move(string type, int step, bool isBlind){
- cout << "BD mova called" << endl;
  return player->move(type, step, true);
 }
 
