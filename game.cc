@@ -50,7 +50,6 @@ void Game::restart() {
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
     if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
-        undrawBigString(9, 1, std::to_string(currentPlayer->getLevel()), currentPlayer->getNo());
         currentPlayer->setLevel(level);
         print();
     }
@@ -288,6 +287,7 @@ AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<Abs
     if (specialAction == "heavy") {
     return new HeavyDecorator(absPlayer, this, w.get());
     }  else if (specialAction == "blind") {
+    cout<<"calling blind decor"<<endl;
     return new BlindDecorator(absPlayer, this, w.get());
     }
     return nullptr; // maybe throw an exception instead later

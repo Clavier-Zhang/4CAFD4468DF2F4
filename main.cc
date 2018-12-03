@@ -168,9 +168,12 @@ int main (int argc, char * argv[]) {
                 }        
                 game->force(block[0]); 
             } else if ((action == "heavy")||(action == "blind")) {
+                cout<<"enabling specialAction"<<endl;
                 game->enableSpecialAction(action);
             }
+            cout<<"printing game"<<endl;
             game->print();
+            cout<<"done printing"<<endl;
         }
 
         // error checking
