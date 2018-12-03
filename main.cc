@@ -5,6 +5,7 @@
 #include <map>
 #include <regex>
 #include "game.h"
+#include <ncurses.h>
 using namespace std;
 
 // Global values to determine initial state of the game
@@ -96,6 +97,10 @@ void setInitialState(int argc, char * argv[]){
 
 
 int main (int argc, char * argv[]) {
+    // key feature
+    int key;
+    initscr();
+    // end of key feature
     setInitialState(argc, argv);
     // possible short version commands
     map<string, string> commandMap;
@@ -173,6 +178,14 @@ int main (int argc, char * argv[]) {
         }
 
         // error checking
+
+        // key feature
+        key = getch();
+        if (key == KEY_RIGHT) {
+            game->move("right", 1);
+            continue;
+        }
+        // end of key feature
 
         string word;
         if(game->getNumDrop() >1){

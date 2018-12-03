@@ -5,7 +5,7 @@ OBJECTS = main.o game.o abstractLevel.o levelZero.o levelOne.o levelTwo.o levelT
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
-	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -L/usr/X11R6/lib -lX11
+	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC} -L/usr/X11R6/lib -lX11 -lncurses
 
 -include ${DEPENDS}
 
