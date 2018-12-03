@@ -129,7 +129,6 @@ int main (int argc, char * argv[]) {
     game->print();
 
     // key feature
-    char key;
     initscr();
     keypad(stdscr, TRUE);
     cbreak();
@@ -184,6 +183,7 @@ int main (int argc, char * argv[]) {
         // error checking
 
         // key feature
+        char key;
         key = getch();
         if (key == KEY_RIGHT) {
             game->move("right", 1);
@@ -205,7 +205,7 @@ int main (int argc, char * argv[]) {
             cout << "drop" << endl;
             continue;
         }
-        if (key == ' ' {
+        if (key == ' ') {
             game->move("down", 1);
             cout << "drop" << endl;
             continue;
