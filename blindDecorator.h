@@ -25,6 +25,8 @@ class BlindDecorator : public AbstractDecorator {
         
         void nullifyUnderlyingPlayer() override;
 
+        void setUnderlyingPlayer(std::shared_ptr<AbstractPlayer>) override;
+
         std::shared_ptr<AbstractPlayer> getBasePlayer();
         
         void drawGridPoint(int x, int y, int col) override ;

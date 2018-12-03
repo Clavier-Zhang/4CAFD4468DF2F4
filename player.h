@@ -26,6 +26,7 @@ class Player : public AbstractPlayer {
         // check if it is possible to level up/down
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         void nullifyUnderlyingPlayer() override;
+        void setUnderlyingPlayer(std::shared_ptr<AbstractPlayer>) override;
         void drawGridPoint(int x, int y, int col) override ;
         void undrawGridPoint(int x, int y) override;
 };

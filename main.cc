@@ -167,8 +167,12 @@ int main (int argc, char * argv[]) {
                     cout << "Invalid block. Please enter I, J, L, T, S, Z, or O." << endl;
                 }        
                 game->force(block[0]); 
-            } else if ((action == "heavy")||(action == "blind")) {
-                game->enableSpecialAction(action);
+            } else if /*((action == "heavy")||(action == "blind")){*/(action == "heavy") {
+               // game->enableSpecialAction(action);
+               game->enableSpecialAction(action);
+               game->enableSpecialAction(action);
+            } else if (action == "blind") {
+               game->enableSpecialAction(action);
             }
             game->print();
         }
@@ -235,9 +239,9 @@ int main (int argc, char * argv[]) {
         } else if (translatedCmd == "counterclockwise") {
             game->rotate(true, step);
         } else if (translatedCmd == "levelup") {
-            game->levelUp(1);
+            game->levelUp(step);
         } else if (translatedCmd == "leveldown") {
-            game->levelDown(1);
+            game->levelDown(step);
         } else if (translatedCmd == "norandom") {
             string randomFile;
             cin >> randomFile;

@@ -10,11 +10,16 @@ void HeavyDecorator::drop(bool shouldClearBlind) {
 }
 
 shared_ptr<AbstractPlayer> HeavyDecorator::getUnderlyingPlayer() {
- return player; // prbably move up to decorator
+ return player;
 }
 
 void HeavyDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
+}
+
+void HeavyDecorator::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
+ player = play;
+ // UNLESS YOU MADE A COPY SOMETHERE THIS WILL DESTROY IT BEWARE
 }
 
 void HeavyDecorator::drawGridPoint(int x, int y, int col) {
@@ -22,7 +27,6 @@ void HeavyDecorator::drawGridPoint(int x, int y, int col) {
  }
 
 void HeavyDecorator::undrawGridPoint(int x, int y) {
-cout << "just in case" << endl;
 player->undrawGridPoint(x, y);
  }
 

@@ -77,8 +77,6 @@ string Player::getGridPoint(int row, int col) {
  return grid[row][col].getType();
 }
 
-
-
 void Player::drawGridPoint(int x, int y, int col) {
  game->drawPoint(x, y, 1, 1, col, no);
  }
@@ -91,20 +89,10 @@ game->undrawPoint(x, y, 1, 1, no);
 shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() { // there is no underlying player
  return nullptr;
 }
-// assign the point pointer to currentBlock, can
-// be used in moveLeft, moveRight
-// target::block
-/*void Player::setCurrentBlock(char type) {
-    // if is lowercase make uppercase
-    if ((97 <= type)&&(type <= 122)) { // is lowercase
-     int offset = 97-65;
-     type = type - offset;
-     }
-    unique_ptr<AbstractBlock>tmp{level->generateBlock(type)};
-    currentBlock->removeAllPoint();
-    currentBlock = std::move(tmp);
-    currentBlock->initialize(this);
-}*/
+
+void Player::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
+ //does nothing
+ }
 
 void Player::nullifyUnderlyingPlayer() {
 } // there is no underlying player to set to null
@@ -230,15 +218,13 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
 
 
 void Player::clearBlind() {
- 
-
 for (int i = 3; i <= 12 + reservedRowNum; ++i) {
   for (int j = 2; j <= 8; ++j) {
         string type = getGridPoint(i, j); 
         setGridType(i,j,type);
   }
  }
- }
+}
 
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(bool shouldClearBlind){

@@ -29,6 +29,12 @@ void BlindDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
 }
 
+void BlindDecorator::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
+
+ player = play;
+ // UNLESS YOU MADE A COPY SOMETHERE THIS WILL DESTROY IT BEWARE
+}
+
 shared_ptr<AbstractPlayer> BlindDecorator::getBasePlayer() {
  shared_ptr<AbstractPlayer> tmp = getUnderlyingPlayer();
  while (tmp->getUnderlyingPlayer() != nullptr) {
@@ -38,7 +44,6 @@ shared_ptr<AbstractPlayer> BlindDecorator::getBasePlayer() {
 }
 
 int BlindDecorator::rotate(bool counter, int step, bool isBlind){
-cout << "BD rotate called" << endl;
 return player->rotate(counter, step, true);
 }
 
@@ -73,8 +78,6 @@ void BlindDecorator::setCurrentBlock(char c) {
  }
 
 int BlindDecorator::move(string type, int step, bool isBlind){
- cout << "BD mova called" << endl;
  return player->move(type, step, true);
 }
-
 

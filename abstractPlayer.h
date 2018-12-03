@@ -60,6 +60,7 @@ class AbstractPlayer {
         virtual void setCurrentBlock(char type = ' ') = 0;
         virtual std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() = 0;
         virtual void nullifyUnderlyingPlayer() = 0;
+        virtual void setUnderlyingPlayer(std::shared_ptr<AbstractPlayer>) = 0;
 
         void recalculateGrid();
         void recalculateInactiveBlocks();
@@ -107,7 +108,5 @@ class AbstractPlayer {
         void undrawLevel();
         void drawNextBlock();
         void undrawNextBlock();
-        void undrawTopBlock();
-        void undrawBottomBlock();
 };
 #endif

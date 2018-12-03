@@ -1,6 +1,7 @@
 #ifndef _HEAVYDECORATOR_H_
 #define _HEAVYDECORATOR_H_
 #include "abstractDecorator.h"
+#include <memory>
 class HeavyDecorator : public AbstractDecorator {
     
         std::shared_ptr<AbstractPlayer> getBasePlayer();
@@ -25,6 +26,8 @@ class HeavyDecorator : public AbstractDecorator {
         std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() override;
         
         void nullifyUnderlyingPlayer() override;
+
+        void setUnderlyingPlayer(std::shared_ptr<AbstractPlayer>) override;
         
         void drawGridPoint(int x, int y, int col) override ;
         

@@ -114,8 +114,9 @@ void AbstractPlayer::recalculateGrid() {
             shiftRowDown(row, offset);
         }
     }
-    if (offset>=2) notifySpecialAction();
+    if (offset >= 2) notifySpecialAction();
     else notifyTurnover();
+    // the turns were switched
     applyLevelEffects(offset);
     recalculateInactiveBlocks();
 }

@@ -85,7 +85,6 @@ pair<int, int> AbstractBlock::getLowerLeft() {
   return lowerLeft;
 }
 
-
 int AbstractBlock::getScore() {
     return score;
 }

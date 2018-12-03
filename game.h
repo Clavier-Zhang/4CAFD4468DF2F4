@@ -25,6 +25,8 @@ class Game {
 
         AbstractPlayer *createDecoratedPlayer(std::string, std::shared_ptr<AbstractPlayer>);
         void takeOffDecorations();
+        void addLevelDecorator(int);
+        void removeLevelDecorator(int);
 
     public:
         // initialize two players
