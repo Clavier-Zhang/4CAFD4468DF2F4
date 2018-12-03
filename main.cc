@@ -234,7 +234,7 @@ int main (int argc, char * argv[]) {
             else if (step == 0){ 
                 game->print();
                 continue;
-            } //TODO: FIX THE 0 CASE
+            } 
             game->drop(step);
         } else if (translatedCmd == "clockwise") {
             game->rotate(false, step);
