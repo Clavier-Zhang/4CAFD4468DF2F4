@@ -205,6 +205,11 @@ int main (int argc, char * argv[]) {
             cout << "drop" << endl;
             continue;
         }
+        if (key == ',') {
+            game->move("down", 1);
+            cout << "drop" << endl;
+            continue;
+        }
         // end of key feature
 
         string word;
