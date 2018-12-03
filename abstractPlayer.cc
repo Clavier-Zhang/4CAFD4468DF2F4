@@ -174,12 +174,26 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
 }
 
 void AbstractPlayer::recalculateInactiveBlocks(){
-    for(auto & entry : inactiveBlocks){
-        if (entry.second->getPoints().size() == 0){
-            currentScore += entry.second->getScore();
-            inactiveBlocks.erase(entry.first);
+    auto it= inactiveBlocks.begin();
+    while(it != inactiveBlocks.end()){
+        if (it->second->getPoints().size() == 0){
+            currentScore+=it->second->getScore();
+            auto toErase = it;
+            cout<<it->first<<endl;
+            it++;
+            it=inactiveBlocks.erase(toErase);
+        }else{
+            it++;
         }
     }
+    /*for(auto & entry : inactiveBlocks){
+        if (entry.second!=nullptr && entry.second->getPoints().size() == 0){
+            currentScore += entry.second->getScore();
+//            entry.second.reset(nullptr);
+
+            inactiveBlocks.erase(entry.first);
+        }
+    }*/
 }
 
 void AbstractPlayer::applyLevelEffects(int offset){

@@ -28,4 +28,3 @@ I
 cl
 11ri
 dro
-heavy
