@@ -205,9 +205,14 @@ int main (int argc, char * argv[]) {
             cout << "drop" << endl;
             continue;
         }
-        if (key == ' ') {
-            game->move("down", 1);
-            cout << "drop" << endl;
+        if (key == ',') {
+            game->rotate(false, step);
+            cout << "clockwise" << endl;
+            continue;
+        }
+        if (key == '.') {
+            game->rotate(true, step);
+            cout << "counterclockwise" << endl;
             continue;
         }
         // end of key feature
