@@ -9,20 +9,20 @@ using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
 Player::Player(Game *game, int no, Xwindow *w, int startLvl, std::string scpt):
-AbstractPlayer{game, no, w, scpt}{
+AbstractPlayer{game, no, w, scpt} {
     //initialize
-if(startLvl==1){
+if (startLvl == 1){
             level.reset(new LevelOne);
-        }else if(startLvl==2){
+        } else if (startLvl == 2) {
             level.reset(new LevelTwo);
 
-        }else if(startLvl==3){
+        } else if (startLvl == 3) {
             level.reset(new LevelThree);
 
-        }else if(startLvl ==4){
+        } else if (startLvl == 4) {
             level.reset(new LevelFour);
 
-        }else{
+        } else {
             //default to 0
             level.reset(new LevelZero{scpt});
         }
@@ -30,13 +30,13 @@ if(startLvl==1){
         currentBlock->initialize(this);
         nextBlock.reset(level->generateBlock());
         if (game->getWindow() != nullptr) {
-        game->drawBigString(1, 1, "Level:", this->no);
-        game->drawBigString(9, 1, to_string(startLvl), this->no);
-        game->drawBigString(1, 2, "Score:", this->no);
-        game->drawBigString(9, 2, to_string(currentScore), this->no);
-        game->drawBigString(0, 24, " Next:", this->no);
-        game->drawBigString(4, 24, "High Score:", this->no);
-        game->drawBigString(10, 24, to_string(highestScore), this->no);
+            game->drawBigString(1, 1, "Level:", this->no);
+            game->drawBigString(9, 1, to_string(startLvl), this->no);
+            game->drawBigString(1, 2, "Score:", this->no);
+            game->drawBigString(9, 2, to_string(currentScore), this->no);
+            game->drawBigString(0, 24, " Next:", this->no);
+            game->drawBigString(4, 24, "High Score:", this->no);
+            game->drawBigString(10, 24, to_string(highestScore), this->no);
             for (auto &p : this->nextBlock->getPositions()) {
                 int colour = 0;
                 string type = this->nextBlock->getType();
@@ -72,55 +72,9 @@ if(startLvl==1){
         }
 }
 
-int Player::getLevel() {
-    return level->getLevel();
-}
-string Player::getGridRow(int row) {
-string s;
-    for (int i = 0; i < colNum; i++) {
-        s += grid[row][i].getType();
-    }
-    return s;
-}
-
-void Player::setLevel(int level){
-    if(this->level != nullptr) this->undrawLevel();
-    if (level == 0) {
-        this->level.reset(new LevelZero{initScpt});
-    } else if (level == 1) {
-        this->level.reset(new LevelOne);
-    }else if (level == 2){
-        this->level.reset(new LevelTwo);
-    }else if (level == 3){
-        this->level.reset(new LevelThree);
-    }else if ( level == 4){
-        this->level.reset(new LevelFour);
-    }
-    this->drawLevel();
-}
-
-string Player::getGridPoint(int row, int col) {
- return grid[row][col].getType();
-}
-
 void Player::drawGridPoint(int x, int y, int col) {
  game->drawPoint(x, y, 1, 1, col, no);
  }
-
-void Player::undrawGridPoint(int x, int y) {
-game->undrawPoint(x, y, 1, 1, no);
- }
-
-shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() { // there is no underlying player
- return nullptr;
-}
-
-void Player::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
- //does nothing
- }
-
-void Player::nullifyUnderlyingPlayer() {
-} // there is no underlying player to set to null
 
 int Player::move(string type, int step, bool isBlind) {
 bool succeeded = moveHelper(type, step, isBlind);
@@ -189,16 +143,17 @@ int Player::rotate(bool counter, int step, bool isBlind) {
 
 bool Player::rotateHelper(bool counter, int step, bool isBlind) {
     // if it's a multiple of 4 it ends up in the same place
-    if (step % 4 == 0) return true; // end position will be same as start position
+    const int NUM_POSSIBLE_ORIENTATIONS = 4;
+    if (step % NUM_POSSIBLE_ORIENTATIONS == 0) return true; // end position will be same as start position
 
-    // rotation matrix
+    // rotation matrix; select which one based on counter
     vector<vector<int>> clockWise{{0,-1},{1,0}};
     vector<vector<int>> counterClockWise{{0,1},{-1,0}};
     vector<vector<int>>& current = clockWise;
     if (counter) {
         current = counterClockWise;
     }
-    int numRotations = step % 4; // since 4 possible orientations
+    int numRotations = step % NUM_POSSIBLE_ORIENTATIONS; // since only 4 possible orientations
     vector<pair<int, int>> coordinates; // create cordinates array foro case rot is 0
     for (Point *p : currentBlock->getPoints()) {
      int x = p->getX();
@@ -215,6 +170,7 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
     for (pair<int, int> p : coordinates) {
         int x = p.first;
         int y = p.second;
+        // matrix multiplcation by correct rotation matrix
         int newX = x * current[0][0] + y * current[0][1];
         int newY = x * current[1][0] + y * current[1][1];
         pair<int, int> p1 = make_pair(newX, newY);
@@ -241,7 +197,6 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
     return true;
 }
 
-
 void Player::clearBlind() {
 for (int i = 3; i <= 12 + reservedRowNum; ++i) {
   for (int j = 2; j <= 8; ++j) {
@@ -267,6 +222,56 @@ void Player::drop(bool shouldClearBlind){
     recalculateGrid();
 }
 
+// Traversing a linked list of decorators
+
+shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() {
+ // this is the concrete component class so there is no underlying player
+ return nullptr;
+}
+
+void Player::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
+ // does nothing since there is no underlying player to set
+}
+
+void Player::nullifyUnderlyingPlayer() {
+ // does nothing since there is no underlying player to set to null
+}
+
+
+// Getters and setters
+
+string Player::getGridRow(int row) {
+ string s;
+    for (int i = 0; i < colNum; i++) {
+        s += grid[row][i].getType();
+    }
+ return s;
+}
+
+string Player::getGridPoint(int row, int col) {
+ return grid[row][col].getType();
+}
+
+int Player::getLevel() {
+    return level->getLevel();
+}
+
+void Player::setLevel(int level){
+    if(this->level != nullptr) this->undrawLevel();
+    if (level == 0) {
+        this->level.reset(new LevelZero{initScpt});
+    } else if (level == 1) {
+        this->level.reset(new LevelOne);
+    }else if (level == 2){
+        this->level.reset(new LevelTwo);
+    }else if (level == 3){
+        this->level.reset(new LevelThree);
+    }else if ( level == 4){
+        this->level.reset(new LevelFour);
+    }
+    this->drawLevel();
+}
+
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
@@ -276,17 +281,20 @@ void Player::setCurrentBlock(char type) {
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);
 }
-int Player::getHighScore(){
+
+int Player::getHighScore() {
     return highestScore;
 }
+
 void Player::setHighScore(int hi) {
     highestScore = hi;
-    if(w!=nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
+    if(w != nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
 }
-int Player::getNumDrop(){
+
+int Player::getNumDrop() {
     return numDrop;
 }
 
-void Player::setNumDrop(int n){
+void Player::setNumDrop(int n) {
     numDrop = n;
 }

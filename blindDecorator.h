@@ -31,8 +31,6 @@ class BlindDecorator : public AbstractDecorator {
         
         void drawGridPoint(int x, int y, int col) override ;
 
-        void undrawGridPoint(int x, int y) override;
-        
         void setLevel(int) override;
 
         int getLevel() override;

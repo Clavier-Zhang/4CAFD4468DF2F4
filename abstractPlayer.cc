@@ -171,7 +171,7 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
                 }
 
             }
-            p->setID(-1);
+            p->resetId();
         }
     }
 }

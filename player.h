@@ -8,6 +8,7 @@
 #include "window.h"
 
 class Player : public AbstractPlayer {
+        // returns whether move/rotate was successful or not
         bool moveHelper(std::string type = "down", int step = 1, bool isBlind=false);
         bool rotateHelper(bool counter = false, int step = 1, bool isBlind=false);
         void clearBlind();
@@ -15,6 +16,7 @@ class Player : public AbstractPlayer {
         // initialzie the player, draw in the constructor, save window pointer
         Player(Game *game, int no, Xwindow *w, int startLevel,std::string scpt);
         // check if it's movable, then call block's method to move
+        // int retval reflects how many steps it was able to complete
         int move(std::string type = "down", int step = 1, bool isBlind=false) override;
         int rotate(bool counter = false, int step = 1, bool isBlind =false) override;
         // add the points of blocks to grid, update the block in drop(), 
@@ -28,7 +30,6 @@ class Player : public AbstractPlayer {
         void nullifyUnderlyingPlayer() override;
         void setUnderlyingPlayer(std::shared_ptr<AbstractPlayer>) override;
         void drawGridPoint(int x, int y, int col) override ;
-        void undrawGridPoint(int x, int y) override;
         void setLevel(int) override;
         int getLevel() override;
         int getHighScore() override;

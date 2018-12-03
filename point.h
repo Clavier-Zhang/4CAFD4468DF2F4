@@ -19,13 +19,17 @@ class Point {
         Xwindow *w;
     public:
         Point(int x, int y, std::string type, int playerNum, Xwindow *w);
-        void setType(std::string type, bool isBlind = false);
-        void setID(int n);
+        
+        // Setters
+        void setType(std::string type, bool isBlind = false); // sets type and draws point if graphics are enabled
+        void setID(int n); // gives point ID n, only called when adding a block to inactiveBlocks
         void reset(bool isBlind);
+        void resetId(); // sets id to -1 once its block is removed from inactiveBlocks
+        
+        // Getters
         int getX();
         int getY();
         int getID();
         std::string getType();
-        void resetId(); // sets id to -1 once its block is removed from inactiveBlocks
 };
 #endif

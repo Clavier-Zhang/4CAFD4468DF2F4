@@ -86,7 +86,6 @@ class AbstractPlayer {
         virtual std::string getGridRow(int row) = 0;
         virtual std::string getGridPoint(int row, int col) = 0;
         virtual void drawGridPoint(int x, int y, int col) = 0;
-        virtual void undrawGridPoint(int x, int y) = 0;
         std::string getNextBlock();
         virtual void setNumDrop(int)=0;
         void setNextBlock(std::string);
