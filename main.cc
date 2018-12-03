@@ -97,13 +97,6 @@ void setInitialState(int argc, char * argv[]){
 
 
 int main (int argc, char * argv[]) {
-    // key feature
-    int key;
-    initscr();
-    keypad(stdscr, TRUE);
-    cbreak();
-    noecho();
-    // end of key feature
     setInitialState(argc, argv);
     // possible short version commands
     map<string, string> commandMap;
@@ -134,6 +127,14 @@ int main (int argc, char * argv[]) {
     string command;
     unique_ptr<Game>game{new Game(isGraphical, startLvl,scpt1,scpt2)};
     game->print();
+
+    // key feature
+    int key;
+    initscr();
+    keypad(stdscr, TRUE);
+    cbreak();
+    noecho();
+    // end of key feature
 
     // Command interpreter
     while (!game->gameOver() && !cin.eof()) {
