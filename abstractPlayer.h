@@ -80,7 +80,7 @@ class AbstractPlayer {
         void notifySpecialAction();
         // getter
         int getCurrentScore();
-        int getHighestScore();
+        virtual int getHighScore()=0;
         virtual int getLevel() = 0;
         int getNo();
         int getNumDrop();
@@ -94,7 +94,7 @@ class AbstractPlayer {
         void setNumDrop(int);
         void setNextBlock(std::string);
         void setCurrentBlock(std::string);
-        void setHighScore(int );
+        virtual void setHighScore(int)=0;
         std::string getCurrentBlock();
         Point* getPoint(std::pair<int, int> &c);
 
@@ -109,5 +109,7 @@ class AbstractPlayer {
         void undrawLevel();
         void drawNextBlock();
         void undrawNextBlock();
+
+        bool canMoveDown(int step); //used in heavy dec
 };
 #endif

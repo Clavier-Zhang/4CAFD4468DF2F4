@@ -33,6 +33,14 @@ void BlindDecorator::setLevel(int level) {
  player->setLevel(level);
 }
 
+int BlindDecorator::getHighScore(){
+    return player->getHighScore();
+}
+
+void BlindDecorator::setHighScore(int hi){
+    player->setHighScore(hi);
+}
+
 int BlindDecorator::getLevel() {return player->getLevel();}
 void BlindDecorator::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
 

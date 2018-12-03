@@ -31,5 +31,9 @@ class Player : public AbstractPlayer {
         void undrawGridPoint(int x, int y) override;
         void setLevel(int) override;
         int getLevel() override;
+        int getHighScore() override;
+        void setHighScore(int)override;
+
+//        bool canMoveDown(int step); //used in heavy dec
 };
 #endif

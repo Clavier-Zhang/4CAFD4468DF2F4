@@ -33,16 +33,9 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
         for (int x = 0; x < this->colNum; x++) {
             game->drawPoint(x, 2, 1, 1, 11, this->no);
         }
-        game->drawBigString(1, 1, "Level:", this->no);
-        game->drawBigString(1, 2, "Score:", this->no);
-        game->drawBigString(9, 2, "0", this->no);
-        game->drawBigString(9, 1, "0", this->no);
         for (int x = 0; x < this->colNum; x++) {
             game->drawPoint(x, 21, 1, 1, 11, this->no);
         }
-        game->drawBigString(0, 24, " Next:", this->no);
-        game->drawBigString(4, 24, "High Score:", this->no);
-        game->drawBigString(10, 24, "0", this->no);
     }
 
 // important
@@ -98,6 +91,20 @@ bool AbstractPlayer::isValid(pair<int, int> &c) {
     return true;
 }
 
+bool AbstractPlayer::canMoveDown(int step){
+    if (step ==0) return true;
+    int deltaX=0;
+    int deltaY=step;
+
+    for (Point *p : currentBlock->getPoints()) {
+            pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
+            if (!isValid(c)) {
+                return false;
+            }
+        }
+        return true;
+
+}
 void AbstractPlayer::recalculateGrid() {
     bool shouldClear;
     int offset = 0;
@@ -212,9 +219,6 @@ void AbstractPlayer::applyLevelEffects(int offset){
     }
 }
 
-void AbstractPlayer::setHighScore(int hi) {
-    highestScore = hi;
-}
 
 void AbstractPlayer::setRandom(bool rand, string file) {
     level->setRandom(rand, file);
@@ -238,9 +242,9 @@ int AbstractPlayer::getCurrentScore() {
     return currentScore;
 }
 
-int AbstractPlayer::getHighestScore() {
+/*int AbstractPlayer::getHighestScore() {
     return highestScore;
-}
+}*/
 /*
 int AbstractPlayer::getLevel() {
     return level->getLevel();
@@ -309,6 +313,7 @@ void AbstractPlayer::drawLevel(){
 
 void AbstractPlayer::undrawLevel(){
     if (game->getWindow() != nullptr) {
+    cout<<"UNDDDDRRRRAAAAWWWWW"<<endl;
         game->undrawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }

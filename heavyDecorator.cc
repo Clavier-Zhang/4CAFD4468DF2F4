@@ -4,6 +4,7 @@ using namespace std;
 
 HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) :
 AbstractDecorator{absPlayer, g, w} {
+cout<<"PLAYER LEVEL ISSS" <<endl;
 }
 
 void HeavyDecorator::drop(bool shouldClearBlind) {
@@ -17,6 +18,14 @@ shared_ptr<AbstractPlayer> HeavyDecorator::getUnderlyingPlayer() {
 void HeavyDecorator::setLevel(int level) {
  player->setLevel(level);
  }
+
+int HeavyDecorator::getHighScore(){
+    return player->getHighScore();
+}
+
+void HeavyDecorator::setHighScore(int hi){
+    player->setHighScore(hi);
+}
 
 int HeavyDecorator::getLevel() {return player->getLevel();}
 void HeavyDecorator::nullifyUnderlyingPlayer() {
@@ -37,9 +46,21 @@ player->undrawGridPoint(x, y);
  }
 
 int HeavyDecorator::rotate(bool counter, int step, bool isBlind) {
+cout << "ENTER HEAVY MOVE" << endl;
 int newStep = player->rotate(counter, step, isBlind);
+int test =1;
+cout<<"finished new step"<<endl;
 int result = getBasePlayer()->move("down", newStep, isBlind);
-if (result < newStep) return -1;
+cout<<"finished result"<<endl;
+cout<< "RESULT" << result<<endl;
+cout<<"NEWSTEP"<<result<<endl;
+if (result == newStep)
+    test = getBasePlayer()->canMoveDown(1);
+cout<<"ROTATE TEST" <<test <<endl;
+if ((newStep == -1)||(result < newStep )||test==0){ 
+    return -1;
+    }
+cout << "EXIT HEAVY MOVE" << endl;
 return newStep;// return this r the retval of the preceding line?
 }
 
@@ -56,15 +77,15 @@ void HeavyDecorator::setCurrentBlock(char c) {
  }
 
 int HeavyDecorator::move(string type, int step, bool isBlind) {
-cout << "ENTER HEAVY MOVE" << endl;
 int newStep = player->move(type, step, isBlind);
-cout<<"finished new step"<<endl;
+int test=1;
 int result = getBasePlayer()->move("down", newStep, isBlind);
-cout<<"finished result"<<endl;
-if ((newStep == -1)||(result < newStep)||(getBasePlayer()->move("down", newStep, isBlind) == 0)){ 
+if (result == newStep)
+    test = getBasePlayer()->canMoveDown(1);
+cout<<"MOVE TEST" <<test <<endl;
+if ((newStep == -1)||(result < newStep )||test==0){ 
     return -1;
     }
-cout << "EXIT HEAVY MOVE" << endl;
 return newStep;// return this r the retval of the preceding line?
 }
 

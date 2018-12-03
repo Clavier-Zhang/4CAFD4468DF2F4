@@ -11,100 +11,108 @@ using namespace std;
 // initialize two players
 // more constructor for differnnt mode in command line
 Game::Game(bool isGraphical, int startLvl, string scpt1, string scpt2):
-isGraphical{isGraphical} {
-    // else set to nullptr, important
-    if (isGraphical) {
-        this->w.reset(new Xwindow(this->width, this->height));
-    } else {
-        this->w.reset(nullptr);
-    }
-    this->playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
-    this->playerTwo.reset(new Player(this, 2, this->w.get(), startLvl, scpt2));
-    this->currentPlayer = this->playerOne;
+    isGraphical{isGraphical} {
+        // else set to nullptr, important
+        if (isGraphical) {
+            this->w.reset(new Xwindow(this->width, this->height));
+        } else {
+            this->w.reset(nullptr);
+        }
+        this->playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
+        this->playerTwo.reset(new Player(this, 2, this->w.get(), startLvl, scpt2));
+        this->currentPlayer = this->playerOne;
 
-    if (startLvl >= 3) {
-        enableSpecialAction("heavy");
-      }
-}
+        if (startLvl >= 3) {
+            enableSpecialAction("heavy");
+        }
+    }
 
 Game::~Game() {
- takeOffDecorations();
+    takeOffDecorations();
 }
 
-void Game::restart() {
- int highScoreP1 = playerOne->getHighestScore();
- int highScoreP2 = playerTwo->getHighestScore();
- int lvl1 = playerOne->getLevel();
- int lvl2 = playerTwo->getLevel();
- string scpt1 = playerOne->getInitScpt();
- string scpt2 = playerTwo->getInitScpt();
- 
- this->w->fillRectangle(0, 0, this->width, this->height, 0);
- currentPlayer.reset();
- playerOne.reset(new Player(this, 1, this->w.get(), lvl1, scpt1));
- playerTwo.reset(new Player(this, 2, this->w.get(), lvl2, scpt2));
- playerOne->setHighScore(highScoreP1);
- playerTwo->setHighScore(highScoreP2);
- currentPlayer = playerOne;
- print();
+void Game::restart(int startLvl) {
+    int highScoreP1 = playerOne->getHighScore();
+    int highScoreP2 = playerTwo->getHighScore();
+    //int lvl1 = playerOne->getLevel();
+    //int lvl2 = playerTwo->getLevel();
+    string scpt1 = playerOne->getInitScpt();
+    string scpt2 = playerTwo->getInitScpt();
+    if (w != nullptr){
+        this->w->fillRectangle(0, 0, this->width, this->height, 0);
+    }
+    takeOffDecorations();
+    currentPlayer.reset();
+    playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
+    playerTwo.reset(new Player(this, 2, this->w.get(), startLvl, scpt2));
+    if (w != nullptr){
+        undrawBigString(10, 24, to_string(playerOne->getHighScore()), 1);
+        undrawBigString(10, 24, to_string(playerTwo->getHighScore()), 2);
+    }
+    playerOne->setHighScore(highScoreP1);
+    playerTwo->setHighScore(highScoreP2);
+    currentPlayer=playerOne;
+    print();
 }
 
 // player's operation
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
     if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
+        //undrawBigString(10, 24, to_string(playerOne->getHighScore()), 1);
         currentPlayer->setLevel(level);
         print();
     }
 }
 
 void Game::addLevelDecorator(int level) {
-if (!((level == 3)||(level == 4))) return;
- // otherwise make the level heavy
-if (currentPlayer->getUnderlyingPlayer() != nullptr) { // the player is decorated already
-   // get a pointer too the the Player and the thing before it
-   cout << "clause 1" << endl;
-   shared_ptr<AbstractPlayer> cur = currentPlayer;
-   shared_ptr<AbstractPlayer> next = cur->getUnderlyingPlayer();
-   while (next->getUnderlyingPlayer() != nullptr) {
-    cur = next;
-    next = next->getUnderlyingPlayer();
+    if (!((level == 3)||(level == 4))) return;
+    // otherwise make the level heavy
+    if (currentPlayer->getUnderlyingPlayer() != nullptr) { // the player is decorated already
+        // get a pointer too the the Player and the thing before it
+        cout << "clause 1" << endl;
+        shared_ptr<AbstractPlayer> cur = currentPlayer;
+        shared_ptr<AbstractPlayer> next = cur->getUnderlyingPlayer();
+        while (next->getUnderlyingPlayer() != nullptr) {
+            cur = next;
+            next = next->getUnderlyingPlayer();
+        }
+        // make a shared ptr that takes the base player (next)
+        AbstractPlayer *heavyPlayer = createDecoratedPlayer("heavy", next);
+        shared_ptr<AbstractPlayer> heavyLevel {heavyPlayer};
+        cur->setUnderlyingPlayer(heavyLevel);
+    } else { // just create one decoratori
+        cout << "clause 2" << endl;
+        enableSpecialAction("heavy");
     }
-   // make a shared ptr that takes the base player (next)
-   AbstractPlayer *heavyPlayer = createDecoratedPlayer("heavy", next);
-   shared_ptr<AbstractPlayer> heavyLevel {heavyPlayer};
-   cur->setUnderlyingPlayer(heavyLevel);
-   } else { // just create one decoratori
-   cout << "clause 2" << endl;
-   enableSpecialAction("heavy");
-   }
 }
 
 void Game::levelUp(int step) {
     int targetLevel = currentPlayer->getLevel() + step;
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
-      if (!((targetLevel == 4)&&(step == 1))) addLevelDecorator(targetLevel);
-     currentPlayer->setLevel(targetLevel);
-      print();
+        if (!((targetLevel == 4)&&(step == 1))) addLevelDecorator(targetLevel);
+        currentPlayer->setLevel(targetLevel);
+        print();
     }
 }
 
 void Game::removeLevelDecorator(int level) {
- if ((level == 3)||(level == 4)) return;
- if (currentPlayer->getUnderlyingPlayer() == nullptr) return;
- if (currentPlayer->getUnderlyingPlayer()->getUnderlyingPlayer() != nullptr) {// there is a decoration in adition to level
-   shared_ptr<AbstractPlayer> cur = currentPlayer;
-   shared_ptr<AbstractPlayer> next = cur->getUnderlyingPlayer();
-   shared_ptr<AbstractPlayer> bottom = next->getUnderlyingPlayer();
-   while (bottom->getUnderlyingPlayer() != nullptr) {
-    cur = next;
-    next = bottom;
-    bottom = bottom->getUnderlyingPlayer();
-    }
-    next->nullifyUnderlyingPlayer();
-    next.reset();
-   cur->setUnderlyingPlayer(bottom);
- } else {
+    cout<<"REMOVE LEVEL DECORRR"<<endl;
+    if ((level == 3)||(level == 4)) return;
+    if (currentPlayer->getUnderlyingPlayer() == nullptr) return;
+    if (currentPlayer->getUnderlyingPlayer()->getUnderlyingPlayer() != nullptr) {// there is a decoration in adition to level
+        shared_ptr<AbstractPlayer> cur = currentPlayer;
+        shared_ptr<AbstractPlayer> next = cur->getUnderlyingPlayer();
+        shared_ptr<AbstractPlayer> bottom = next->getUnderlyingPlayer();
+        while (bottom->getUnderlyingPlayer() != nullptr) {
+            cur = next;
+            next = bottom;
+            bottom = bottom->getUnderlyingPlayer();
+        }
+        next->nullifyUnderlyingPlayer();
+        next.reset();
+        cur->setUnderlyingPlayer(bottom);
+    } else {
         if (currentPlayer->getNo() == 1) {
             shared_ptr<AbstractPlayer> cpy = playerOne->getUnderlyingPlayer();
             playerOne->nullifyUnderlyingPlayer();
@@ -121,17 +129,17 @@ void Game::removeLevelDecorator(int level) {
             currentPlayer.reset();
             playerTwo = cpy;
             currentPlayer = playerTwo;
-  }
- }
+        }
+    }
 }
 /*
-            playerOne->nullifyUnderlyingPlayer();
-            currentPlayer->nullifyUnderlyingPlayer();
-            playerOne.reset();
-            currentPlayer.reset();
-            playerOne = tmp;
-            currentPlayer = playerOne;
-*/
+   playerOne->nullifyUnderlyingPlayer();
+   currentPlayer->nullifyUnderlyingPlayer();
+   playerOne.reset();
+   currentPlayer.reset();
+   playerOne = tmp;
+   currentPlayer = playerOne;
+ */
 void Game::levelDown(int step) {
     int targetLevel = currentPlayer->getLevel() - step;
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
@@ -151,13 +159,13 @@ int Game::getLevel(){
 }
 
 void Game::move(string type, int step) {
- if (currentPlayer->move(type, step) == -1) currentPlayer->drop();
- //cout <<"finished current player move"<<endl;
- print();
+    if (currentPlayer->move(type, step) == -1) currentPlayer->drop();
+    //cout <<"finished current player move"<<endl;
+    print();
 }
 
 void Game::rotate(bool counter, int step) {
-    currentPlayer->rotate(counter, step);
+    if (currentPlayer->rotate(counter, step) == -1) currentPlayer->drop();
     print();
 }
 
@@ -175,15 +183,15 @@ void Game::setNumDrop(int n){
 }
 
 bool Game::gameOver() {
- return isOver;
+    return isOver;
 }
 
 bool Game::isNeedSpecial() {
- return needSpecial;
- }
+    return needSpecial;
+}
 
 void Game::setGameOver() {
- isOver = true;
+    isOver = true;
 }
 
 // next player's turn
@@ -194,34 +202,34 @@ void Game::turnOver() {
     } else {
         currentPlayer = playerOne;
     }
-  int curPlayerLevel = currentPlayer->getLevel();
-  if ((curPlayerLevel == 3)||(curPlayerLevel == 4)) enableSpecialAction("heavy");
+    int curPlayerLevel = currentPlayer->getLevel();
+    if ((curPlayerLevel == 3)||(curPlayerLevel == 4)) enableSpecialAction("heavy");
 }
 
 // finish later
 void Game::specialAction() {
-  turnOver();// switch players
-  needSpecial = true;
- }
+    turnOver();// switch players
+    needSpecial = true;
+}
 
 void Game::enableSpecialAction(string spa) {// information is gathered after the turn is switched to the oppoenent so we decorate currentPlayer
- if (currentPlayer == playerOne) {
-    AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerOne);
-    shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
-    playerOne = tmp;
-    currentPlayer = playerOne;
- } else { // currentPlayer is player2
-    AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerTwo);
-    shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
-    playerTwo = tmp;
-    currentPlayer = playerTwo;
- }
-  needSpecial = false;
+    if (currentPlayer == playerOne) {
+        AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerOne);
+        shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
+        playerOne = tmp;
+        currentPlayer = playerOne;
+    } else { // currentPlayer is player2
+        AbstractPlayer *decoratedPlayer = createDecoratedPlayer(spa, playerTwo);
+        shared_ptr<AbstractPlayer>tmp{decoratedPlayer};
+        playerTwo = tmp;
+        currentPlayer = playerTwo;
+    }
+    needSpecial = false;
 }
 
 void Game::force(char c) { 
- currentPlayer->setCurrentBlock(c);
- needSpecial = false;
+    currentPlayer->setCurrentBlock(c);
+    needSpecial = false;
 }
 
 // finish later
@@ -244,10 +252,10 @@ void Game::print() {
     cout << endl;
     // print highest score
     cout << "Highest:";
-    cout << setw(3) << playerOne->getHighestScore();
+    cout << setw(3) << playerOne->getHighScore();
     cout  << setw(7) << " ";
     cout << "Highest:";
-    cout << setw(3) << playerTwo->getHighestScore();
+    cout << setw(3) << playerTwo->getHighScore();
     cout << endl;
     // print dash
     cout << "-----------";
@@ -257,7 +265,7 @@ void Game::print() {
     // print grid
     for (int i = 0; i < 18; i++) {
         cout << playerOne->getGridRow(i);
-        cout << setw(7) << " ";
+        cout << setw(7) << "*";
         cout << playerTwo->getGridRow(i);
         cout << endl;
     }
@@ -323,14 +331,15 @@ Xwindow * Game::getWindow() {
 
 // Private helper functions
 void Game::takeOffDecorations() {
+    cout<<"I RAAAAAAAAAAAAAAAAAAAAAAAAANNNNNNNNNN"<<endl;
     shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
     while (tmp != nullptr) { // the player still has decorations
-    // schema for removing decoration:
-    // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
-    // 2. call on both currentPlayer and playerX; this deletes only the decorator
-    // 3. reassign the undecorated player component to playerX and currentPlayer
+        // schema for removing decoration:
+        // 1. set the currentPlayer and playerX pointers to the undecorated player component to null (tmp is a copy of this)
+        // 2. call on both currentPlayer and playerX; this deletes only the decorator
+        // 3. reassign the undecorated player component to playerX and currentPlayer
         if (currentPlayer == playerOne) {
-            playerOne->nullifyUnderlyingPlayer();
+            int highScore=playerOne->getHighScore();
             currentPlayer->nullifyUnderlyingPlayer();
             playerOne.reset();
             currentPlayer.reset();
@@ -350,11 +359,11 @@ void Game::takeOffDecorations() {
 
 AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<AbstractPlayer> absPlayer) {
     if (specialAction == "heavy") {
-   // shared_ptr firstHeavy = make_shared(new HeavyDecorator(absPlayer, this, w.get()));
-    return new HeavyDecorator(absPlayer, this, w.get());// since 2 heavy for special action
+        // shared_ptr firstHeavy = make_shared(new HeavyDecorator(absPlayer, this, w.get()));
+        return new HeavyDecorator(absPlayer, this, w.get());// since 2 heavy for special action
     }  else if (specialAction == "blind") {
-    cout<<"calling blind decor"<<endl;
-    return new BlindDecorator(absPlayer, this, w.get());
+        cout<<"calling blind decor"<<endl;
+        return new BlindDecorator(absPlayer, this, w.get());
     }
     return nullptr; // maybe throw an exception instead later
 }
@@ -392,7 +401,7 @@ void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
 }
 
 void Game::undrawPoint(int x, int y, int w, int h, int playerNum) {
-   if (this->w.get() != nullptr) {
+    if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
         int unit = 18;
         int realX = (x + (playerNum - 1) * 18) * unit;
