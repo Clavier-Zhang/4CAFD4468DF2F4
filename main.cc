@@ -205,12 +205,12 @@ int main (int argc, char * argv[]) {
             cout << "drop" << endl;
             continue;
         }
-        if (key == ',') {
+        if (key == 'z') {
             game->rotate(false, 1);
             cout << "clockwise" << endl;
             continue;
         }
-        if (key == '.') {
+        if (key == 'x') {
             game->rotate(true, 1);
             cout << "counterclockwise" << endl;
             continue;
