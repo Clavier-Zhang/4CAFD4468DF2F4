@@ -225,6 +225,7 @@ int main (int argc, char * argv[]) {
             cout << "level down" << endl;
             continue;
         }
+        continue;
         // end of key feature
 
         string word;
