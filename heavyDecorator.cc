@@ -47,10 +47,6 @@ void HeavyDecorator::drawGridPoint(int x, int y, int col) {
  player->drawGridPoint(x, y, col);
  }
 
-void HeavyDecorator::undrawGridPoint(int x, int y) {
-player->undrawGridPoint(x, y); // dnt think this is needed
- }
-
 int HeavyDecorator::rotate(bool counter, int step, bool isBlind) {
 int newStep = player->rotate(counter, step, isBlind);
 int test =1;

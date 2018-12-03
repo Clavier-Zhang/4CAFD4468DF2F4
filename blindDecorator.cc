@@ -71,10 +71,6 @@ void BlindDecorator::drawGridPoint(int x, int y, int col) {
  player->drawGridPoint(x, y, col);
  }
 
-void BlindDecorator::undrawGridPoint(int x, int y) {
-player->undrawGridPoint(x, y);// dont think this is neeed
- }
-
 string BlindDecorator::getGridPoint(int row, int col) {
  if (((MIN_ROW_BOUND + reservedRowNum  <= row) && (row <= MAX_ROW_BOUND + reservedRowNum)) && ((MIN_COL_BOUND <= col) && (col <= MAX_COL_BOUND))) {
  //getBasePlayer()->getGame()->drawPoint(col, row, 1, 1, 8, getBasePlayer()->getNo());

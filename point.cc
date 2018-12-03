@@ -72,6 +72,11 @@ string Point::getType() {
 int Point::getID(){
     return id;
 }
+
+void Point::resetId() {
+ id = -1;
+}
+
 void Point::reset(bool isBlind) {
     this->type = " ";
     this->setType(" ", isBlind);
