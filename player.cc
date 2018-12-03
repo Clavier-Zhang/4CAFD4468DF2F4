@@ -118,7 +118,9 @@ void Player::nullifyUnderlyingPlayer() {
 } // there is no underlying player to set to null
 
 int Player::move(string type, int step, bool isBlind) {
+cout<<"entering player move"<<endl;
 bool succeeded = moveHelper(type, step, isBlind);
+cout<<"finished succeed"<<endl;
  int newStep = step;
  // if unable to move step times, move max allowed times strictly less than step and return how
  // many moves were able to be made
@@ -250,18 +252,31 @@ for (int i = 3; i <= 12 + reservedRowNum; ++i) {
 
 // add the points of blocks to grid, update the block in drop(), 
 void Player::drop(bool shouldClearBlind){
+cout<<"entering drop"<<endl;
     while (move("down", 1, shouldClearBlind)) {}
+    cout<<"after move down"<<endl;
     currentBlock->setID(AbstractBlock::getCurId());
+    cout<<"finished setting id"<<endl;
     inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
+    cout<<"added to inactive blocks"<<endl;
     AbstractBlock::incrementCurId();
+    cout<<"incremented current id"<<endl;
     this->undrawNextBlock();
+    cout<<"undraw next block"<<endl;
     currentBlock = std::move(nextBlock);
+    cout<<"moved next block to current block"<<endl;
     currentBlock->initialize(this);
+    cout<<"initialized current blck's points"<<endl;
     unique_ptr<AbstractBlock>tmp{level->generateBlock()};
+    cout<<"created tmp from generate block"<<endl;
     nextBlock = std::move(tmp);
+    cout<<"set next block"<<endl;
     this->drawNextBlock();
+   cout<<"finished drawing block"<<endl;
     if (shouldClearBlind) clearBlind();
+   cout<<"cleared blind if necessary"<<endl;
     recalculateGrid();
+   cout<<"finished recalcultaeGrid"<<endl;
     // some logic for determining correct notify will need to go here
     //if (getIsDecorated())setIsDecorated(false);
 }

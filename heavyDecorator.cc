@@ -3,7 +3,8 @@
 using namespace std;
 
 HeavyDecorator::HeavyDecorator(shared_ptr<AbstractPlayer> absPlayer, Game *g, Xwindow * w) :
-AbstractDecorator{absPlayer, g, w} {}
+AbstractDecorator{absPlayer, g, w} {
+}
 
 void HeavyDecorator::drop(bool shouldClearBlind) {
  player->drop(shouldClearBlind);
@@ -37,7 +38,8 @@ player->undrawGridPoint(x, y);
 
 int HeavyDecorator::rotate(bool counter, int step, bool isBlind) {
 int newStep = player->rotate(counter, step, isBlind);
-getBasePlayer()->move("down", newStep, isBlind);
+int result = getBasePlayer()->move("down", newStep, isBlind);
+if (result < newStep) return -1;
 return newStep;// return this r the retval of the preceding line?
 }
 
@@ -54,8 +56,15 @@ void HeavyDecorator::setCurrentBlock(char c) {
  }
 
 int HeavyDecorator::move(string type, int step, bool isBlind) {
+cout << "ENTER HEAVY MOVE" << endl;
 int newStep = player->move(type, step, isBlind);
-getBasePlayer()->move("down", newStep, isBlind);
+cout<<"finished new step"<<endl;
+int result = getBasePlayer()->move("down", newStep, isBlind);
+cout<<"finished result"<<endl;
+if ((newStep == -1)||(result < newStep)){ 
+    return -1;
+    }
+cout << "EXIT HEAVY MOVE" << endl;
 return newStep;// return this r the retval of the preceding line?
 }
 

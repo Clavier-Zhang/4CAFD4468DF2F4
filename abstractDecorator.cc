@@ -23,8 +23,8 @@ player{component} {
         this->level.reset(new LevelFour);
     }
 
-    setNextBlock(component->getNextBlock());
-    setCurrentBlock(component->getCurrentBlock());
+   setNextBlock(component->getNextBlock());
+//   setCurrentBlock(component->getCurrentBlock());
 }
 
 

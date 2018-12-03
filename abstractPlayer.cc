@@ -116,9 +116,7 @@ void AbstractPlayer::recalculateGrid() {
         }
     }
     if (offset>=1){
-        cout<<"undrawscore"<<endl;
         this->undrawScore();
-        cout<<"finished undrawscore"<<endl;
         currentScore+=((getLevel()+offset)*(getLevel()+offset));
         if(offset>=2)notifySpecialAction();
         else notifyTurnover();
@@ -131,12 +129,10 @@ void AbstractPlayer::recalculateGrid() {
 }
 
 void AbstractPlayer::updateScore(){
-
     if (this->currentScore > this->highestScore) {
         this->highestScore = this->currentScore;
     }
     this->drawScore();
-
 }
 
 void AbstractPlayer::clearRow(int row) {
@@ -281,6 +277,7 @@ void AbstractPlayer::setNextBlock(string type){
 }
 
 void AbstractPlayer::setCurrentBlock(string type){
+cout << "set current bloc in absplayer" << endl;
     unique_ptr<AbstractBlock>tmp{level->generateBlock(type[0])};
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);

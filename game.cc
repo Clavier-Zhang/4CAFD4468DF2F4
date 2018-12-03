@@ -147,7 +147,8 @@ int Game::getLevel(){
 }
 
 void Game::move(string type, int step) {
- currentPlayer->move(type, step);
+ if (currentPlayer->move(type, step) == -1) currentPlayer->drop();
+ //cout <<"finished current player move"<<endl;
  print();
 }
 
@@ -223,6 +224,7 @@ void Game::force(char c) {
 void Game::print() {
     // this->drawBigString(2,2,"-",1);
     // print level
+    cout<<"entering print"<<endl;
     cout << "Level:";
     cout << setw(5) << playerOne->getLevel();
     cout  << setw(7) << " ";
