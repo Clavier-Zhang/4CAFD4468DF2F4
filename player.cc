@@ -296,4 +296,10 @@ void Player::setCurrentBlock(char type) {
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);
 }
-
+int Player::getHighScore(){
+    return highestScore;
+}
+void Player::setHighScore(int hi) {
+    highestScore = hi;
+    if(w!=nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
+}

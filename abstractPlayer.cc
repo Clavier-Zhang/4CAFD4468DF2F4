@@ -219,10 +219,6 @@ void AbstractPlayer::applyLevelEffects(int offset){
     }
 }
 
-void AbstractPlayer::setHighScore(int hi) {
-    highestScore = hi;
-    if(w!=nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
-}
 
 void AbstractPlayer::setRandom(bool rand, string file) {
     level->setRandom(rand, file);
@@ -246,9 +242,9 @@ int AbstractPlayer::getCurrentScore() {
     return currentScore;
 }
 
-int AbstractPlayer::getHighestScore() {
+/*int AbstractPlayer::getHighestScore() {
     return highestScore;
-}
+}*/
 /*
 int AbstractPlayer::getLevel() {
     return level->getLevel();

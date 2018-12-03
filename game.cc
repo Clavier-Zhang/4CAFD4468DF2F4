@@ -32,25 +32,22 @@ Game::~Game() {
 }
 
 void Game::restart(int startLvl) {
-    int highScoreP1 = playerOne->getHighestScore();
-    int highScoreP2 = playerTwo->getHighestScore();
+    int highScoreP1 = playerOne->getHighScore();
+    int highScoreP2 = playerTwo->getHighScore();
     //int lvl1 = playerOne->getLevel();
     //int lvl2 = playerTwo->getLevel();
     string scpt1 = playerOne->getInitScpt();
     string scpt2 = playerTwo->getInitScpt();
-    cout<<"Im successful"<<endl;
     if (w != nullptr){
         this->w->fillRectangle(0, 0, this->width, this->height, 0);
     }
-    cout<<"if this is the problem I'll laugh"<<endl;
     takeOffDecorations();
     currentPlayer.reset();
-    cout<<"still good"<<endl;
     playerOne.reset(new Player(this, 1, this->w.get(), startLvl, scpt1));
     playerTwo.reset(new Player(this, 2, this->w.get(), startLvl, scpt2));
     if (w != nullptr){
-        undrawBigString(10, 24, to_string(playerOne->getHighestScore()), 1);
-        undrawBigString(10, 24, to_string(playerTwo->getHighestScore()), 2);
+        undrawBigString(10, 24, to_string(playerOne->getHighScore()), 1);
+        undrawBigString(10, 24, to_string(playerTwo->getHighScore()), 2);
     }
     playerOne->setHighScore(highScoreP1);
     playerTwo->setHighScore(highScoreP2);
@@ -62,7 +59,7 @@ void Game::restart(int startLvl) {
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
     if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
-        //undrawBigString(10, 24, to_string(playerOne->getHighestScore()), 1);
+        //undrawBigString(10, 24, to_string(playerOne->getHighScore()), 1);
         currentPlayer->setLevel(level);
         print();
     }
@@ -100,6 +97,7 @@ void Game::levelUp(int step) {
 }
 
 void Game::removeLevelDecorator(int level) {
+    cout<<"REMOVE LEVEL DECORRR"<<endl;
     if ((level == 3)||(level == 4)) return;
     if (currentPlayer->getUnderlyingPlayer() == nullptr) return;
     if (currentPlayer->getUnderlyingPlayer()->getUnderlyingPlayer() != nullptr) {// there is a decoration in adition to level
@@ -254,10 +252,10 @@ void Game::print() {
     cout << endl;
     // print highest score
     cout << "Highest:";
-    cout << setw(3) << playerOne->getHighestScore();
+    cout << setw(3) << playerOne->getHighScore();
     cout  << setw(7) << " ";
     cout << "Highest:";
-    cout << setw(3) << playerTwo->getHighestScore();
+    cout << setw(3) << playerTwo->getHighScore();
     cout << endl;
     // print dash
     cout << "-----------";
@@ -333,6 +331,7 @@ Xwindow * Game::getWindow() {
 
 // Private helper functions
 void Game::takeOffDecorations() {
+    cout<<"I RAAAAAAAAAAAAAAAAAAAAAAAAANNNNNNNNNN"<<endl;
     shared_ptr<AbstractPlayer> tmp = currentPlayer->getUnderlyingPlayer();// get the undecorated player component
     while (tmp != nullptr) { // the player still has decorations
         // schema for removing decoration:
@@ -340,7 +339,7 @@ void Game::takeOffDecorations() {
         // 2. call on both currentPlayer and playerX; this deletes only the decorator
         // 3. reassign the undecorated player component to playerX and currentPlayer
         if (currentPlayer == playerOne) {
-            playerOne->nullifyUnderlyingPlayer();
+            int highScore=playerOne->getHighScore();
             currentPlayer->nullifyUnderlyingPlayer();
             playerOne.reset();
             currentPlayer.reset();

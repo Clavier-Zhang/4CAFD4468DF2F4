@@ -35,5 +35,7 @@ class HeavyDecorator : public AbstractDecorator {
         void setLevel(int) override;
 
         int getLevel() override;
+        int getHighScore() override;
+        void setHighScore(int) override;
 };
 #endif

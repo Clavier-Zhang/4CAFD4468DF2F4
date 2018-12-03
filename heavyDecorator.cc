@@ -19,6 +19,14 @@ void HeavyDecorator::setLevel(int level) {
  player->setLevel(level);
  }
 
+int HeavyDecorator::getHighScore(){
+    return player->getHighScore();
+}
+
+void HeavyDecorator::setHighScore(int hi){
+    player->setHighScore(hi);
+}
+
 int HeavyDecorator::getLevel() {return player->getLevel();}
 void HeavyDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
