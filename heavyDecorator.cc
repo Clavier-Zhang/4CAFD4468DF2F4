@@ -13,6 +13,11 @@ shared_ptr<AbstractPlayer> HeavyDecorator::getUnderlyingPlayer() {
  return player;
 }
 
+void HeavyDecorator::setLevel(int level) {
+ player->setLevel(level);
+ }
+
+int HeavyDecorator::getLevel() {return player->getLevel();}
 void HeavyDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
 }

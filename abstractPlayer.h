@@ -54,7 +54,7 @@ class AbstractPlayer {
         // add the points of blocks to grid, update the block in drop(), 
         virtual void drop(bool shouldClear = false) = 0;
         // check if it is possible to level up/down
-        void setLevel(int level);
+        virtual void setLevel(int level) = 0;
         // assign the point pointer to currentBlock, can
         void setRandom(bool rand, std::string file = "");
         // display
@@ -81,7 +81,7 @@ class AbstractPlayer {
         // getter
         int getCurrentScore();
         int getHighestScore();
-        int getLevel();
+        virtual int getLevel() = 0;
         int getNo();
         int getNumDrop();
         Game *getGame();

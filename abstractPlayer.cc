@@ -13,6 +13,7 @@ using namespace std;
 AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
     no{no}, initScpt{scpt},level{nullptr},currentBlock{nullptr},nextBlock{nullptr}{
         // initialize the grid
+        cout << "abstractplayer ctr" << endl;
         for (int i = 0; i < rowNum; i++) {
             vector<Point> row;
             for (int j = 0; j < colNum; j++) {
@@ -66,7 +67,7 @@ AbstractPlayer::~AbstractPlayer(){
 Game *AbstractPlayer::getGame() { return game;}
 
 // check if possible to level up or down
-void AbstractPlayer::setLevel(int level){
+/*void AbstractPlayer::setLevel(int level){
     if(this->level != nullptr) this->undrawLevel();
     if (level == 0) {
         this->level.reset(new LevelZero{initScpt});
@@ -80,7 +81,7 @@ void AbstractPlayer::setLevel(int level){
         this->level.reset(new LevelFour);
     }
     this->drawLevel();
-}
+}*/
 
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
@@ -244,10 +245,10 @@ int AbstractPlayer::getCurrentScore() {
 int AbstractPlayer::getHighestScore() {
     return highestScore;
 }
-
+/*
 int AbstractPlayer::getLevel() {
     return level->getLevel();
-}
+}*/
 
 int AbstractPlayer::getNo(){
     return no;

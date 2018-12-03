@@ -29,6 +29,11 @@ void BlindDecorator::nullifyUnderlyingPlayer() {
  player = nullptr;
 }
 
+void BlindDecorator::setLevel(int level) {
+ player->setLevel(level);
+}
+
+int BlindDecorator::getLevel() {return player->getLevel();}
 void BlindDecorator::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
 
  player = play;

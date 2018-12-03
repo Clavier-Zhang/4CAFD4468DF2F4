@@ -11,7 +11,8 @@ using namespace std;
 Player::Player(Game *game, int no, Xwindow *w, int startLvl, std::string scpt):
 AbstractPlayer{game, no, w, scpt}{
     //initialize
-        if(startLvl==1){
+cout << "Player ctor" << endl;
+if(startLvl==1){
             level.reset(new LevelOne);
         }else if(startLvl==2){
             level.reset(new LevelTwo);
@@ -65,12 +66,31 @@ AbstractPlayer{game, no, w, scpt}{
         }
 }
 
+int Player::getLevel() {
+    return level->getLevel();
+}
 string Player::getGridRow(int row) {
 string s;
     for (int i = 0; i < colNum; i++) {
         s += grid[row][i].getType();
     }
     return s;
+}
+
+void Player::setLevel(int level){
+    if(this->level != nullptr) this->undrawLevel();
+    if (level == 0) {
+        this->level.reset(new LevelZero{initScpt});
+    } else if (level == 1) {
+        this->level.reset(new LevelOne);
+    }else if (level == 2){
+        this->level.reset(new LevelTwo);
+    }else if (level == 3){
+        this->level.reset(new LevelThree);
+    }else if ( level == 4){
+        this->level.reset(new LevelFour);
+    }
+    this->drawLevel();
 }
 
 string Player::getGridPoint(int row, int col) {
