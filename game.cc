@@ -50,6 +50,7 @@ void Game::restart() {
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
     if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
+        undrawBigString(9, 1, std::to_string(currentPlayer->getLevel()), currentPlayer->getNo());
         currentPlayer->setLevel(level);
         print();
     }

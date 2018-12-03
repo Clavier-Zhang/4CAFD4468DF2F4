@@ -67,6 +67,7 @@ Game *AbstractPlayer::getGame() { return game;}
 
 // check if possible to level up or down
 void AbstractPlayer::setLevel(int level){
+    this->undrawLevel();
     if (level == 0) {
         this->level.reset(new LevelZero{initScpt});
     } else if (level == 1) {
@@ -78,7 +79,6 @@ void AbstractPlayer::setLevel(int level){
     }else if ( level == 4){
         this->level.reset(new LevelFour);
     }
-    this->undrawLevel();
     this->drawLevel();
 }
 
@@ -114,17 +114,19 @@ void AbstractPlayer::recalculateGrid() {
             shiftRowDown(row, offset);
         }
     }
-    if (offset>=2) notifySpecialAction();
+    if (offset>=1){
+        this->undrawScore();
+        currentScore+=((getLevel()+offset)*(getLevel()+offset));
+    }
+    else if(offset>=2)notifySpecialAction();
     else notifyTurnover();
     applyLevelEffects(offset);
     recalculateInactiveBlocks();
-    currentScore+=((getLevel()+offset)*(getLevel()+offset));
     updateScore();
 }
 
 void AbstractPlayer::updateScore(){
 
-    this->undrawScore();
     if (this->currentScore > this->highestScore) {
         this->highestScore = this->currentScore;
     }
@@ -270,8 +272,6 @@ void AbstractPlayer::drawScore(){
     if (game->getWindow() != nullptr) {
         game->drawBigString(10, 24, std::to_string(this->highestScore), this->no);
         game->drawBigString(9, 2, std::to_string(this->currentScore), this->no);
-        game->drawBigString(4, 24, "High Score:", this->no);
-        game->drawBigString(10, 24, "0", this->no);
     }
 }
 
@@ -279,20 +279,18 @@ void AbstractPlayer::undrawScore(){
     if (game->getWindow() != nullptr) {
         game->undrawBigString(10, 24, std::to_string(this->highestScore), this->no);
         game->undrawBigString(9, 2, std::to_string(this->currentScore), this->no);
-        game->undrawBigString(4, 24, "High Score:", this->no);
-        game->undrawBigString(10, 24, "0", this->no);
     }
 }
 
 void AbstractPlayer::drawLevel(){
     if (game->getWindow() != nullptr) {
-        game->drawBigString(9, 2, std::to_string(this->level->getLevel()), this->no);
+        game->drawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
 
 void AbstractPlayer::undrawLevel(){
     if (game->getWindow() != nullptr) {
-        game->undrawBigString(9, 2, std::to_string(this->level->getLevel()), this->no);
+        game->undrawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
 
