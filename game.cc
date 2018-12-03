@@ -231,6 +231,13 @@ void Game::print() {
     cout << "Score:";
     cout << setw(5) << playerTwo->getCurrentScore();
     cout << endl;
+    // print highest score
+    cout << "Highest:";
+    cout << setw(3) << playerOne->getHighestScore();
+    cout  << setw(7) << " ";
+    cout << "Highest:";
+    cout << setw(3) << playerTwo->getHighestScore();
+    cout << endl;
     // print dash
     cout << "-----------";
     cout << setw(7) << " ";
@@ -335,6 +342,7 @@ AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<Abs
    // shared_ptr firstHeavy = make_shared(new HeavyDecorator(absPlayer, this, w.get()));
     return new HeavyDecorator(absPlayer, this, w.get());// since 2 heavy for special action
     }  else if (specialAction == "blind") {
+    cout<<"calling blind decor"<<endl;
     return new BlindDecorator(absPlayer, this, w.get());
     }
     return nullptr; // maybe throw an exception instead later

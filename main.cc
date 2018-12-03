@@ -174,7 +174,9 @@ int main (int argc, char * argv[]) {
             } else if (action == "blind") {
                game->enableSpecialAction(action);
             }
+            cout<<"printing game"<<endl;
             game->print();
+            cout<<"done printing"<<endl;
         }
 
         // error checking

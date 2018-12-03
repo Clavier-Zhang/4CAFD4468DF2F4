@@ -11,7 +11,7 @@ using namespace std;
 
 // constructor
 AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
-    no{no}, initScpt{scpt}{
+    no{no}, initScpt{scpt},level{nullptr},currentBlock{nullptr},nextBlock{nullptr}{
         // initialize the grid
         for (int i = 0; i < rowNum; i++) {
             vector<Point> row;
@@ -40,9 +40,9 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
             game->drawPoint(x, 21, 1, 1, 11, this->no);
         }
         game->drawBigString(0, 24, " Next:", this->no);
-        game->drawBigString(4, 24, "Highest Score:", this->no);
+        game->drawBigString(4, 24, "High Score:", this->no);
         game->drawBigString(10, 24, "0", this->no);
-}
+    }
 
 // important
 /*AbstractPlayer::AbstractPlayer(Game *game):,currentBlock{level->generateBlock()},
@@ -67,6 +67,7 @@ Game *AbstractPlayer::getGame() { return game;}
 
 // check if possible to level up or down
 void AbstractPlayer::setLevel(int level){
+    if(this->level != nullptr) this->undrawLevel();
     if (level == 0) {
         this->level.reset(new LevelZero{initScpt});
     } else if (level == 1) {
@@ -78,7 +79,6 @@ void AbstractPlayer::setLevel(int level){
     }else if ( level == 4){
         this->level.reset(new LevelFour);
     }
-    this->undrawLevel();
     this->drawLevel();
 }
 
@@ -114,11 +114,28 @@ void AbstractPlayer::recalculateGrid() {
             shiftRowDown(row, offset);
         }
     }
-    if (offset >= 2) notifySpecialAction();
+    if (offset>=1){
+        cout<<"undrawscore"<<endl;
+        this->undrawScore();
+        cout<<"finished undrawscore"<<endl;
+        currentScore+=((getLevel()+offset)*(getLevel()+offset));
+        if(offset>=2)notifySpecialAction();
+        else notifyTurnover();
+    }
     else notifyTurnover();
     // the turns were switched
     applyLevelEffects(offset);
     recalculateInactiveBlocks();
+    updateScore();
+}
+
+void AbstractPlayer::updateScore(){
+
+    if (this->currentScore > this->highestScore) {
+        this->highestScore = this->currentScore;
+    }
+    this->drawScore();
+
 }
 
 void AbstractPlayer::clearRow(int row) {
@@ -159,12 +176,7 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
 void AbstractPlayer::recalculateInactiveBlocks(){
     for(auto & entry : inactiveBlocks){
         if (entry.second->getPoints().size() == 0){
-            this->undrawScore();
             currentScore += entry.second->getScore();
-            if (this->currentScore > this->highestScore) {
-                this->highestScore = this->currentScore;
-            }
-            this->drawScore();
             inactiveBlocks.erase(entry.first);
         }
     }
@@ -187,8 +199,8 @@ void AbstractPlayer::applyLevelEffects(int offset){
 }
 
 void AbstractPlayer::setHighScore(int hi) {
- highestScore = hi;
- }
+    highestScore = hi;
+}
 
 void AbstractPlayer::setRandom(bool rand, string file) {
     level->setRandom(rand, file);
@@ -276,13 +288,13 @@ void AbstractPlayer::undrawScore(){
 
 void AbstractPlayer::drawLevel(){
     if (game->getWindow() != nullptr) {
-        game->drawBigString(9, 2, std::to_string(this->level->getLevel()), this->no);
+        game->drawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
 
 void AbstractPlayer::undrawLevel(){
     if (game->getWindow() != nullptr) {
-        game->undrawBigString(9, 2, std::to_string(this->level->getLevel()), this->no);
+        game->undrawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
 
