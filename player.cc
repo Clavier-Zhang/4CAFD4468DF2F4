@@ -135,6 +135,7 @@ bool succeeded = moveHelper(type, step, isBlind);
         }
         // clear block first, then add points
         currentBlock->removeAllPoint(isBlind);
+        cout << "add points in move" << endl;
         currentBlock->addPoints(coordinates, this, isBlind);
         return true;
     }
@@ -212,6 +213,7 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
      }
     // clear block first, then add points
     currentBlock->removeAllPoint(isBlind);
+    cout << "add points in roaotte" << endl;
     currentBlock->addPoints(coordinates, this, isBlind);
     return true;
 }

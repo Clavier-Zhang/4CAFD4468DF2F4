@@ -80,7 +80,7 @@ void Game::levelUp(int step) {
     int targetLevel = currentPlayer->getLevel() + step;
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
       if (!((targetLevel == 4)&&(step == 1))) addLevelDecorator(targetLevel);
-      currentPlayer->setLevel(targetLevel);
+     currentPlayer->setLevel(targetLevel);
       print();
     }
 }
@@ -97,23 +97,26 @@ void Game::removeLevelDecorator(int level) {
     next = bottom;
     bottom = bottom->getUnderlyingPlayer();
     }
+    next->nullifyUnderlyingPlayer();
+    next.reset();
    cur->setUnderlyingPlayer(bottom);
  } else {
-   if (currentPlayer->getNo() == 1) {
-   shared_ptr<AbstractPlayer> cpy = playerOne->getUnderlyingPlayer();
-   playerOne->nullifyUnderlyingPlayer();
-   currentPlayer->nullifyUnderlyingPlayer();
-   playerOne.reset();
-   currentPlayer.reset();
-   playerOne = cpy;
-  // playerOne->setUnderlyingPlayer(cpy);
-   currentPlayer = playerOne;
-   } else {
-   shared_ptr<AbstractPlayer> cpy = playerTwo->getUnderlyingPlayer();
-   playerTwo->nullifyUnderlyingPlayer();
-   currentPlayer->nullifyUnderlyingPlayer();
-   playerTwo->setUnderlyingPlayer(cpy);
-   currentPlayer = playerTwo;
+        if (currentPlayer->getNo() == 1) {
+            shared_ptr<AbstractPlayer> cpy = playerOne->getUnderlyingPlayer();
+            playerOne->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerOne.reset();
+            currentPlayer.reset();
+            playerOne = cpy;
+            currentPlayer = playerOne;
+        } else {
+            shared_ptr<AbstractPlayer> cpy = playerTwo->getUnderlyingPlayer();
+            playerTwo->nullifyUnderlyingPlayer();
+            currentPlayer->nullifyUnderlyingPlayer();
+            playerTwo.reset();
+            currentPlayer.reset();
+            playerTwo = cpy;
+            currentPlayer = playerTwo;
   }
  }
 }
