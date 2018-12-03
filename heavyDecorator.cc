@@ -61,7 +61,7 @@ int newStep = player->move(type, step, isBlind);
 cout<<"finished new step"<<endl;
 int result = getBasePlayer()->move("down", newStep, isBlind);
 cout<<"finished result"<<endl;
-if ((newStep == -1)||(result < newStep)){ 
+if ((newStep == -1)||(result < newStep)||(getBasePlayer()->move("down", newStep, isBlind) == 0)){ 
     return -1;
     }
 cout << "EXIT HEAVY MOVE" << endl;
