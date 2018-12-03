@@ -15,6 +15,7 @@ string scpt1="sequence1.txt";
 string scpt2="sequence2.txt";
 int startLvl=0;
 int seed=-1;
+bool keyMode = true;
 
 // add possible short version commands into map
 // notice we will not add unambiguous commands shorthand
@@ -183,49 +184,51 @@ int main (int argc, char * argv[]) {
         // error checking
 
         // key feature
-        int key;
-        key = getch();
-        if (key == KEY_RIGHT) {
-            game->move("right", 1);
-            cout << "right" << endl;
-            continue;
-        }
-        if (key == KEY_LEFT) {
-            game->move("left", 1);
-            cout << "left" << endl;
-            continue;
-        }
-        if (key == KEY_DOWN) {
-            game->move("down", 1);
-            cout << "down" << endl;
-            continue;
-        }
-        if (key == KEY_UP) {
-            game->drop(1);
-            cout << "drop" << endl;
-            continue;
-        }
-        if (key == 'z') {
-            game->rotate(false, 1);
-            cout << "clockwise" << endl;
-            continue;
-        }
-        if (key == 'x') {
-            game->rotate(true, 1);
-            cout << "counterclockwise" << endl;
-            continue;
-        }
-        if (key == 'c') {
-            game->levelUp(1);
-            cout << "level up" << endl;
-            continue;
-        }
-        if (key == 'v') {
-            game->levelDown(1);
-            cout << "level down" << endl;
-            continue;
-        }
+        if (keyMode) {
+            int key;
+            key = getch();
+            if (key == KEY_RIGHT) {
+                game->move("right", 1);
+                cout << "right" << endl;
+                continue;
+            }
+            if (key == KEY_LEFT) {
+                game->move("left", 1);
+                cout << "left" << endl;
+                continue;
+            }
+            if (key == KEY_DOWN) {
+                game->move("down", 1);
+                cout << "down" << endl;
+                continue;
+            }
+            if (key == KEY_UP) {
+                game->drop(1);
+                cout << "drop" << endl;
+                continue;
+            }
+            if (key == 'z') {
+                game->rotate(false, 1);
+                cout << "clockwise" << endl;
+                continue;
+            }
+            if (key == 'x') {
+                game->rotate(true, 1);
+                cout << "counterclockwise" << endl;
+                continue;
+            }
+            if (key == 'c') {
+                game->levelUp(1);
+                cout << "level up" << endl;
+                continue;
+            }
+            if (key == 'v') {
+                game->levelDown(1);
+                cout << "level down" << endl;
+                continue;
+            }
         continue;
+        }
         // end of key feature
 
         string word;
