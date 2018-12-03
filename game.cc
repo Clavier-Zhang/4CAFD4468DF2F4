@@ -50,6 +50,7 @@ void Game::restart() {
 // do not need to check, call currentPlayer's method directly
 void Game::setLevel(int level) {
     if (this->MIN_LEVEL <= level && level <= this->MAX_LEVEL) {
+        undrawBigString(9, 1, std::to_string(currentPlayer->getLevel()), currentPlayer->getNo());
         currentPlayer->setLevel(level);
         print();
     }
@@ -326,7 +327,6 @@ void Game::drawPoint(int x, int y, int w, int h, int c, int playerNum) {
 }
 
 void Game::undrawPoint(int x, int y, int w, int h, int playerNum) {
-   cout << "called for " << x << " " << y << endl;
    if (this->w.get() != nullptr) {
         x = x + (playerNum - 1) * 18;
         int unit = 18;
