@@ -34,8 +34,6 @@ Game::~Game() {
 void Game::restart(int startLvl) {
     int highScoreP1 = playerOne->getHighScore();
     int highScoreP2 = playerTwo->getHighScore();
-    //int lvl1 = playerOne->getLevel();
-    //int lvl2 = playerTwo->getLevel();
     string scpt1 = playerOne->getInitScpt();
     string scpt2 = playerTwo->getInitScpt();
     if (w != nullptr){

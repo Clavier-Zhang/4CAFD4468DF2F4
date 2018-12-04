@@ -62,7 +62,7 @@ if (result == newStep)
 if ((newStep == -1)||(result < newStep )||test==0){ 
     return -1;
     }
-return newStep;// return this r the retval of the preceding line?
+return newStep;
 }
 
 string HeavyDecorator::getGridPoint(int row, int col) {
@@ -78,15 +78,15 @@ void HeavyDecorator::setCurrentBlock(char c) {
  }
 
 int HeavyDecorator::move(string type, int step, bool isBlind) {
-int newStep = player->move(type, step, isBlind);
-int test=1;
-int result = getBasePlayer()->move("down", newStep, isBlind);
-if (result == newStep)
+ int newStep = player->move(type, step, isBlind);
+ int test=1;
+ int result = getBasePlayer()->move("down", newStep, isBlind);
+ if (result == newStep)
     test = getBasePlayer()->canMoveDown(1);
-if ((newStep == -1)||(result < newStep )||test==0){ 
+ if ((newStep == -1)||(result < newStep )||test==0){ 
     return -1;
     }
-return newStep;// return this r the retval of the preceding line?
+ return newStep;
 }
 
 shared_ptr<AbstractPlayer> HeavyDecorator::getBasePlayer() {

@@ -4,8 +4,6 @@
 using namespace std;
 
 BlockX::BlockX(int score) : AbstractBlock{"X", score} {
-/*    auto c1 = make_pair(0, 5);
-    this->positions.emplace_back(c1);*/
 }
 
 BlockX::~BlockX() {}

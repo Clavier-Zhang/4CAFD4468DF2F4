@@ -81,7 +81,7 @@ bool succeeded = moveHelper(type, step, isBlind);
  int newStep = step;
  // if unable to move step times, move max allowed times strictly less than step and return how
  // many moves were able to be made
- while (!succeeded) { // && (newStep - i >= 0)) {
+ while (!succeeded) {
   newStep -= 1;
   succeeded = moveHelper(type, newStep, isBlind);
   }
@@ -134,7 +134,7 @@ int Player::rotate(bool counter, int step, bool isBlind) {
      int newStep = step;
      // if unable to move step times, move max allowed times strictly less than step and return how
      // many moves were able to be made
- while (!succeeded) { // && (newStep - i >= 0)) {
+ while (!succeeded) {
   newStep -= 1;
   succeeded = rotateHelper(counter, newStep, isBlind);
   }
@@ -202,8 +202,6 @@ for (int i = 3; i <= 12 + reservedRowNum; ++i) {
   for (int j = 2; j <= 8; ++j) {
         string type = getGridPoint(i, j); 
         setGridType(i,j,type);
-        //pair<int, int> c = make_pair(i, j);
-        //getPoint(c)->setType(type, true);
   }
  }
 }
@@ -238,7 +236,6 @@ void Player::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
 void Player::nullifyUnderlyingPlayer() {
  // does nothing since there is no underlying player to set to null
 }
-
 
 // Getters and setters
 

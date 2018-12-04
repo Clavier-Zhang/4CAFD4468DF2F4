@@ -57,7 +57,6 @@ void BlindDecorator::setNumDrop(int n){
     player->setNumDrop(n);
 }
 void BlindDecorator::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
-
  player = play;
  // UNLESS YOU MADE A COPY SOMETHERE THIS WILL DESTROY IT BEWARE
 }

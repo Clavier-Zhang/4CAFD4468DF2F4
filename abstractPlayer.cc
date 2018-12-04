@@ -33,8 +33,7 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
         }
     }
 
-AbstractPlayer::~AbstractPlayer(){
-}
+AbstractPlayer::~AbstractPlayer(){}
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
     if (c.first < 0 || c.second < 0) {
@@ -51,9 +50,9 @@ bool AbstractPlayer::isValid(pair<int, int> &c) {
 }
 
 bool AbstractPlayer::canMoveDown(int step){
-    if (step ==0) return true;
-    int deltaX=0;
-    int deltaY=step;
+    if (step == 0) return true;
+    int deltaX = 0;
+    int deltaY = step;
 
     for (Point *p : currentBlock->getPoints()) {
             pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
@@ -62,8 +61,8 @@ bool AbstractPlayer::canMoveDown(int step){
             }
         }
         return true;
-
 }
+
 void AbstractPlayer::recalculateGrid() {
     bool shouldClear;
     int offset = 0;
@@ -81,10 +80,10 @@ void AbstractPlayer::recalculateGrid() {
             shiftRowDown(row, offset);
         }
     }
-    if (offset>=1){
+    if (offset >= 1){
         this->undrawScore();
-        currentScore+=((getLevel()+offset)*(getLevel()+offset));
-        if(offset>=2)notifySpecialAction();
+        currentScore += ((getLevel() + offset) * (getLevel() + offset));
+        if(offset >= 2) notifySpecialAction();
         else notifyTurnover();
     }
     else notifyTurnover();
@@ -110,7 +109,8 @@ void AbstractPlayer::clearRow(int row) {
                 inactiveBlocks[p->getID()].get()->removeOnePoint(p);
             }
         }
-        p->setID(-1);// reset to default
+       // p->setID(-1);// reset to default
+       p->resetId();
     }
 }
 
@@ -148,14 +148,6 @@ void AbstractPlayer::recalculateInactiveBlocks(){
             it++;
         }
     }
-    /*for(auto & entry : inactiveBlocks){
-        if (entry.second!=nullptr && entry.second->getPoints().size() == 0){
-            currentScore += entry.second->getScore();
-//            entry.second.reset(nullptr);
-
-            inactiveBlocks.erase(entry.first);
-        }
-    }*/
 }
 
 void AbstractPlayer::applyLevelEffects(int offset){
@@ -174,8 +166,6 @@ void AbstractPlayer::applyLevelEffects(int offset){
     }
 }
 
-
-
 // observer pattern
 void AbstractPlayer::notifyGameover() {
     game->setGameOver();
@@ -190,14 +180,6 @@ void AbstractPlayer::notifySpecialAction() {
 }
 
 // getter
-
-/*int AbstractPlayer::getHighestScore() {
-    return highestScore;
-}*/
-/*
-int AbstractPlayer::getLevel() {
-    return level->getLevel();
-}*/
 
 int AbstractPlayer::getNo(){
     return no;
@@ -215,17 +197,12 @@ string AbstractPlayer::getNextBlock() {
 string AbstractPlayer::getCurrentBlock() {
     return currentBlock->getType();
 }
+
 //USED IN DECORATOR TO MAKE NEXT BLOCK NON NULL
 void AbstractPlayer::setNextBlock(string type){
     unique_ptr<AbstractBlock>tmp{level->generateBlock(type[0])};
     nextBlock = std::move(tmp);
     this->drawNextBlock();
-}
-
-void AbstractPlayer::setCurrentBlock(string type){
-    unique_ptr<AbstractBlock>tmp{level->generateBlock(type[0])};
-    currentBlock = std::move(tmp);
-    currentBlock->initialize(this);
 }
 
 Point* AbstractPlayer::getPoint(pair<int, int> &c) {
