@@ -16,7 +16,7 @@ class BlockT;
 class BlockZ;
 class BlockX;
 class AbstractPlayer;
-// visitor
+
 class AbstractLevel {
     protected:
         int level = 0;
@@ -35,7 +35,7 @@ class AbstractLevel {
         AbstractBlock *createCustomBlock(char);
         // getter
         int getLevel();
-        
+        //setter
         void setRandom(bool rand, std::string file = "");
 
 

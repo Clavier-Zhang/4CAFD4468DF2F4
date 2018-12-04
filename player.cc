@@ -5,13 +5,18 @@
 #include <memory>
 #include <iostream>
 #include "window.h"
+#include "levelZero.h"
+#include "levelOne.h"
+#include "levelTwo.h"
+#include "levelThree.h"
+#include "levelFour.h"
 using namespace std;
 
 // initialzie the player, draw in the constructor, save window pointer
 Player::Player(Game *game, int no, Xwindow *w, int startLvl, std::string scpt):
-AbstractPlayer{game, no, w, scpt} {
-    //initialize
-if (startLvl == 1){
+    AbstractPlayer{game, no, w, scpt} {
+        //initialize
+        if (startLvl == 1){
             level.reset(new LevelOne);
         } else if (startLvl == 2) {
             level.reset(new LevelTwo);
@@ -67,78 +72,78 @@ if (startLvl == 1){
                 if (type == "Z") {
                     colour = 9;
                 }
-                game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, colour, this->no);
+                game->drawPoint(p.first, p.second + this->ROW + 5, 1, 1, colour, this->no);
             }
         }
-}
+    }
 
 void Player::drawGridPoint(int x, int y, int col) {
- game->drawPoint(x, y, 1, 1, col, no);
- }
-
-int Player::move(string type, int step, bool isBlind) {
-bool succeeded = moveHelper(type, step, isBlind);
- int newStep = step;
- // if unable to move step times, move max allowed times strictly less than step and return how
- // many moves were able to be made
- while (!succeeded) {
-  newStep -= 1;
-  succeeded = moveHelper(type, newStep, isBlind);
-  }
-  return newStep;
+    game->drawPoint(x, y, 1, 1, col, no);
 }
 
-    bool Player::moveHelper(std::string type, int step, bool isBlind) {
-    if (step == 0) return true; // no movement required
-        // interpret command
-        int deltaX = 0;
-        int deltaY = 0;
-        if (type == "down") {
-            deltaY = step;
-        }
-        if (type == "left") {
-            deltaX = -step;
-        }
-        if (type == "right") {
-            deltaX = step;
-        }
-        // check if it's movable
-        vector<pair<int, int>> coordinates;
-        for (Point *p : currentBlock->getPoints()) {
-            pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
-            if (isValid(c)) {
-                coordinates.emplace_back(c);
-            } else {
-                return false;
-            }
-        }
-        // clear block first, then add points
-        currentBlock->removeAllPoint(isBlind);
-        currentBlock->addPoints(coordinates, this, isBlind);
-        return true;
+int Player::move(string type, int step, bool isBlind) {
+    bool succeeded = moveHelper(type, step, isBlind);
+    int newStep = step;
+    // if unable to move step times, move max allowed times strictly less than step and return how
+    // many moves were able to be made
+    while (!succeeded) {
+        newStep -= 1;
+        succeeded = moveHelper(type, newStep, isBlind);
     }
+    return newStep;
+}
 
-    pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
-     int minX = coordinates[0].first;
-     int maxY = coordinates[0].second;
-     for (int i = 0; i < (int)coordinates.size(); ++i) {
-      if (coordinates[i].first < minX) minX = coordinates[i].first;
-      if (coordinates[i].second > maxY) maxY = coordinates[i].second;
-      }
-     pair<int, int> lowerLeft = make_pair(minX, maxY);
-     return lowerLeft;
+bool Player::moveHelper(std::string type, int step, bool isBlind) {
+    if (step == 0) return true; // no movement required
+    // interpret command
+    int deltaX = 0;
+    int deltaY = 0;
+    if (type == "down") {
+        deltaY = step;
     }
+    if (type == "left") {
+        deltaX = -step;
+    }
+    if (type == "right") {
+        deltaX = step;
+    }
+    // check if it's movable
+    vector<pair<int, int>> coordinates;
+    for (Point *p : currentBlock->getPoints()) {
+        pair<int, int> c = make_pair(p->getX() + deltaX, p->getY() + deltaY);
+        if (isValid(c)) {
+            coordinates.emplace_back(c);
+        } else {
+            return false;
+        }
+    }
+    // clear block first, then add points
+    currentBlock->removeAllPoints(isBlind);
+    currentBlock->addPoints(coordinates, this, isBlind);
+    return true;
+}
+
+pair<int, int> getLowerLeft(vector<pair<int, int>> &coordinates) {
+    int minX = coordinates[0].first;
+    int maxY = coordinates[0].second;
+    for (int i = 0; i < (int)coordinates.size(); ++i) {
+        if (coordinates[i].first < minX) minX = coordinates[i].first;
+        if (coordinates[i].second > maxY) maxY = coordinates[i].second;
+    }
+    pair<int, int> lowerLeft = make_pair(minX, maxY);
+    return lowerLeft;
+}
 
 int Player::rotate(bool counter, int step, bool isBlind) {
     bool succeeded = rotateHelper(counter, step, isBlind);
-     int newStep = step;
-     // if unable to move step times, move max allowed times strictly less than step and return how
-     // many moves were able to be made
- while (!succeeded) {
-  newStep -= 1;
-  succeeded = rotateHelper(counter, newStep, isBlind);
-  }
-  return newStep;
+    int newStep = step;
+    // if unable to move step times, move max allowed times strictly less than step and return how
+    // many moves were able to be made
+    while (!succeeded) {
+        newStep -= 1;
+        succeeded = rotateHelper(counter, newStep, isBlind);
+    }
+    return newStep;
 }
 
 bool Player::rotateHelper(bool counter, int step, bool isBlind) {
@@ -156,104 +161,128 @@ bool Player::rotateHelper(bool counter, int step, bool isBlind) {
     int numRotations = step % NUM_POSSIBLE_ORIENTATIONS; // since only 4 possible orientations
     vector<pair<int, int>> coordinates; // create cordinates array foro case rot is 0
     for (Point *p : currentBlock->getPoints()) {
-     int x = p->getX();
-     int y = p->getY();
-     pair<int, int> pair = make_pair(x, y);
-     coordinates.emplace_back(pair);
-     }
+        int x = p->getX();
+        int y = p->getY();
+        pair<int, int> pair = make_pair(x, y);
+        coordinates.emplace_back(pair);
+    }
 
-   pair<int, int> lowerLeft;
-    
+    pair<int, int> lowerLeft;
+
     for (int i = 0; i < numRotations; ++i) {
-    lowerLeft = getLowerLeft(coordinates);
-    vector<pair<int, int>> coorCopy;
-    for (pair<int, int> p : coordinates) {
-        int x = p.first;
-        int y = p.second;
-        // matrix multiplcation by correct rotation matrix
-        int newX = x * current[0][0] + y * current[0][1];
-        int newY = x * current[1][0] + y * current[1][1];
-        pair<int, int> p1 = make_pair(newX, newY);
-        coorCopy.emplace_back(p1);
+        lowerLeft = getLowerLeft(coordinates);
+        vector<pair<int, int>> coorCopy;
+        for (pair<int, int> p : coordinates) {
+            int x = p.first;
+            int y = p.second;
+            // matrix multiplcation by correct rotation matrix
+            int newX = x * current[0][0] + y * current[0][1];
+            int newY = x * current[1][0] + y * current[1][1];
+            pair<int, int> p1 = make_pair(newX, newY);
+            coorCopy.emplace_back(p1);
         }
 
-      pair<int, int> rotatedll = getLowerLeft(coorCopy);
-      int deltaX = rotatedll.first - lowerLeft.first;
-      int deltaY = rotatedll.second - lowerLeft.second;
-      coordinates.clear();
-      for (pair<int, int> p : coorCopy) {
-        pair<int, int> finalPair = make_pair(p.first - deltaX, p.second - deltaY);
-      
-        if (isValid(finalPair)) {
-            coordinates.emplace_back(finalPair);
-        } else {
-            return false;
+        pair<int, int> rotatedll = getLowerLeft(coorCopy);
+        int deltaX = rotatedll.first - lowerLeft.first;
+        int deltaY = rotatedll.second - lowerLeft.second;
+        coordinates.clear();
+        for (pair<int, int> p : coorCopy) {
+            pair<int, int> finalPair = make_pair(p.first - deltaX, p.second - deltaY);
+
+            if (isValid(finalPair)) {
+                coordinates.emplace_back(finalPair);
+            } else {
+                return false;
+            }
         }
-       }
-     }
+    }
     // clear block first, then add points
-    currentBlock->removeAllPoint(isBlind);
+    currentBlock->removeAllPoints(isBlind);
     currentBlock->addPoints(coordinates, this, isBlind);
     return true;
 }
 
+
 void Player::clearBlind() {
-for (int i = 3; i <= 12 + reservedRowNum; ++i) {
-  for (int j = 2; j <= 8; ++j) {
-        string type = getGridPoint(i, j); 
-        setGridType(i,j,type);
-  }
- }
+    for (int i = 3; i <= 12 + RESERVE_ROW; ++i) {
+        for (int j = 2; j <= 8; ++j) {
+            string type = getGridPoint(i, j); 
+            setGridType(i,j,type);
+        }
+    }
 }
 
+
 // add the points of blocks to grid, update the block in drop(), 
-void Player::drop(bool shouldClearBlind){
-    while (move("down", 1, shouldClearBlind)) {}
+void Player::drop(bool isBlind){
+    while (move("down", 1, isBlind)) {}
+    //updates the current block
     currentBlock->setID(AbstractBlock::getCurId());
     inactiveBlocks[AbstractBlock::getCurId()] = std::move(currentBlock);
     AbstractBlock::incrementCurId();
+    //updates the next block
     this->undrawNextBlock();
     currentBlock = std::move(nextBlock);
     currentBlock->initialize(this);
     unique_ptr<AbstractBlock>tmp{level->generateBlock()};
     nextBlock = std::move(tmp);
     this->drawNextBlock();
-    if (shouldClearBlind) clearBlind();
+    //runs logic to do calculation for the next turn
+    if (isBlind) clearBlind();
     recalculateGrid();
 }
 
-// Traversing a linked list of decorators
 
+// --------- Functions for traversing a linked list of decorators---------------------
 shared_ptr<AbstractPlayer> Player::getUnderlyingPlayer() {
- // this is the concrete component class so there is no underlying player
- return nullptr;
+    // this is the concrete component class so there is no underlying player
+    return nullptr;
 }
 
+
 void Player::setUnderlyingPlayer(shared_ptr<AbstractPlayer> play) {
- // does nothing since there is no underlying player to set
+    // does nothing since there is no underlying player to set
 }
 
 void Player::nullifyUnderlyingPlayer() {
- // does nothing since there is no underlying player to set to null
+    // does nothing since there is no underlying player to set to null
 }
+
 
 // Getters and setters
-
 string Player::getGridRow(int row) {
- string s;
-    for (int i = 0; i < colNum; i++) {
+    string s;
+    for (int i = 0; i < COL; i++) {
         s += grid[row][i].getType();
     }
- return s;
+    return s;
 }
 
+
 string Player::getGridPoint(int row, int col) {
- return grid[row][col].getType();
+    return grid[row][col].getType();
 }
+
 
 int Player::getLevel() {
     return level->getLevel();
 }
+
+
+int Player::getHighScore() {
+    return highestScore;
+}
+
+
+int Player::getCurrentScore() {
+    return currentScore;
+}
+
+
+int Player::getNumDrop() {
+    return numDrop;
+}
+
 
 void Player::setLevel(int level){
     if(this->level != nullptr) this->undrawLevel();
@@ -271,35 +300,31 @@ void Player::setLevel(int level){
     this->drawLevel();
 }
 
+
 void Player::setRandom(bool rand, string file) {
     level->setRandom(rand, file);
 }
+
+
 // assign the point pointer to currentBlock, can
 // be used in moveLeft, moveRight
 // target::block
 void Player::setCurrentBlock(char type) {
     unique_ptr<AbstractBlock>tmp{level->generateBlock(type)};
-    currentBlock->removeAllPoint();
+    currentBlock->removeAllPoints();
     currentBlock = std::move(tmp);
     currentBlock->initialize(this);
 }
 
-int Player::getHighScore() {
-    return highestScore;
-}
 
 void Player::setHighScore(int hi) {
     highestScore = hi;
     if(w != nullptr) game->drawBigString(10, 24, to_string(highestScore), this->no);
 }
 
-int Player::getNumDrop() {
-    return numDrop;
-}
 
 void Player::setNumDrop(int n) {
     numDrop = n;
 }
-int Player::getCurrentScore() {
-    return currentScore;
-}
+
+

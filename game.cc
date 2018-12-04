@@ -1,10 +1,10 @@
+#include <iomanip>
+#include <iostream>
+#include "abstractDecorator.h"
 #include "game.h"
 #include "player.h"
-#include "abstractDecorator.h"
 #include "blindDecorator.h"
 #include "heavyDecorator.h"
-#include <iostream>
-#include <iomanip>
 #include "window.h"
 using namespace std;
 
@@ -243,7 +243,7 @@ void Game::print() {
     // print grid
     for (int i = 0; i < 18; i++) {
         cout << playerOne->getGridRow(i);
-        cout << setw(7) << "*";
+        cout << setw(7) << " ";
         cout << playerTwo->getGridRow(i);
         cout << endl;
     }

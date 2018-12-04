@@ -3,8 +3,7 @@
 #include "abstractPlayer.h"
 using namespace std;
 
-BlockX::BlockX(int score) : AbstractBlock{"X", score} {
-}
+BlockX::BlockX(int score) : AbstractBlock{"X", score} {}
 
 BlockX::~BlockX() {}
 

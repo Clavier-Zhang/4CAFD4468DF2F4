@@ -11,8 +11,11 @@
 using namespace std;
 
 LevelTwo::LevelTwo(): AbstractLevel{2, "", false} {}
+
+
 LevelTwo::~LevelTwo() {}
- 
+
+
 AbstractBlock* LevelTwo::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);
     const double DEFAULT = static_cast<double>(1)/7;

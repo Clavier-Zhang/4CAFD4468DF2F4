@@ -1,0 +1,12 @@
+#!/bin/bash
+
+files=$(ls)
+
+for file in $files;
+do
+    content=$(egrep "${1}" $file| wc -l)
+    if [ $content -gt 0 ];
+    then
+        echo $file;
+    fi
+done

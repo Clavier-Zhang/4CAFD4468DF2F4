@@ -11,7 +11,9 @@ using namespace std;
 
 LevelFour::LevelFour(): AbstractLevel{4, "", true}{} 
 
+
 LevelFour::~LevelFour() {}
+
 
 AbstractBlock* LevelFour::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);
@@ -27,13 +29,16 @@ AbstractBlock* LevelFour::generateBlock(char type) {
     return createCustomBlock(c);
 }
 
+
 int LevelFour::getNumUncleared()const{
     return numUncleared;
 }
 
+
 void LevelFour::incNumUncleared(){
     numUncleared++;
 }
+
 
 void LevelFour::resetNumUncleared(){
     numUncleared = 0;

@@ -7,9 +7,9 @@
 using namespace std;
 
 AbstractDecorator::AbstractDecorator(shared_ptr<AbstractPlayer> component, Game *g, 
-Xwindow *w) : 
-AbstractPlayer{g,component->getNo(), w, component->getInitScpt()},
+Xwindow *w) : AbstractPlayer{g,component->getNo(), w, component->getInitScpt()},
 player{component} { 
+//initializes the level
     int l = component->getLevel();
     if (l == 0) {
         this->level.reset(new LevelZero{initScpt});
@@ -22,7 +22,7 @@ player{component} {
     }else{
         this->level.reset(new LevelFour);
     }
-
+//initializes the nextBlock
    setNextBlock(component->getNextBlock());
 }
 

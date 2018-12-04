@@ -11,13 +11,19 @@
 
 using namespace std;
 
-AbstractLevel::AbstractLevel(int level, std::string sequence, bool isRandom)
-    : level{level}, sequence{sequence}, isRandom{isRandom}{}
+AbstractLevel::AbstractLevel(int level, std::string sequence, bool isRandom):
+    level{level}, sequence{sequence}, isRandom{isRandom}{}
 
-    AbstractLevel::~AbstractLevel() {}
 
-    char AbstractLevel::generateChar(double bI, double bJ,double bL, double bT, double bS, double bZ, double bO){
+AbstractLevel::~AbstractLevel() {}
+
+
+char AbstractLevel::generateChar(double bI, double bJ,double bL, double bT,
+double bS, double bZ, double bO){
+        // generates a random probability
         double prob= ((double)rand()/(RAND_MAX));
+        //if the probability is within a certain interval, pick the corresponding block
+        //to generate
         double intv=bI;
         if (prob <= intv){
             return 'I';
@@ -52,9 +58,11 @@ AbstractLevel::AbstractLevel(int level, std::string sequence, bool isRandom)
         return 'O';
     }
 
+
 int AbstractLevel::getLevel() {
     return this->level;
 }
+
 
 AbstractBlock* AbstractLevel::createCustomBlock(char type) {
     switch (type) {
@@ -68,6 +76,7 @@ AbstractBlock* AbstractLevel::createCustomBlock(char type) {
         default: return new BlockZ((level + 1) * (level + 1));
     }
 }
+
 
 void AbstractLevel::setRandom(bool rand, string file){
     isRandom =rand;

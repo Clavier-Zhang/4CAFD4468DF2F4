@@ -11,7 +11,9 @@ using namespace std;
 
 LevelThree::LevelThree(): AbstractLevel{3, "", true}{} 
 
+
 LevelThree::~LevelThree() {}
+
 
 AbstractBlock* LevelThree::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);

@@ -1,11 +1,13 @@
-#include "abstractPlayer.h"
-#include "game.h"
-#include "abstractLevel.h"
-#include "point.h"
-#include <string.h>
 #include <memory>
 #include <map>
 #include <iostream>
+#include <string>
+#include "abstractBlock.h"
+#include "abstractLevel.h"
+#include "abstractPlayer.h"
+#include "game.h"
+#include "levelFour.h"
+#include "point.h"
 #include "window.h"
 using namespace std;
 
@@ -13,9 +15,9 @@ using namespace std;
 AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
     no{no}, initScpt{scpt},level{nullptr},currentBlock{nullptr},nextBlock{nullptr}{
         // initialize the grid
-        for (int i = 0; i < rowNum; i++) {
+        for (int i = 0; i < ROW; i++) {
             vector<Point> row;
-            for (int j = 0; j < colNum; j++) {
+            for (int j = 0; j < COL; j++) {
                 string empty = " ";
                 row.emplace_back(Point(j,i,empty, this->no, w));
             }
@@ -25,21 +27,23 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
         this->game = game;
 
         // initialize the graphical
-        for (int x = 0; x < this->colNum; x++) {
+        for (int x = 0; x < this->COL; x++) {
             game->drawPoint(x, 2, 1, 1, 11, this->no);
         }
-        for (int x = 0; x < this->colNum; x++) {
+        for (int x = 0; x < this->COL; x++) {
             game->drawPoint(x, 21, 1, 1, 11, this->no);
         }
     }
 
+
 AbstractPlayer::~AbstractPlayer(){}
+
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
     if (c.first < 0 || c.second < 0) {
         return false;
     }
-    if (c.first >= colNum || c.second >= rowNum) {
+    if (c.first >= COL || c.second >= ROW) {
         return false;
     }
     Point *p = this->getPoint(c);
@@ -48,6 +52,7 @@ bool AbstractPlayer::isValid(pair<int, int> &c) {
     }
     return true;
 }
+
 
 bool AbstractPlayer::canMoveDown(int step){
     if (step == 0) return true;
@@ -63,13 +68,14 @@ bool AbstractPlayer::canMoveDown(int step){
         return true;
 }
 
+
 void AbstractPlayer::recalculateGrid() {
     bool shouldClear;
     int offset = 0;
-    for (int row = rowNum - 1; row > reservedRowNum; row--) {
+    for (int row = ROW - 1; row > RESERVE_ROW; row--) {
         shouldClear = false;
-        for (int col = 0; col < colNum; col++) {
-            if ((grid[row][col].getType() != " ") && (col == colNum - 1)) shouldClear = true;
+        for (int col = 0; col < COL; col++) {
+            if ((grid[row][col].getType() != " ") && (col == COL - 1)) shouldClear = true;
             if (grid[row][col].getType() == " ") break; 
         }
 
@@ -93,6 +99,7 @@ void AbstractPlayer::recalculateGrid() {
     updateScore();
 }
 
+
 void AbstractPlayer::updateScore(){
     if (this->currentScore > this->highestScore) {
         this->highestScore = this->currentScore;
@@ -100,8 +107,9 @@ void AbstractPlayer::updateScore(){
     this->drawScore();
 }
 
+
 void AbstractPlayer::clearRow(int row) {
-    for (int col = 0; col < colNum; col++){
+    for (int col = 0; col < COL; col++){
         Point *p = &this->grid[row][col];
         p->setType(" ");
         for (auto cell : inactiveBlocks[p->getID()]->getPoints()){
@@ -114,9 +122,10 @@ void AbstractPlayer::clearRow(int row) {
     }
 }
 
+
 void AbstractPlayer::shiftRowDown(int row, int offset) {
-    if (row < reservedRowNum || offset == 0) return; //checks if were within correct range
-    for (int col =0; col < colNum; col++) { // iterates through the columns in the current row
+    if (row < RESERVE_ROW || offset == 0) return; //checks if were within correct range
+    for (int col =0; col < COL; col++) { // iterates through the columns in the current row
         Point *p = &grid[row][col];// gets the point to be moved
         if (p->getType() != " ") {
             Point *newP = &grid[row+offset][col]; // finds the place the point needs to be moved
@@ -136,6 +145,7 @@ void AbstractPlayer::shiftRowDown(int row, int offset) {
     }
 }
 
+
 void AbstractPlayer::recalculateInactiveBlocks(){
     auto it= inactiveBlocks.begin();
     while(it != inactiveBlocks.end()){
@@ -149,6 +159,7 @@ void AbstractPlayer::recalculateInactiveBlocks(){
         }
     }
 }
+
 
 void AbstractPlayer::applyLevelEffects(int offset){
     if (level->getLevel() == 4){
@@ -166,24 +177,27 @@ void AbstractPlayer::applyLevelEffects(int offset){
     }
 }
 
+
 // observer pattern
 void AbstractPlayer::notifyGameover() {
     game->setGameOver();
 }
 
+
 void AbstractPlayer::notifyTurnover() {
     game->turnOver();
 }
+
 
 void AbstractPlayer::notifySpecialAction() {
     game->specialAction();
 }
 
 // getter
-
 int AbstractPlayer::getNo(){
     return no;
 }
+
 
 string AbstractPlayer::getInitScpt(){
     return initScpt;
@@ -194,9 +208,11 @@ string AbstractPlayer::getNextBlock() {
     return nextBlock->getType();
 }
 
+
 string AbstractPlayer::getCurrentBlock() {
     return currentBlock->getType();
 }
+
 
 //USED IN DECORATOR TO MAKE NEXT BLOCK NON NULL
 void AbstractPlayer::setNextBlock(string type){
@@ -205,9 +221,11 @@ void AbstractPlayer::setNextBlock(string type){
     this->drawNextBlock();
 }
 
+
 Point* AbstractPlayer::getPoint(pair<int, int> &c) {
     return &grid[c.second][c.first];
 }
+
 
 void AbstractPlayer::drawScore(){
     if (game->getWindow() != nullptr) {
@@ -216,6 +234,7 @@ void AbstractPlayer::drawScore(){
     }
 }
 
+
 void AbstractPlayer::undrawScore(){
     if (game->getWindow() != nullptr) {
         game->undrawBigString(10, 24, std::to_string(this->highestScore), this->no);
@@ -223,17 +242,20 @@ void AbstractPlayer::undrawScore(){
     }
 }
 
+
 void AbstractPlayer::drawLevel(){
     if (game->getWindow() != nullptr) {
         game->drawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
 
+
 void AbstractPlayer::undrawLevel(){
     if (game->getWindow() != nullptr) {
         game->undrawBigString(9, 1, std::to_string(this->level->getLevel()), this->no);
     }
 }
+
 
 void AbstractPlayer::drawNextBlock(){
     if (game->getWindow() != nullptr) {
@@ -267,18 +289,20 @@ void AbstractPlayer::drawNextBlock(){
             if (type == "Z") {
                 colour = 9;
             }
-            game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, colour, this->no);
+            game->drawPoint(p.first, p.second + this->ROW + 5, 1, 1, colour, this->no);
         }
     }
 }
 
+
 void AbstractPlayer::undrawNextBlock(){
     if (game->getWindow() != nullptr) {
         for (pair<int, int> &p : this->nextBlock->getPositions()) {
-            game->drawPoint(p.first, p.second + this->rowNum + 5, 1, 1, 0, this->no);
+            game->drawPoint(p.first, p.second + this->ROW + 5, 1, 1, 0, this->no);
         }
     }
 }
+
 
 void AbstractPlayer::setGridType(int row, int col, string c) {
     grid[row][col].setType(c);

@@ -4,7 +4,7 @@
 #include "abstractLevel.h"
 #include "abstractBlock.h"
 class LevelZero : public AbstractLevel {
-    std::string scpt;
+    std::string scpt;//script used to generate blocks for the level
     public:
         LevelZero(std::string scpt);
         ~LevelZero();
