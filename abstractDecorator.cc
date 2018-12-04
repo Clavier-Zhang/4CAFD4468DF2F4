@@ -24,10 +24,5 @@ player{component} {
     }
 
    setNextBlock(component->getNextBlock());
-//   setCurrentBlock(component->getCurrentBlock());
 }
 
-
-/*AbstractLevel * AbstractDecorator::getLevel(){
-    return player->level.get();
-}*/

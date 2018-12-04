@@ -82,38 +82,38 @@ void howToPlay(){
 
 void setInitialState(int argc, char * argv[]){
     string s;
-    for (int i =1; i< argc; ++i){
-        s=argv[i];
+    for (int i =1; i < argc; ++i){
+        s = argv[i];
         if (s == "-text"){
-            isGraphical=false;
-        }else if(s == "-seed"){
+            isGraphical = false;
+        } else if (s == "-seed") {
             if (i+1 <argc){
                 ++i;
-                s= argv[i];
+                s = argv[i];
                 seed = stoi(s);
             }
-        }else if(s == "-scriptfile1"){
-            if (i+1 <argc){
+        } else if (s == "-scriptfile1") {
+            if (i + 1 < argc) {
                 ++i;
                 scpt1 = argv[i];
             }
-        }else if(s == "-scriptfile2"){
-            if (i+1 <argc){
+        } else if (s == "-scriptfile2") {
+            if (i + 1 < argc){
                 ++i;
                 scpt2 = argv[i];
             }
-        }else if (s == "-startlevel"){
-            if (i+1 <argc){
+        } else if (s == "-startlevel") {
+            if (i + 1 < argc) {
                 ++i;
-                s=argv[i];
+                s = argv[i];
                 startLvl = stoi(s);
             }
-        }else if( s == "-key"){
-            if (isGraphical == false){
-                cout<<"Must turn graphics on to use this feature!"<<endl;
+        } else if( s == "-key") {
+            if (isGraphical == false) {
+                cout << "Must turn graphics on to use this feature!" << endl;
                 exit(1);
             }
-            keyMode=true;
+            keyMode = true;
         }
     }
 }
@@ -121,12 +121,12 @@ void setInitialState(int argc, char * argv[]){
 int main (int argc, char * argv[]) {
     setInitialState(argc, argv);
 
-    if ( seed >-1)
+    if (seed > -1)
         srand(seed);
     else
         srand(time(NULL));
     string command;
-    if(keyMode) howToPlay();
+    if (keyMode) howToPlay();
     unique_ptr<Game>game{new Game(isGraphical, startLvl,scpt1,scpt2)};
 
     // key feature
@@ -174,7 +174,7 @@ int main (int argc, char * argv[]) {
                 continue;
             }
         }
-    }else{
+    } else {
         // possible short version commands
         map<string, string> commandMap;
         // duplicates means the string in this vector (short version command)
@@ -229,8 +229,7 @@ int main (int argc, char * argv[]) {
                         cout << "Invalid block. Please enter I, J, L, T, S, Z, or O." << endl;
                     }        
                     game->force(block[0]); 
-                } else if /*((action == "heavy")||(action == "blind")){*/(action == "heavy") {
-                    // game->enableSpecialAction(action);
+                } else if (action == "heavy") {
                     game->enableSpecialAction(action);
                     game->enableSpecialAction(action);
                 } else if (action == "blind") {
@@ -239,14 +238,11 @@ int main (int argc, char * argv[]) {
                 game->print();
             }
 
-            // error checking
-
-
             string word;
-            if(game->getNumDrop() >1){
+            if (game->getNumDrop() > 1) {
                 word = "drop";
                 game->setNumDrop(game->getNumDrop()-1);
-            }else{
+            } else {
                 determineInput(word);
             }
 
@@ -301,7 +297,7 @@ int main (int argc, char * argv[]) {
                 string randomFile;
                 determineInput(randomFile);
                 // use this file
-                if ( game->getLevel()>=3){
+                if (game->getLevel() >= 3) {
                     cout<<"Block generation will generate from " << randomFile <<endl;
                     game->setRandom(false,randomFile);
                 }else cout<<"Not applicable to this level"<<endl;
@@ -315,9 +311,9 @@ int main (int argc, char * argv[]) {
                 cin >> sequenceFile;
                 ifstream file{sequenceFile};
                 string txtCmd;
-                while(file>>txtCmd){
-                    seq+=txtCmd;
-                    seq+=" ";
+                while(file >> txtCmd){
+                    seq += txtCmd;
+                    seq += " ";
                 }
             } else if ((translatedCmd == "I")||(translatedCmd == "J")||(translatedCmd == "L")||
                     (translatedCmd == "O")||(translatedCmd == "T")||(translatedCmd == "S")||(translatedCmd == "Z")) {

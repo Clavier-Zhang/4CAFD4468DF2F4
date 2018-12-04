@@ -13,7 +13,7 @@ class Player : public AbstractPlayer {
         bool rotateHelper(bool counter = false, int step = 1, bool isBlind=false);
         void clearBlind();
     public:
-        // initialzie the player, draw in the constructor, save window pointer
+        // initialize the player, draw in the constructor, save window pointer
         Player(Game *game, int no, Xwindow *w, int startLevel,std::string scpt);
         // check if it's movable, then call block's method to move
         // int retval reflects how many steps it was able to complete
@@ -38,6 +38,5 @@ class Player : public AbstractPlayer {
         void setNumDrop(int)override;
         void setRandom(bool rand, std::string file = "") override;
         int getCurrentScore()override;
-//        bool canMoveDown(int step); //used in heavy dec
 };
 #endif

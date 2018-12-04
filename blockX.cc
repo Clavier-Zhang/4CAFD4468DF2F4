@@ -13,7 +13,7 @@ BlockX::~BlockX() {}
 void BlockX::initialize(AbstractPlayer *p) {
     // get point pointers
     string row;
-    for (int i =17; i>2; i--){
+    for (int i = 17; i > 2; i--){
 
         row = p->getGridRow(i);
         if (row[5] == ' '){

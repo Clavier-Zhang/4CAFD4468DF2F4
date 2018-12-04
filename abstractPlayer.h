@@ -43,61 +43,55 @@ class AbstractPlayer {
         // game for observer
         Game *game;
         Xwindow *w;
+        // Private helper functions
+        void shiftRowDown(int row, int offset); // used in recalculateGrid
+        bool isValid(std::pair<int, int> &c); // used as a helper in subclesses
+        void recalculateGrid();
+        void recalculateInactiveBlocks();
+        void clearRow(int row);
+        void applyLevelEffects(int); // checks if you need to apply special
+                                     // effects to player at end of turn
+        void setNextBlock(std::string); // for access by AbstractDecorator
     public:
         AbstractPlayer(Game *game, int no, Xwindow *w, std::string scpt);
         AbstractPlayer(Game *game);
         ~AbstractPlayer();
-        // player's operation
-        // check if it's movable, then call block's method to move
+        // Pure virtual transformation methods
         virtual int move(std::string type, int step = 1, bool isBlind=false) = 0;
         virtual int rotate(bool counter = false, int step = 1, bool isBlind=false) = 0;
-        // add the points of blocks to grid, update the block in drop(), 
-        virtual void drop(bool shouldClear = false) = 0;
-        // check if it is possible to level up/down
-        virtual void setLevel(int level) = 0;
-        // assign the point pointer to currentBlock, can
+        virtual void drop(bool shouldClear = false) = 0; // add the points of block to grid, update the block in drop()
+        // Pure virtual setters
+        virtual void setLevel(int level) = 0; // check if posible to level up/down
         virtual void setRandom(bool rand, std::string file = "")=0;
-        // display
-        virtual void setCurrentBlock(char type = ' ') = 0;
+        virtual void setCurrentBlock(char type = ' ') = 0; 
+        // Iterate through decorators
         virtual std::shared_ptr<AbstractPlayer> getUnderlyingPlayer() = 0;
         virtual void nullifyUnderlyingPlayer() = 0;
         virtual void setUnderlyingPlayer(std::shared_ptr<AbstractPlayer>) = 0;
 
-        void recalculateGrid();
-        void recalculateInactiveBlocks();
-        void clearRow(int row);
-        //checks if you need to apply any special affects to player at the end of turn
-        void applyLevelEffects(int);
-
-        void shiftRowDown(int row, int offset);
-        
-        // observer pattern
+        // Observer pattern
         void notifyGameover();
         void notifyTurnover();
         void notifySpecialAction();
-        // getter
-        virtual int getCurrentScore()=0;
-        virtual int getHighScore()=0;
+        // getters
+        virtual int getCurrentScore() = 0;
+        virtual int getHighScore() = 0;
         virtual int getLevel() = 0;
         int getNo();
-        virtual int getNumDrop()=0;
-        Game *getGame();
+        virtual int getNumDrop() = 0;
         std::string getInitScpt();
         virtual std::string getGridRow(int row) = 0;
         virtual std::string getGridPoint(int row, int col) = 0;
         virtual void drawGridPoint(int x, int y, int col) = 0;
         std::string getNextBlock();
-        virtual void setNumDrop(int)=0;
-        void setNextBlock(std::string);
+        virtual void setNumDrop(int) = 0;
         void setCurrentBlock(std::string);
-        virtual void setHighScore(int)=0;
+        virtual void setHighScore(int) = 0;
         std::string getCurrentBlock();
         Point* getPoint(std::pair<int, int> &c);
 
         void setGridType(int row, int col, std::string c);
 
-        // check if the point at c is valid
-        bool isValid(std::pair<int, int> &c);
         // draw
         void drawScore();
         void undrawScore();

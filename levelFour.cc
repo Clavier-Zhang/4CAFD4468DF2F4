@@ -36,6 +36,6 @@ void LevelFour::incNumUncleared(){
 }
 
 void LevelFour::resetNumUncleared(){
-    numUncleared=0;
+    numUncleared = 0;
 }
 

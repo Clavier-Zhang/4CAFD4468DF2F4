@@ -22,10 +22,6 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
             grid.emplace_back(row);
         }
 
-        //initliaze blocks and level
-
-
-        //currentBlock->initialize(this);
         this->game = game;
 
         // initialize the graphical
@@ -37,44 +33,8 @@ AbstractPlayer::AbstractPlayer(Game *game, int no, Xwindow *w, string scpt):
         }
     }
 
-// important
-/*AbstractPlayer::AbstractPlayer(Game *game):,currentBlock{level->generateBlock()},
-  nextBlock{level->generateBlock()} {
-// initialize the grid
-for (int i = 0; i < rowNum; i++) {
-vector<Point> row;
-for (int j = 0; j < colNum; j++) {
-string empty = " ";
-row.emplace_back(Point(j,i,empty, this->no, nullptr));
-}
-grid.emplace_back(row);
-}
-currentBlock->initialize(this);
-this->game = game;
-}*/
-
 AbstractPlayer::~AbstractPlayer(){
 }
-
-Game *AbstractPlayer::getGame() { return game;}
-
-// check if possible to level up or down
-/*void AbstractPlayer::setLevel(int level){
-    if(this->level != nullptr) this->undrawLevel();
-    if (level == 0) {
-        this->level.reset(new LevelZero{initScpt});
-    } else if (level == 1) {
-        this->level.reset(new LevelOne);
-    }else if (level == 2){
-        this->level.reset(new LevelTwo);
-    }else if (level == 3){
-        this->level.reset(new LevelThree);
-    }else if ( level == 4){
-        this->level.reset(new LevelFour);
-    }
-    this->drawLevel();
-}*/
-
 
 bool AbstractPlayer::isValid(pair<int, int> &c) {
     if (c.first < 0 || c.second < 0) {
@@ -182,7 +142,6 @@ void AbstractPlayer::recalculateInactiveBlocks(){
         if (it->second->getPoints().size() == 0){
             currentScore+=it->second->getScore();
             auto toErase = it;
-            //cout<<it->first<<endl;
             it++;
             it=inactiveBlocks.erase(toErase);
         }else{
@@ -344,6 +303,6 @@ void AbstractPlayer::undrawNextBlock(){
     }
 }
 
-void AbstractPlayer::setGridType(int row, int col, string c){
+void AbstractPlayer::setGridType(int row, int col, string c) {
     grid[row][col].setType(c);
 }

@@ -13,7 +13,7 @@
 using namespace std;
 
 LevelZero::LevelZero(string scpt) : AbstractLevel{0, "", false}, scpt{scpt} {
-    setRandom(false,scpt);
+    setRandom(false, scpt);
 };
 
 LevelZero::~LevelZero() {}
@@ -22,5 +22,4 @@ AbstractBlock* LevelZero::generateBlock(char type) {
     if (type != ' ') return createCustomBlock(type);
     char c = nonRandomBlock();
     return createCustomBlock(c);
-
 }

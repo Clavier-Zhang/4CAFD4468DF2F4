@@ -68,7 +68,6 @@ void Game::addLevelDecorator(int level) {
     // otherwise make the level heavy
     if (currentPlayer->getUnderlyingPlayer() != nullptr) { // the player is decorated already
         // get a pointer too the the Player and the thing before it
-        cout << "clause 1" << endl;
         shared_ptr<AbstractPlayer> cur = currentPlayer;
         shared_ptr<AbstractPlayer> next = cur->getUnderlyingPlayer();
         while (next->getUnderlyingPlayer() != nullptr) {
@@ -80,7 +79,6 @@ void Game::addLevelDecorator(int level) {
         shared_ptr<AbstractPlayer> heavyLevel {heavyPlayer};
         cur->setUnderlyingPlayer(heavyLevel);
     } else { // just create one decoratori
-        cout << "clause 2" << endl;
         enableSpecialAction("heavy");
     }
 }
@@ -94,7 +92,6 @@ void Game::levelUp(int step) {
 }
 
 void Game::removeLevelDecorator(int level) {
-    cout<<"REMOVE LEVEL DECORRR"<<endl;
     if ((level == 3)||(level == 4)) return;
     if (currentPlayer->getUnderlyingPlayer() == nullptr) return;
     if (currentPlayer->getUnderlyingPlayer()->getUnderlyingPlayer() != nullptr) {// there is a decoration in adition to level
@@ -129,18 +126,10 @@ void Game::removeLevelDecorator(int level) {
         }
     }
 }
-/*
-   playerOne->nullifyUnderlyingPlayer();
-   currentPlayer->nullifyUnderlyingPlayer();
-   playerOne.reset();
-   currentPlayer.reset();
-   playerOne = tmp;
-   currentPlayer = playerOne;
- */
+
 void Game::levelDown(int step) {
     int targetLevel = currentPlayer->getLevel() - step;
     if (this->MIN_LEVEL <= targetLevel && targetLevel <= this->MAX_LEVEL) {
-        //currentPlayer->setLevel(targetLevel);
         if (!((targetLevel == 3)&&(step == 1))) removeLevelDecorator(targetLevel); 
         currentPlayer->setLevel(targetLevel);
     }
@@ -156,7 +145,6 @@ int Game::getLevel(){
 
 void Game::move(string type, int step) {
     if (currentPlayer->move(type, step) == -1) currentPlayer->drop();
-    //cout <<"finished current player move"<<endl;
 }
 
 void Game::rotate(bool counter, int step) {
@@ -352,7 +340,6 @@ AbstractPlayer *Game::createDecoratedPlayer(string specialAction, shared_ptr<Abs
         // shared_ptr firstHeavy = make_shared(new HeavyDecorator(absPlayer, this, w.get()));
         return new HeavyDecorator(absPlayer, this, w.get());// since 2 heavy for special action
     }  else if (specialAction == "blind") {
-        cout<<"calling blind decor"<<endl;
         return new BlindDecorator(absPlayer, this, w.get());
     }
     return nullptr; // maybe throw an exception instead later

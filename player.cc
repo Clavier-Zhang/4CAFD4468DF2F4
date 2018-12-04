@@ -202,6 +202,8 @@ for (int i = 3; i <= 12 + reservedRowNum; ++i) {
   for (int j = 2; j <= 8; ++j) {
         string type = getGridPoint(i, j); 
         setGridType(i,j,type);
+        //pair<int, int> c = make_pair(i, j);
+        //getPoint(c)->setType(type, true);
   }
  }
 }

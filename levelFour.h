@@ -4,7 +4,7 @@
 #include "abstractLevel.h"
 #include "abstractBlock.h"
 class LevelFour : public AbstractLevel {
-    int numUncleared=0; //total number of turns gone without clearing rows
+    int numUncleared = 0; //total number of turns gone without clearing rows
     public:
         LevelFour();
         ~LevelFour();
